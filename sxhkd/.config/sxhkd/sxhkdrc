@@ -1,0 +1,105 @@
+# Terminal
+super + Return
+  kitty
+
+super + p
+	rofi -show-icons -show run 1&> /dev/null
+
+super + slash ; {t,v,n}
+  {kitty -e htop, kitty -e nvim, kitty -e newsboat}
+} 
+
+# apps
+super + b
+  brave
+
+super + o ; {o,z,f,b,q} 
+  {obsidian,zotero ,thunar ,blueberry,clipmenu -i -matching fuzzy}
+
+# obsidian stuff
+super + n ; {t,c,l,s,a}
+  ~/obsidian-rofi/obsidian_rofi {quick-task,quick-capture,quick-log,search-query,append}
+  
+# scripts
+
+## passwords
+
+super + r;p
+ ~/scripts/rbw.sh 
+
+# fuzzy finder
+super + f; {f}
+    {kitty -e ~/scripts/fzf.sh}
+# take Screenshots
+super + a 
+  ~/scripts/screenshot.sh
+# use flameshot
+super + e;f
+  flameshot gui
+# super + a ; {u,e}
+#   {~/scripts/area_ocr.sh ara, ~/scripts/area_ocr.sh eng}
+#bluetooth
+super + c ; {b,c}
+  {bluetoothctl connect 28:04:C6:46:A6:65,bluetoothctl disconnect 28:04:C6:46:A6:65} 
+## increaes - descrease volume
+super + {u,d}
+  {pactl set-sink-volume @DEFAULT_SINK@ +5%,pactl set-sink-volume @DEFAULT_SINK@ -5%}
+
+# copy selected file to highlight.md
+super + s 
+  ~/scripts/sselp.sh
+
+
+# dzen2 scripts
+# find time
+super + i
+  date +%I:%M__%d%a_%b%m | dzen2 -p 2 -w 170 -fg white
+# pomodoro
+# start deafult , custom, end, pause, resume, 
+super + e ; {s,c,k,p,r}
+  {~/scripts/pomodoro.sh,~/scripts/pomodoro.sh dmenu, killall dzen2;killall pomodoro, killall -STOP pomodoro, killall -CONT pomodoro}
+# Books
+super + e ; b
+  ~/scripts/books.sh
+super + e ; n
+  ~/scripts/subjects.sh
+
+# weather
+super + e ; w
+  ~/scripts/weather.sh
+#show bandwidth consumptino 
+super + e ; {b}
+  ~/scripts/bandwidth.sh
+# show memory_usage
+super + e ; {f}
+  ~/scripts/memory_usage.sh
+  # show left for next prayer  # show prayer times in dmenu
+super + e ; {h,j}
+  /media/Maind/goProjects/gopray/go-pray {next|dzen2 -p 4 -w 400 -fg white ,list |dmenu}
+  # {~/scripts/prayer_timings/prayer_times.sh left, ~/scripts/prayer_timings/prayer_times.sh dmenu}
+# dmenu scripts
+# open config menu use a search engine
+super + bracketleft; {c,s,y}
+  {~/scripts/configs.sh ,~/scripts/search_engine.sh,~/scripts/search_engine.sh youtube}
+# pick emoji
+super + e ; {i}
+  rofi -modi emoji -show emoji
+  # ~/scripts/dmenu-emoji.sh
+
+# translate
+super + e ; {t,d}
+  {~/scripts/translate.sh short,~/scripts/translate.sh long}
+#poweroff
+super + shift + BackSpace
+  ~/scripts/poweroff.sh
+
+
+super + BackSpace
+  systemctl suspend
+
+# kill obsidian and sioyek
+super + e; o
+  killall AppRun electron
+
+super + c: p
+  as-cmd -b 192.168.1.8

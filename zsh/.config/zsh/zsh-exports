@@ -1,0 +1,9 @@
+#!/bin/sh
+export MANWIDTH=999
+export PATH=$PATH:$HOME/.local/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$HOME/go/bin
+export TODO_FILE_PATH="$HOME/.config/todo/todo.json"
+#eval "$(fnm env)"
+# eval "$(zoxide init zsh)"
+# eval "`pip completion --zsh`"

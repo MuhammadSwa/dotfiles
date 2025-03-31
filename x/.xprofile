@@ -1,0 +1,13 @@
+setxkbmap us,ara -option grp:alt_shift_toggle &
+setxkbmap -option caps:escape
+setxkbmap -option escape:caps
+
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOM=$HOME/.local/share
+export ZDOTDIR=$HOME/.config/zsh
+
+# clipmenu
+
+feh --bg-scale dotfiles/Data/Data/Arabic-Background-HD.webp
+sxhkd &

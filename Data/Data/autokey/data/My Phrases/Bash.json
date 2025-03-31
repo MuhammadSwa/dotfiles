@@ -1,0 +1,31 @@
+{
+    "type": "phrase",
+    "description": "Bash",
+    "modes": [
+        1
+    ],
+    "usageCount": 1,
+    "prompt": false,
+    "omitTrigger": false,
+    "matchCase": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [
+            "b!"
+        ],
+        "backspace": true,
+        "ignoreCase": true,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[^ \\n]"
+    },
+    "hotkey": {
+        "modifiers": [],
+        "hotKey": null
+    },
+    "filter": {
+        "regex": null,
+        "isRecursive": false
+    },
+    "sendMode": "<ctrl>+v"
+}

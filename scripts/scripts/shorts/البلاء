@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xpdf -z 250 /home/alien/Downloads/البلاء_الشديد_والميلاد_المجيد.pdf

@@ -1,0 +1,231 @@
+#!/bin/bash
+
+
+# Full vault path
+vaultPath="$HOME"/MyVault
+# change it to your vault's name
+vaultName="MyVault"
+# change it to the path you want the new notes to be created into , empty means the root folder
+# TODO remove this
+# newNotePath=""
+
+# TODO Set it up so the user doesn't have to get into the script to change it
+# like prepare scripts . read -p "what's your vault name" $vaultName ...etc . how to put those vars in here?
+# TODO What if the path doesn't exist?
+
+# output all files to standard output and pipes it to rofi,
+# exclude any directory that starts with dot like .git .trash only searches for files that end with .md
+findAllFiles()(
+    find "$vaultPath" -type f ! -path '*/\.*' -name "*\.md" \
+        |  rofi -no-plugins -dmenu -i -matching fuzzy -p "Search $vaultName" -no-custom -keep-right
+)
+
+findDirectories()(
+    find "$vaultPath" -type d ! -path '*/\.*' | rofiDmenu
+)
+
+# exit if chosen none.
+checkStatus(){
+    [[ $? -eq 1 ]] && exit 1
+}
+
+# Make rofi behave like dmenu
+rofiDmenu()(
+    rofi -no-plugins -i -matching fuzzy -dmenu -p "$@"
+)
+
+notifySend()(
+    iconPath="$vaultPath/assets/obsidian-icon.png"
+    notify-send -a Obsidian -t 1000 -i "$iconPath" "$@"
+)
+
+# Add to your daily logs under the ## Log section
+quickLog()(
+    logTemplate="- $(date +%H:%M)"
+    # the relative path you use for your daily template
+    dailyNotePath="Templates/Daily Template.md"
+    # the relative path where do you put your daily note
+    dailyFolder="journal"
+    # the section you have in your daily template to add logs
+    logSection="## Log"
+    # date format you use for daily notes, here it's ISO8601
+    dateFormat=$(date -I)
+    dailyNote="$vaultPath/$dailyFolder/$dateFormat.md"
+
+    logContent=$(rofiDmenu "Add Log")
+    checkStatus
+    # check if the daily note exits.If not then copy the daily template in your daily note folder
+    [[ -f $dailyNote ]] || cp "$vaultPath/$dailyNotePath" "$dailyNote"
+    # find the logSection and add the log beneath it
+    sed -i "s/$logSection/&\n$logTemplate $logContent/" "$dailyNote"
+    notifySend "your log has been saved in $dailyFolder/$dateFormat"
+)
+
+# TODO Make tasks a variable
+# add a task to the Tasks📝file
+quickTask()(
+    # file you put your tasks in
+    tasksPath="$vaultPath/Tasks📝.md"
+    #
+    tags=(Obsidian Linux Bash College Youtube Vim\
+        Oral_Pathology Prothesis Crown Operative Public_Health Surgery Internals Main)
+    chosenTag=$(printf "%s\n" "${tags[@]}" | rofiDmenu "choose a tag")
+    checkStatus
+    taskTemplate="- [ ] #task #$chosenTag"
+    tagSection="## $chosenTag"
+    # If the section for the specific tag isn't found in the tasks file , append the tagSection
+    grep -qc "$tagSection" "$tasksPath" || echo -e "\n$tagSection" >> "$tasksPath"
+    taskContent=$(rofiDmenu "what's your task?")
+    checkStatus
+    sed -i "s/$tagSection/&\n$taskTemplate $taskContent/" "$tasksPath"
+    notifySend "Your task is added to Tasks📝."
+)
+
+# Make a new note in your vault without opening obsidian (good for quick capturing), # TODO quickcapture to booklist
+quickCapture()(
+    # TODO Add templates to seeds,quick-capture, process-later
+    # TODO Dynamic Path here (optional)
+    # choose path
+    # chosenPath=$(findDirectories)
+    newNotePath=""
+    noteName=$(rofiDmenu "Note Name")
+    checkStatus
+    noteContent=$(rofiDmenu "Note Content")
+    fullPath="$vaultPath/$newNotePath/$noteName.md"
+    echo "$noteContent" >> "$fullPath"
+    notifySend "$noteName Was created $fullPath"
+)
+
+# Make a new note in specific template in folder,TO index later.add related: in template,
+newNote()(
+    # TODO add more tags here make
+    tags=("Prothesis")
+    sectionName="## To Index"
+    chosenTag=$(printf "%s\n" "${tags[@]}" | rofiDmenu "choose a tag")
+    ###
+    dentistryTemplate="Templates/Dentistry"
+    # naming convention to my templates
+    chosenTemplate="$dentistryTemplate/$chosenTag Template.md"
+
+    prothesisFolder="Areas/Dentistry/Removable_Prosthodontics"
+    prothesisMoc="Areas/Dentistry/HOME! Removable prosthodontics.md"
+
+    addToNote()(
+        noteFolderPath="$vaultPath/$1"
+        noteMocPath="$vaultPath/$2"
+        templateUsed="$vaultPath/$3"
+
+        noteName="$chosenTag! $(rofiDmenu "Note Name")"
+        checkStatus
+        notePath="$noteFolderPath/$noteName.md"
+        noteContent=$(rofiDmenu "Note Content")
+
+        cp  "$templateUsed" "$notePath"
+        echo "$noteContent" >> "$notePath"
+        grep -qc "$sectionName" "$noteMocPath" || echo -e "\n$sectionName" >> "$noteMocPath"
+        sed -i "s/$sectionName/&\n - [[$noteName]]/" "$noteMocPath"
+    )
+    [[ $chosenTag = "Prothesis" ]] && addToNote "$prothesisFolder" "$prothesisMoc" "$chosenTemplate"
+)
+
+
+# append to a note in your vault without opening obsidian.
+quickAppend()(
+    notePath=$(findAllFiles)
+    checkStatus
+    text=$(rofiDmenu "text to append")
+    checkStatus
+    echo -e "\n$text" >> "$notePath"
+    notifySend "text was appended to $notePath"
+)
+
+
+# choose a note to open
+open()(
+    # list all of the files then pipe them to rofi
+    chosenFile=$(findAllFiles)
+    checkStatus
+    # TODO: touch new file if it doesn't exist and open it in obsidian , see if you can conferm before touch
+
+    # open the chosenFile in obsidian
+    xdg-open "obsidian://open?path=$chosenFile"
+)
+
+# search for a query in vault
+searchQuery()(
+    query=$(rofiDmenu "query")
+    checkStatus
+    xdg-open "obsidian://search?vault=$vaultName&query=$query"
+)
+
+# Make a new note in your vault
+new()(
+    noteName=$(rofiDmenu "Note Name")
+    noteContent=$(rofiDmenu "Note Content")
+    chosenFolder=$(findDirectories)
+    checkStatus
+    # touch "$chosenFolder/$noteName"
+    # echo "$noteContent" > "$noteName"
+    xdg-open "obsidian://new?vault=$vaultName&file=$newNotePath/$noteName&content=$noteContent"
+)
+
+
+append()(
+    appendTo=$(findAllFiles | awk -F'/' '{print $NF}')
+    checkStatus
+    # TODO make rofi more than one line
+    noteContent=$(rofiDmenu "Content to append")
+    checkStatus
+    # I commented this and used advanced-uri for appending is because obsidian URL appends without making a new line
+    # xdg-open "obsidian://new?vault=MyVault&path=$appendTo&content=<br/>$noteContent&append"
+    xdg-open "obsidian://advanced-uri?vault=$vaultName&filename=$appendTo&data=$noteContent&mode=append"
+
+)
+
+
+help()(
+    cat << EOF
+  Valid Arguments:
+    open
+    search-query
+    new
+    quick-capture
+    append
+    quick-append
+    quick-task
+    quick-log
+    help
+EOF
+
+)
+notValidArgument(){
+    echo "The Argument You've passed isn't valid"
+    help
+    exit 1
+}
+moreThanOneArgument(){
+    echo "You've passed more than one Argument. Please pass only one argument"
+    help
+    exit 1
+}
+passedNoArgument(){
+    echo "Please pass an argument"
+    help
+    exit 1
+}
+
+[[ $# -gt 1 ]] && moreThanOneArgument
+[[ $# -eq 0 ]] && passedNoArgument
+case $1 in
+    open) open ;;
+    search-query) searchQuery ;;
+    new) new ;;
+    quick-capture) quickCapture ;;
+    append) append ;;
+    quick-append) append   ;;
+    quick-task) quickTask ;;
+    quick-log) quickLog  ;;
+    new-note) newNote ;;
+    help) help ;;
+    *) notValidArgument ;;
+esac

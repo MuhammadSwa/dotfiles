@@ -1,0 +1,6 @@
+#!/bin/bash
+
+paru -S kitty zsh bgs sxhkd dzen2 jq cronie libnotify dunst bat zenity sselp gotop-bin figlet neofetch openssh cronie maim xclip zbar clipmenu
+paru -S neovim unzip npm beautysh stylelint prettierd shellcheck autopep8 stylua flake8
+sudo npm install -g emmet-ls
+paru -S brave-bin obsidian sioyek thunar flameshot imagemagick

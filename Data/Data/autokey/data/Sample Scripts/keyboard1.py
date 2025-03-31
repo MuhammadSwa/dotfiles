@@ -1,0 +1,1 @@
+window.get_active_title()

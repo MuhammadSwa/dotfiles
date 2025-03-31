@@ -1,0 +1,29 @@
+{
+    "type": "phrase",
+    "description": "completed",
+    "modes": [],
+    "usageCount": 2,
+    "prompt": false,
+    "omitTrigger": false,
+    "matchCase": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [
+            "c!"
+        ],
+        "backspace": true,
+        "ignoreCase": true,
+        "immediate": true,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [],
+        "hotKey": null
+    },
+    "filter": {
+        "regex": null,
+        "isRecursive": false
+    },
+    "sendMode": "<ctrl>+v"
+}
