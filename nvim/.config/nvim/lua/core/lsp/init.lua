@@ -2,12 +2,16 @@ require('core.lsp.handlers').setup()
 
 
 -- Add additional capabilities supported by nvim-cmp
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+-- Enable inlay hints globally by default
+-- You can toggle them per buffer using the keymap defined in on_attach
+vim.lsp.inlay_hint.enable(true) -- Enable globally
+
 
 local lspconfig = require('lspconfig')
 -- Server-specific settings
 lspconfig.lua_ls.setup {
-  capabilities = capabilities,
   settings = {
     Lua = {
       diagnostics = {

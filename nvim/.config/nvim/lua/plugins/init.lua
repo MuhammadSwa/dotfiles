@@ -42,7 +42,8 @@ return {
       "L3MON4D3/LuaSnip",
       dependencies = { "rafamadriz/friendly-snippets" },
     },
-    "saadparwaiz1/cmp_luasnip",
+    -- "saadparwaiz1/cmp_luasnip",
+
 
     -- git
     "lewis6991/gitsigns.nvim",
@@ -58,7 +59,10 @@ return {
       },
     },
     -- AI
-    "Exafunction/codeium.vim",
+    {
+      "Exafunction/codeium.vim",
+    },
+
 
 
     {
@@ -146,5 +150,36 @@ return {
     opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = "Trouble",
   },
+
+
+  -- {
+  --   'saghen/blink.cmp',
+  --   -- optional: provides snippets for the snippet source
+  --   opts_extend = {
+  --     "sources.completion.enabled_providers",
+  --     "sources.compat",
+  --     "sources.default",
+  --   },
+  --   dependencies = {
+  --     "rafamadriz/friendly-snippets",
+  --     -- add blink.compat to dependencies
+  --     {
+  --       "saghen/blink.compat",
+  --       optional = true, -- make optional so it's only enabled if any extras need it
+  --       opts = {},
+  --       version = not vim.g.lazyvim_blink_main and "*",
+  --     },
+  --   },
+  --   event = "InsertEnter",
+  -- },
+
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+    enabled = vim.fn.has("nvim-0.10.0") == 1,
+  },
+
+  "akinsho/toggleterm.nvim",
 
 }

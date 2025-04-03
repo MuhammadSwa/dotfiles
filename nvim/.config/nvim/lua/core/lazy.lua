@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -31,5 +31,45 @@ require("lazy").setup({
   -- colorscheme that will be used when installing plugins.
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
-  checker = { enabled = true },
+  -- Automatically check for updates (consider doing this manually with :Lazy sync)
+  checker = {
+    enabled = true, -- Check for plugin updates
+    notify = true,  -- Notify if updates are available
+    -- frequency = 3600 * 24, -- Check daily (in seconds)
+  },
+  ui = {
+    border = "rounded", -- "none", "single", "double", "rounded", "solid", "shadow"
+    -- You can define custom icons or use the defaults
+    icons = {
+      cmd = " ",
+      config = " ",
+      event = " ",
+      ft = " ",
+      init = " ",
+      keys = " ",
+      plugin = " ",
+      runtime = " ",
+      require = " ",
+      source = " ",
+      start = " ",
+      task = "✔ ",
+      lazy = " ",
+    },
+  },
+  -- Performance optimizations
+  performance = {
+    rtp = {
+      -- Use native Neovim package paths
+      disabled_plugins = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
 })
