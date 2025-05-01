@@ -110,9 +110,26 @@ cmp.setup({
   },
 
   mapping = cmp.mapping.preset.insert({
+    -- ['<C-n>'] = cmp.mapping.select_next_item(),
+    -- ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end, { 'i', 'c' }),
+
+    ['<C-p>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { 'i', 'c' }),
     -- Navigation
-    ['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), -- Use C-k/C-j for selection nav
-    ['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+    -- ['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), -- Use C-k/C-j for selection nav
+    -- ['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
 
     -- Scrolling Documentation
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -123,7 +140,7 @@ cmp.setup({
 
     -- Abort/Close
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<Esc>'] = cmp.mapping.abort(),                    -- Add Escape to abort
+    -- ['<Esc>'] = cmp.mapping.abort(),                    -- Add Escape to abort
 
     ['<CR>'] = cmp.mapping.confirm({ select = true }),  -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ['<C-y>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.

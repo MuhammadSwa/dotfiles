@@ -4,6 +4,8 @@ local term_opts = { silent = true }
 
 local keymap = vim.keymap.set
 
+keymap('n', '<Esc>', ":if &hlsearch | :nohlsearch | :else | :echomsg 'No highlights to clear' | :endif<CR>",
+  { noremap = true, silent = true })
 
 keymap("", "f", ":HopChar1CurrentLine<cr>", opts)
 keymap("", ",", ":HopChar2<cr>", opts)

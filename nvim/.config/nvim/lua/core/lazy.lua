@@ -33,8 +33,8 @@ require("lazy").setup({
   -- automatically check for plugin updates
   -- Automatically check for updates (consider doing this manually with :Lazy sync)
   checker = {
-    enabled = true, -- Check for plugin updates
-    notify = true,  -- Notify if updates are available
+    -- enabled = true, -- Check for plugin updates
+    -- notify = true,  -- Notify if updates are available
     -- frequency = 3600 * 24, -- Check daily (in seconds)
   },
   ui = {

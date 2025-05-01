@@ -2,7 +2,6 @@ require('core.lsp.handlers').setup()
 
 
 -- Add additional capabilities supported by nvim-cmp
--- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Enable inlay hints globally by default
 -- You can toggle them per buffer using the keymap defined in on_attach
@@ -38,6 +37,9 @@ local servers = {
   'tailwindcss',
   'bashls',
 }
+
+-- local capabilities = cmp_module.capabilities
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {

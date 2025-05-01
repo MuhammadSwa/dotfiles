@@ -6,6 +6,8 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_DATA_HOM=$HOME/.local/share
 export ZDOTDIR=$HOME/.config/zsh
+export NDK_HOME=/opt/android-sdk/ndk/27.0.12077973
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 
 # clipmenu
 
