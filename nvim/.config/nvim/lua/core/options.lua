@@ -1,5 +1,13 @@
+vim.opt.shortmess:append "c" -- Avoid showing extra completion messages
+vim.g.loaded_compe_treesitter = 0
+vim.g.loaded_compe_snippets_nvim = 0
+vim.g.loaded_compe_spell = 0
+vim.g.loaded_compe_path = 0
+vim.g.loaded_compe_tags = 0
 local options = {
-  completeopt = "menu,menuone,noselect",
+  -- completeopt = { "menuone", "noselect", "noinsert" },
+  -- completeopt = "menu,menuone,noselect",
+  completeopt = 'menu,menuone,noselect,noinsert',
   backup = false,            -- creates a backup file
   clipboard = "unnamedplus", -- allows neovim to access the system clipboard
   cmdheight = 2,             -- more space in the neovim command line for displaying messages

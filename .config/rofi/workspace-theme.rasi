@@ -1,0 +1,95 @@
+/* ~/.config/rofi/workspace-theme.rasi */
+
+* {
+    background-color: rgba(0, 0, 0, 0.8);
+    text-color: #ffffff;
+    border-color: #444444;
+    separatorcolor: #444444;
+    selected-normal-background: rgba(100, 150, 255, 0.3);
+    selected-normal-foreground: #ffffff;
+    font: "Inter 12";
+}
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 80%;
+    border-radius: 12px;
+    border: 2px solid;
+}
+
+mainbox {
+    background-color: transparent;
+    spacing: 0;
+    children: [ "inputbar", "listview" ];
+}
+
+inputbar {
+    background-color: rgba(50, 50, 50, 0.9);
+    text-color: #ffffff;
+    padding: 15px;
+    border-radius: 12px 12px 0px 0px;
+    children: [ "prompt", "textbox-prompt-colon", "entry" ];
+}
+
+prompt {
+    enabled: true;
+    background-color: transparent;
+    text-color: inherit;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+    margin: 0px 5px 0px 0px;
+    background-color: transparent;
+    text-color: inherit;
+}
+
+entry {
+    background-color: transparent;
+    text-color: inherit;
+    placeholder-color: #888888;
+    placeholder: "Select workspace...";
+    blink: true;
+}
+
+listview {
+    background-color: transparent;
+    padding: 15px;
+    spacing: 10px;
+    scrollbar: false;
+    fixed-height: true;
+    fixed-columns: true;
+    columns: 3;
+    lines: 2;
+}
+
+element {
+    background-color: rgba(40, 40, 40, 0.8);
+    text-color: #ffffff;
+    orientation: vertical;
+    border-radius: 8px;
+    padding: 10px;
+    spacing: 8px;
+}
+
+element selected {
+    background-color: rgba(100, 150, 255, 0.4);
+    text-color: #ffffff;
+    border: 2px solid #ffffff;
+}
+
+element-icon {
+    size: 200px;
+    border-radius: 4px;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+}

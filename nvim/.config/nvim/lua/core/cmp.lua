@@ -112,6 +112,7 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     -- ['<C-n>'] = cmp.mapping.select_next_item(),
     -- ['<C-p>'] = cmp.mapping.select_prev_item(),
+
     ['<C-n>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -127,9 +128,11 @@ cmp.setup({
         fallback()
       end
     end, { 'i', 'c' }),
+
+
     -- Navigation
-    -- ['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), -- Use C-k/C-j for selection nav
-    -- ['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+    -- ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), -- Use C-k/C-j for selection nav
+    -- ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
 
     -- Scrolling Documentation
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
