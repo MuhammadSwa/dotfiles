@@ -14,4 +14,5 @@ chosen_book=$(find ~/Books/ /media/Maind/كتب2/ /media/Maind/كتب/ /media/Ma
 # echo $chosen_book
 # xpdf -z 200 -open "$chosen_book"
 sioyek "$chosen_book"
+# okular "$chosen_book"
 # zathura "$chosen_book"

@@ -7,6 +7,11 @@ alias f='~/scripts/fzf.sh'
 alias p='sudo pacman -S'
 alias pa='paru -S'
 alias g='lazygit'
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log'
 alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull -q"
 alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
 alias arafyne="export FYNE_FONT="/media/Maind/arial-cufonfonts/ARIAL.TTF""

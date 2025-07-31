@@ -12,6 +12,8 @@ keymap("", ",", ":HopChar2<cr>", opts)
 keymap("n", ";", ":HopLine<cr>", opts)
 
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
+-- delete to the black hole
+keymap("n", "<leader>d", "\"_d", opts)
 
 -- Telescope
 local builtin = require("telescope.builtin")
@@ -56,6 +58,10 @@ keymap("n", "<A-w>", "<cmd>bdelete!<cr>", opts)
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
+
+-- Move text up and down
+keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
+keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
 
 -- half page
 keymap("n", "<C-d>", "<C-d>zz", opts)

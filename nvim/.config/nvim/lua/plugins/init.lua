@@ -8,6 +8,8 @@ return {
     },
     config = true,
   },
+  { "autolyticus/hot-reload.vim" },
+
   -- lsp
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",

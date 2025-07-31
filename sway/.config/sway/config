@@ -27,6 +27,7 @@ set $menu rofi -show drun
 output * bg ~/dotfiles/Data/Data/Arabic-Background-HD.webp fill
 # output * bg swaybg -i ~/dotfiles/Data/Data/Arabic-Background-HD.webp -m fill
 
+exec --no-startup-id /usr/lib/pam_kwallet_init
 
 #
 
@@ -38,34 +39,36 @@ input * {
     xkb_options "grp:alt_shift_toggle,caps:escape" 
 }
 
+
 ### Key bindings
 #
 # Basics:
 #
     # Start a terminal
-bindsym $mod+Return exec $term
-bindsym $mod+b exec $browser
-bindsym $mod+i exec ~/scripts/unduck-cli/unduck.sh
-bindsym $mod+Shift+equal exec ~/scripts/poweroff.sh
-bindsym $mod+equal exec  systemctl suspend
-bindsym $mod+a exec ~/scripts/screenshot.sh
-bindsym $mod+s exec ~/scripts/sselp.sh
-bindsym $mod+u exec ~/scripts/books.sh
+bindsym --to-code $mod+Return exec $term
+bindsym --to-code $mod+b exec $browser
+bindsym --to-code $mod+i exec ~/scripts/unduck-cli/unduck.sh
+bindsym --to-code $mod+Shift+equal exec ~/scripts/poweroff.sh
+bindsym --to-code $mod+equal exec  systemctl suspend
+bindsym --to-code $mod+a exec ~/scripts/screenshot.sh
+bindsym --to-code $mod+s exec ~/scripts/sselp.sh
+bindsym --to-code $mod+u exec ~/scripts/books.sh
+bindsym --to-code $mod+d exec killall brave
 
 mode "e_mode" {
     # When in "my_o_mode", pressing 'e' executes thunar
-    bindsym s exec ~/scripts/pomodoro.sh; mode "default"
-    bindsym k exec killall pomodoro; mode "default"
-    bindsym p exec killall -STOP pomodoro; mode "default"
-    bindsym r exec killall -CONT pomodoro; mode "default"
+    bindsym --to-code s exec ~/scripts/pomodoro.sh; mode "default"
+    bindsym --to-code k exec killall pomodoro; mode "default"
+    bindsym --to-code p exec killall -STOP pomodoro; mode "default"
+    bindsym --to-code r exec killall -CONT pomodoro; mode "default"
 
-    bindsym h exec /media/Maind/goProjects/gopray/go-pray next | xargs -I {} notify-send "{}" ; mode "default"
+    bindsym --to-code h exec /media/Maind/goProjects/gopray/go-pray next | xargs -I {} notify-send "{}" ; mode "default"
 
     # To exit this mode:
     # Press Escape to return to the default mode
-    bindsym Escape mode "default"
+    bindsym --to-code Escape mode "default"
     # Press Return to return to the default mode
-    bindsym Return mode "default"
+    bindsym --to-code Return mode "default"
 
     # You might also want to display a message to the user that they're in a mode
     # For example, using swaymsg to change the bar's mode indicator (if your bar supports it)
@@ -73,19 +76,19 @@ mode "e_mode" {
     # This is more advanced and depends on your setup.
 }
 
-bindsym $mod+e mode "e_mode"
+bindsym --to-code $mod+e mode "e_mode"
 
 mode "o_mode" {
     # When in "my_o_mode", pressing 'e' executes thunar
-    bindsym f exec thunar; mode "default"
+    bindsym --to-code f exec thunar; mode "default"
 
-    bindsym o exec obsidian; mode "default"
+    bindsym --to-code o exec obsidian; mode "default"
 
     # To exit this mode:
     # Press Escape to return to the default mode
-    bindsym Escape mode "default"
+    bindsym --to-code Escape mode "default"
     # Press Return to return to the default mode
-    bindsym Return mode "default"
+    bindsym --to-code Return mode "default"
 
     # You might also want to display a message to the user that they're in a mode
     # For example, using swaymsg to change the bar's mode indicator (if your bar supports it)
@@ -94,14 +97,14 @@ mode "o_mode" {
 }
 
 # Bind 'o' to *enter* "my_o_mode"
-bindsym $mod+o mode "o_mode"
+bindsym --to-code $mod+o mode "o_mode"
 
 
 # Kill focused window
-bindsym $mod+c kill
+bindsym --to-code $mod+c kill
 
 # Start your launcher
-bindsym $mod+p exec $menu
+bindsym --to-code $mod+p exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -111,34 +114,34 @@ bindsym $mod+p exec $menu
     floating_modifier $mod normal
 
     # Reload the configuration file
-    bindsym $mod+Shift+c reload
+    bindsym --to-code $mod+Shift+c reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym --to-code $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 #
 # Moving around:
 #
     # Move your focus around
-    bindsym $mod+$left focus left
-    bindsym $mod+$down focus down
-    bindsym $mod+$up focus up
-    bindsym $mod+$right focus right
+    bindsym --to-code $mod+$left focus left
+    bindsym --to-code $mod+$down focus down
+    bindsym --to-code $mod+$up focus up
+    bindsym --to-code $mod+$right focus right
     # Or use $mod+[up|down|left|right]
-    bindsym $mod+Left focus left
-    bindsym $mod+Down focus down
-    bindsym $mod+Up focus up
-    bindsym $mod+Right focus right
+    bindsym --to-code $mod+Left focus left
+    bindsym --to-code $mod+Down focus down
+    bindsym --to-code $mod+Up focus up
+    bindsym --to-code $mod+Right focus right
 
     # Move the focused window with the same, but add Shift
-    bindsym $mod+Shift+$left move left
-    bindsym $mod+Shift+$down move down
-    bindsym $mod+Shift+$up move up
-    bindsym $mod+Shift+$right move right
+    bindsym --to-code $mod+Shift+$left move left
+    bindsym --to-code $mod+Shift+$down move down
+    bindsym --to-code $mod+Shift+$up move up
+    bindsym --to-code $mod+Shift+$right move right
     # Ditto, with arrow keys
-    bindsym $mod+Shift+Left move left
-    bindsym $mod+Shift+Down move down
-    bindsym $mod+Shift+Up move up
-    bindsym $mod+Shift+Right move right
+    bindsym --to-code $mod+Shift+Left move left
+    bindsym --to-code $mod+Shift+Down move down
+    bindsym --to-code $mod+Shift+Up move up
+    bindsym --to-code $mod+Shift+Right move right
 #
 # Workspaces:
 
@@ -181,11 +184,11 @@ bindsym $mod+p exec $menu
 
     # Switch the current container between different layout styles
     # bindsym $mod+w layout stacking
-    bindsym $mod+w layout tabbed
-    bindsym $mod+space layout toggle split
+    bindsym --to-code $mod+w layout tabbed
+    bindsym --to-code $mod+space layout toggle split
 
     # Make the current focus fullscreen
-    bindsym $mod+f fullscreen
+    bindsym --to-code $mod+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
     bindsym $mod+Shift+space floating toggle

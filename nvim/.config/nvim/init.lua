@@ -11,4 +11,5 @@ require("core.colorscheme")
 require("core.codium")
 require("core.toggleterm")
 require("core.lualine")
+require("core.hot-reload")
 require("flutter-tools").setup {} -- use defaults

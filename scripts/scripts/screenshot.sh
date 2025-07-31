@@ -14,7 +14,10 @@ select-clip() {
 }
 
 select-save() {
-  maim -s ~/Pictures/$(date +%c | sed 's/ /_/g').png && echo "screenshot saved to ~/Pictures/" | $(echo "$dzen2" 300)
+  # maim -s ~/Pictures/$(date +%c | sed 's/ /_/g').png && echo "screenshot saved to ~/Pictures/" | $(echo "$dzen2" 300)
+
+  grim -g "$(slurp)" -o ~/Pictures/$(date +%c | sed 's/ /_/g').png
+  # grim -o ~/Pictures/$(date +%c | sed 's/ /_/g').png)
 }
 
 save() {
@@ -33,9 +36,11 @@ qr() {
 ocr() {
   [ -d ~/Pictures/Temporary ] || mkdir -p ~/Pictures/Temporary
 
-  maim -s ~/Pictures/Temporary/ocr_screenshot.png
+  # maim -s ~/Pictures/Temporary/ocr_screenshot.png
+  grim -g "$(slurp)" -t png ~/Pictures/Temporary/ocr_screenshot.png
 
-  tesseract ~/Pictures/Temporary/ocr_screenshot.png stdout -l $1 --oem 1 | xclip -selection clipboard
+  # tesseract ~/Pictures/Temporary/ocr_screenshot.png stdout -l $1 --oem 1 | xclip -selection clipboard
+  tesseract ~/Pictures/Temporary/ocr_screenshot.png stdout -l $1 --oem 1 | wl-copy
 
 }
 
