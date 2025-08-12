@@ -1,73 +1,73 @@
 vim.o.number = true
 vim.o.relativenumber = true
-vim.o.cursorline=true -- highlight line number
-vim.o.wrap = false  -- don't wrap lines
-vim.o.scrolloff = 10 -- keep 10 lines about/below cursor
-vim.o.sidescrolloff = 8  -- keep 8 columns left/right of cursor
+vim.o.cursorline = true -- highlight line number
+vim.o.wrap = false      -- don't wrap lines
+vim.o.scrolloff = 10    -- keep 10 lines about/below cursor
+vim.o.sidescrolloff = 8 -- keep 8 columns left/right of cursor
 
 -- -- Indentation
-vim.o.tabstop = 2                                -- Tab width
-vim.o.shiftwidth = 2                             -- Indent width
-vim.o.softtabstop = 2                            -- Soft tab stop
-vim.o.expandtab = true                           -- Use spaces instead of tabs
-vim.o.smartindent = true                         -- Smart auto-indenting
-vim.o.autoindent = true                          -- Copy indent from current line
+vim.o.tabstop = 2        -- Tab width
+vim.o.shiftwidth = 2     -- Indent width
+vim.o.softtabstop = 2    -- Soft tab stop
+vim.o.expandtab = true   -- Use spaces instead of tabs
+vim.o.smartindent = true -- Smart auto-indenting
+vim.o.autoindent = true  -- Copy indent from current line
 
-  -- Search settings
-vim.o.ignorecase = true                          -- Case insensitive search
-vim.o.smartcase = true                           -- Case sensitive if uppercase in search
--- vim.o.hlsearch = false                           -- Don't highlight search results 
-vim.o.incsearch = true                           -- Show matches as you type
+-- Search settings
+vim.o.ignorecase = true -- Case insensitive search
+vim.o.smartcase = true  -- Case sensitive if uppercase in search
+-- vim.o.hlsearch = false                           -- Don't highlight search results
+vim.o.incsearch = true  -- Show matches as you type
 
 -- Visual settings
-vim.o.termguicolors = true                       -- Enable 24-bit colors
-vim.o.signcolumn = "yes"                         -- Always show sign column
-vim.o.showmatch = true                           -- Highlight matching brackets
-vim.o.matchtime = 2                              -- How long to show matching bracket
-vim.o.cmdheight = 1                              -- Command line height
-vim.o.completeopt = "menuone,noinsert,noselect"  -- Completion options 
-vim.o.showmode = false                           -- Don't show mode in command line 
-vim.o.pumheight = 10                             -- Popup menu height 
-vim.o.pumblend = 10                              -- Popup menu transparency 
-vim.o.winblend = 0                               -- Floating window transparency 
-vim.o.conceallevel = 0                           -- Don't hide markup 
-vim.o.concealcursor = ""                         -- Don't hide cursor line markup 
-vim.o.lazyredraw = true                          -- Don't redraw during macros
-vim.o.synmaxcol = 300                            -- Syntax highlighting limit 
+vim.o.termguicolors = true                      -- Enable 24-bit colors
+vim.o.signcolumn = "yes"                        -- Always show sign column
+vim.o.showmatch = true                          -- Highlight matching brackets
+vim.o.matchtime = 2                             -- How long to show matching bracket
+vim.o.cmdheight = 1                             -- Command line height
+vim.o.completeopt = "menuone,noinsert,noselect" -- Completion options
+vim.o.showmode = false                          -- Don't show mode in command line
+vim.o.pumheight = 10                            -- Popup menu height
+vim.o.pumblend = 10                             -- Popup menu transparency
+vim.o.winblend = 0                              -- Floating window transparency
+vim.o.conceallevel = 0                          -- Don't hide markup
+vim.o.concealcursor = ""                        -- Don't hide cursor line markup
+vim.o.lazyredraw = true                         -- Don't redraw during macros
+vim.o.synmaxcol = 300                           -- Syntax highlighting limit
 vim.o.winborder = "rounded"
 
 -- File handling
-vim.o.backup = false                             -- Don't create backup files
-vim.o.writebackup = false                        -- Don't create backup before writing
-vim.o.swapfile = false                           -- Don't create swap files
-vim.o.undofile = true                            -- Persistent undo
-vim.o.undodir = vim.fn.expand("~/.vim/undodir")  -- Undo directory
-vim.o.updatetime = 300                           -- Faster completion
-vim.o.timeoutlen = 500                           -- Key timeout duration
-vim.o.ttimeoutlen = 0                            -- Key code timeout
-vim.o.autoread = true                            -- Auto reload files changed outside vim
-vim.o.autowrite = false                          -- Don't auto save
+vim.o.backup = false                            -- Don't create backup files
+vim.o.writebackup = false                       -- Don't create backup before writing
+vim.o.swapfile = false                          -- Don't create swap files
+vim.o.undofile = true                           -- Persistent undo
+vim.o.undodir = vim.fn.expand("~/.vim/undodir") -- Undo directory
+vim.o.updatetime = 300                          -- Faster completion
+vim.o.timeoutlen = 500                          -- Key timeout duration
+vim.o.ttimeoutlen = 0                           -- Key code timeout
+vim.o.autoread = true                           -- Auto reload files changed outside vim
+vim.o.autowrite = false                         -- Don't auto save
 
 -- Behavior settings
-vim.o.hidden = true                              -- Allow hidden buffers
-vim.o.errorbells = false                         -- No error bells
-vim.o.backspace = "indent,eol,start"             -- Better backspace behavior
-vim.o.autochdir = false                          -- Don't auto change directory
-vim.opt.iskeyword:append("-")                      -- Treat dash as part of word
-vim.opt.path:append("**")                          -- include subdirectories in search
-vim.opt.clipboard:append("unnamedplus")            -- Use system clipboard
-vim.o.modifiable = true                          -- Allow buffer modifications
-vim.o.encoding = "UTF-8"                         -- Set encoding
+vim.o.hidden = true                     -- Allow hidden buffers
+vim.o.errorbells = false                -- No error bells
+vim.o.backspace = "indent,eol,start"    -- Better backspace behavior
+vim.o.autochdir = false                 -- Don't auto change directory
+vim.opt.iskeyword:append("-")           -- Treat dash as part of word
+vim.opt.path:append("**")               -- include subdirectories in search
+vim.opt.clipboard:append("unnamedplus") -- Use system clipboard
+vim.o.modifiable = true                 -- Allow buffer modifications
+vim.o.encoding = "UTF-8"                -- Set encoding
 
 
 -- Folding settings
-vim.o.foldmethod = "expr"                             -- Use expression for folding
+vim.o.foldmethod = "expr"                           -- Use expression for folding
 vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Use treesitter for folding
-vim.o.foldlevel = 99                                  -- Start with all folds open
+vim.o.foldlevel = 99                                -- Start with all folds open
 
 -- Split behavior
-vim.o.splitbelow = true                          -- Horizontal splits go below
-vim.o.splitright = true                          -- Vertical splits go right
+vim.o.splitbelow = true -- Horizontal splits go below
+vim.o.splitright = true -- Vertical splits go right
 
 
 -- Better diff options
@@ -79,8 +79,8 @@ vim.o.maxmempattern = 20000
 
 
 -- Key mappings
-vim.g.mapleader = " "                              -- Set leader key to space
-vim.g.maplocalleader = " "                         -- Set local leader key (NEW)
+vim.g.mapleader = " "      -- Set leader key to space
+vim.g.maplocalleader = " " -- Set local leader key (NEW)
 
 -- Normal mode mappings
 vim.keymap.set("n", "<esc>", ":nohlsearch<CR>", { desc = "Clear search highlights" })
@@ -107,8 +107,11 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 
 -- Splitting & Resizing
-vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Split window vertically" })
-vim.keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Split window horizontally" })
+-- vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Split window vertically" })
+-- vim.keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Split window horizontally" })
+vim.keymap.set("n", "|", ":vsplit<CR>", { desc = "Split window vertically" })
+vim.keymap.set("n", "_", ":split<CR>", { desc = "Split window horizontally" })
+
 vim.keymap.set("n", "<C-Up>", ":resize +2<CR>", { desc = "Increase window height" })
 vim.keymap.set("n", "<C-Down>", ":resize -2<CR>", { desc = "Decrease window height" })
 vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease window width" })
@@ -137,10 +140,10 @@ vim.keymap.set("n", "<leader>rc", ":e ~/.config/nvim/init.lua<CR>", { desc = "Ed
 
 -- Copy Full File-Path
 vim.keymap.set("n", "<leader>pa", function()
-	local path = vim.fn.expand("%:p")
-	vim.fn.setreg("+", path)
-	print("file:", path)
-end)
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("+", path)
+  print("file:", path)
+end, { desc = "Copy file path" })
 
 -- Basic autocommands
 local augroup = vim.api.nvim_create_augroup("UserConfig", {})
@@ -216,8 +219,8 @@ end
 -- ============================================================================
 
 -- Tab display settings
-vim.opt.showtabline = 1  -- Always show tabline (0=never, 1=when multiple tabs, 2=always)
-vim.opt.tabline = ''     -- Use default tabline (empty string uses built-in)
+vim.opt.showtabline = 1 -- Always show tabline (0=never, 1=when multiple tabs, 2=always)
+vim.opt.tabline = ''    -- Use default tabline (empty string uses built-in)
 
 -- Transparent tabline appearance
 vim.cmd([[
@@ -230,8 +233,8 @@ vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', { desc = 'Close tab' })
 
 -- Tab moving
 vim.keymap.set('n', '<leader>tm', ':tabmove<CR>', { desc = 'Move tab' })
-  vim.keymap.set('n', '<leader>t>', ':tabmove +1<CR>', { desc = 'Move tab right' })
-  vim.keymap.set('n', '<leader>t<', ':tabmove -1<CR>', { desc = 'Move tab left' })
+vim.keymap.set('n', '<leader>t>', ':tabmove +1<CR>', { desc = 'Move tab right' })
+vim.keymap.set('n', '<leader>t<', ':tabmove -1<CR>', { desc = 'Move tab left' })
 
 -- Function to open file in new tab
 local function open_file_in_tab()
@@ -306,6 +309,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 vim.opt.rtp:prepend(lazypath)
+
+
+
 
 
 -- Setup lazy.nvim
@@ -477,25 +483,14 @@ require("lazy").setup({
   checker = { enabled = true },
 })
 
--- LSP keymaps
--- grn => rename
--- gra => code_action
--- grr => references
--- gf => gotofile
--- Diagnostics
--- ]d, [d => next,prev diagnostic
--- ]D, [D => last,first diagnostic
---
 
 
 vim.keymap.set('n', '<leader>w', ':write<CR>')
 
 
-vim.keymap.set({ 'n', 'v', 'x' }, '<leader>y', '"+y<CR>')
-vim.keymap.set({ 'n', 'v', 'x' }, '<leader>d', '"+d<CR>')
+-- vim.keymap.set({ 'n', 'v', 'x' }, '<leader>y', '"+y<CR>')
+-- vim.keymap.set({ 'n', 'v', 'x' }, '<leader>d', '"+d<CR>')
 
--- lsp
-vim.keymap.set('n', 'gl', vim.diagnostic.open_float)
 
 -- vim.pack.add({
 --   { src = "https://github.com/folke/tokyonight.nvim" },
@@ -523,7 +518,7 @@ require("mason-lspconfig").setup()
 
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader><space>', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 -- Searches for the string under your cursor or selection in your current working directory
@@ -543,10 +538,17 @@ vim.keymap.set('n', '<leader>fo', vim.lsp.buf.format)
 
 -- Diagnostic signs
 vim.diagnostic.config({
+  virtual_text = false,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  -- virtual_text = { prefix = '●' },
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = '',
-      [vim.diagnostic.severity.WARN] = '',
+      [vim.diagnostic.severity.ERROR] = "✗",
+      [vim.diagnostic.severity.WARN] = "⚠",
+      [vim.diagnostic.severity.INFO] = "ℹ",
+      [vim.diagnostic.severity.HINT] = "💡",
     },
     -- highlight entire line
     linehl = {
@@ -558,6 +560,40 @@ vim.diagnostic.config({
     },
   },
 })
+
+-- LSP keymaps
+-- grn => rename
+-- gra => code_action
+-- grr => references
+-- gf => gotofile
+-- Diagnostics
+-- ]d, [d => next,prev diagnostic
+-- ]D, [D => last,first diagnostic
+--
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(event)
+    local opts = { buffer = event.buf }
+
+    -- Navigation
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', 'gD', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'gs', vim.lsp.buf.declaration, opts)
+    -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+
+    -- Information
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+
+    -- -- Code actions
+    -- vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+
+    -- Diagnostics
+    vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
+    vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
+  end,
+})
+
 
 
 --
@@ -711,10 +747,10 @@ require('telescope').setup({
     -- }
     -- please take a look at the readme of the extension you want to configure
     fzf = {
-      fuzzy = true,                     -- false will only do exact matching
-      override_generic_sorter = true,   -- override the generic sorter
-      override_file_sorter = true,      -- override the file sorter
-      case_mode = "smart_case",         -- or "ignore_case" or "respect_case"
+      fuzzy = true,                   -- false will only do exact matching
+      override_generic_sorter = true, -- override the generic sorter
+      override_file_sorter = true,    -- override the file sorter
+      case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
       -- the default case_mode is "smart_case"
     },
   },
