@@ -1,0 +1,13 @@
+[install]
+# where `bun add --global` installs packages
+# globalDir = "~/.bun/install/global"
+globalDir = "/media/Maind/.bun/install/global"
+
+# where globally-installed package bins are linked
+# globalBinDir = "~/.bun/bin"
+globalBinDir = "/media/Maind/.bun/bin"
+
+[install.cache]
+# the directory to use for the cache
+# dir = "~/.bun/install/cache"
+dir = "/media/Maind/.bun/install/cache"

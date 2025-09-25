@@ -4,7 +4,7 @@ setxkbmap -option escape:caps
 
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_CONFIG_HOME=$HOME/.config
-export XDG_DATA_HOM=$HOME/.local/share
+export XDG_DATA_HOME=$HOME/.local/share
 export ZDOTDIR=$HOME/.config/zsh
 export NDK_HOME=/opt/android-sdk/ndk/27.2.12479018
 # export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
@@ -13,5 +13,5 @@ export JAVA_HOME=/usr/lib/jvm/java-24-jdk/
 
 # clipmenu
 
-feh --bg-scale dotfiles/Data/Data/Arabic-Background-HD.webp
-sxhkd &
+# feh --bg-scale dotfiles/Data/Data/Arabic-Background-HD.webp
+# sxhkd &
