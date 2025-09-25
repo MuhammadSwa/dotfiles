@@ -7,6 +7,9 @@ globalDir = "/media/Maind/.bun/install/global"
 # globalBinDir = "~/.bun/bin"
 globalBinDir = "/media/Maind/.bun/bin"
 
+# Use isolated installs
+linker = "isolated"
+
 [install.cache]
 # the directory to use for the cache
 # dir = "~/.bun/install/cache"
