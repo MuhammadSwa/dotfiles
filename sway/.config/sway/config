@@ -61,6 +61,8 @@ mode "e_mode" {
     bindsym --to-code k exec killall pomodoro; mode "default"
     bindsym --to-code p exec killall -STOP pomodoro; mode "default"
     bindsym --to-code r exec killall -CONT pomodoro; mode "default"
+   bindsym --to-code i exec   rofi -modi emoji -show emoji
+
 
     bindsym --to-code h exec /media/Maind/goProjects/gopray/go-pray next | xargs -I {} notify-send "{}" ; mode "default"
 
