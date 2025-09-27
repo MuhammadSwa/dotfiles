@@ -64,7 +64,7 @@ mode "e_mode" {
    bindsym --to-code i exec   rofi -modi emoji -show emoji
 
 
-    bindsym --to-code h exec /media/Maind/goProjects/gopray/go-pray next | xargs -I {} notify-send "{}" ; mode "default"
+    bindsym --to-code h exec /home/alien/zahrawi/islamic/gopray-cli/gopray next | xargs -I {} notify-send "{}" ; mode "default"
 
     # To exit this mode:
     # Press Escape to return to the default mode
