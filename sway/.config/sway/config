@@ -28,6 +28,7 @@ output * bg ~/dotfiles/Data/Data/Arabic-Background-HD.webp fill
 # output * bg swaybg -i ~/dotfiles/Data/Data/Arabic-Background-HD.webp -m fill
 
 exec --no-startup-id /usr/lib/pam_kwallet_init
+exec nm-applet
 
 #
 
