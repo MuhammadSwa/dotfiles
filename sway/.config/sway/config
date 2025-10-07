@@ -55,6 +55,7 @@ bindsym --to-code $mod+a exec ~/scripts/screenshot.sh
 bindsym --to-code $mod+s exec ~/scripts/sselp.sh
 bindsym --to-code $mod+u exec ~/scripts/books.sh
 bindsym --to-code $mod+d exec killall brave
+bindsym --to-code $mod+y exec ~/zofi/build/bin/helloworld
 
 mode "e_mode" {
     # When in "my_o_mode", pressing 'e' executes thunar
