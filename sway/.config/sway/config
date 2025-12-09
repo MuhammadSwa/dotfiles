@@ -99,7 +99,7 @@ input type:keyboard {
     xkb_layout us,ara
     xkb_options grp:alt_shift_toggle,caps:escape
     repeat_delay 300
-    repeat_rate 50
+    repeat_rate 25
 }
 
 input type:touchpad {
