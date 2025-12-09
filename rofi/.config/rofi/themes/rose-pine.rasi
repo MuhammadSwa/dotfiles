@@ -1,0 +1,206 @@
+/**
+ * ╔══════════════════════════════════════════════════════════════════════════╗
+ * ║                        Rosé Pine Theme                                    ║
+ * ║                   All natural pine, faux fur and a bit of soho vibes     ║
+ * ╚══════════════════════════════════════════════════════════════════════════╝
+ *
+ * Based on the Rosé Pine color palette
+ */
+
+* {
+    /* Rosé Pine Colors */
+    base:            #191724;
+    surface:         #1f1d2e;
+    overlay:         #26233a;
+    muted:           #6e6a86;
+    subtle:          #908caa;
+    text:            #e0def4;
+    love:            #eb6f92;
+    gold:            #f6c177;
+    rose:            #ebbcba;
+    pine:            #31748f;
+    foam:            #9ccfd8;
+    iris:            #c4a7e7;
+    highlight-low:   #21202e;
+    highlight-med:   #403d52;
+    highlight-high:  #524f67;
+    
+    /* Theme Variables */
+    background:      @base;
+    background-alt:  @surface;
+    foreground:      @text;
+    selected:        @iris;
+    active:          @foam;
+    urgent:          @love;
+    
+    background-color: transparent;
+    text-color:       @foreground;
+    
+    margin:           0;
+    padding:          0;
+    spacing:          0;
+}
+
+/*---------- Main Window ----------*/
+window {
+    location:         center;
+    anchor:           center;
+    fullscreen:       false;
+    width:            600px;
+    x-offset:         0px;
+    y-offset:         0px;
+    
+    enabled:          true;
+    border-radius:    20px;
+    border:           2px solid;
+    border-color:     @rose;
+    cursor:           "default";
+    background-color: @background;
+}
+
+/*---------- Main Container ----------*/
+mainbox {
+    enabled:          true;
+    spacing:          20px;
+    padding:          20px;
+    background-color: transparent;
+    orientation:      vertical;
+    children:         [ "inputbar", "listview" ];
+}
+
+/*---------- Inputbar ----------*/
+inputbar {
+    enabled:          true;
+    spacing:          15px;
+    padding:          0px;
+    background-color: transparent;
+    text-color:       @foreground;
+    orientation:      horizontal;
+    children:         [ "textbox-prompt-colon", "entry" ];
+}
+
+textbox-prompt-colon {
+    enabled:          true;
+    expand:           false;
+    str:              "󰍉";
+    padding:          15px 18px;
+    border-radius:    15px;
+    background-color: @rose;
+    text-color:       @base;
+    font:             "JetBrainsMono Nerd Font 16";
+}
+
+entry {
+    enabled:          true;
+    expand:           true;
+    padding:          15px 20px;
+    border-radius:    15px;
+    background-color: @surface;
+    text-color:       @foreground;
+    cursor:           text;
+    placeholder:      "Search...";
+    placeholder-color: @muted;
+}
+
+/*---------- Listview ----------*/
+listview {
+    enabled:          true;
+    columns:          1;
+    lines:            6;
+    cycle:            true;
+    dynamic:          true;
+    scrollbar:        false;
+    layout:           vertical;
+    reverse:          false;
+    fixed-height:     true;
+    fixed-columns:    true;
+    
+    spacing:          8px;
+    padding:          0px;
+    background-color: transparent;
+    text-color:       @foreground;
+    cursor:           "default";
+}
+
+/*---------- Elements ----------*/
+element {
+    enabled:          true;
+    spacing:          15px;
+    padding:          12px 18px;
+    border-radius:    15px;
+    background-color: transparent;
+    text-color:       @foreground;
+    cursor:           pointer;
+}
+
+element normal.normal {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+element normal.urgent {
+    background-color: @love;
+    text-color:       @base;
+}
+
+element normal.active {
+    background-color: @foam;
+    text-color:       @base;
+}
+
+element selected.normal {
+    background-color: @highlight-med;
+    text-color:       @rose;
+}
+
+element selected.urgent {
+    background-color: @love;
+    text-color:       @base;
+}
+
+element selected.active {
+    background-color: @foam;
+    text-color:       @base;
+}
+
+element alternate.normal {
+    background-color: @highlight-low;
+    text-color:       @foreground;
+}
+
+element-icon {
+    background-color: transparent;
+    text-color:       inherit;
+    size:             30px;
+    cursor:           inherit;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    cursor:           inherit;
+    vertical-align:   0.5;
+    horizontal-align: 0.0;
+}
+
+/*---------- Message ----------*/
+message {
+    background-color: transparent;
+    padding:          0px;
+}
+
+textbox {
+    padding:          15px;
+    border-radius:    15px;
+    background-color: @surface;
+    text-color:       @gold;
+    vertical-align:   0.5;
+    horizontal-align: 0.0;
+}
+
+error-message {
+    padding:          15px;
+    border-radius:    20px;
+    background-color: @background;
+    text-color:       @love;
+}

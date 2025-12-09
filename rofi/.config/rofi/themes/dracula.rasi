@@ -1,0 +1,226 @@
+/**
+ * ╔══════════════════════════════════════════════════════════════════════════╗
+ * ║                          Dracula Theme                                    ║
+ * ║                    A dark theme for dark themes                          ║
+ * ╚══════════════════════════════════════════════════════════════════════════╝
+ *
+ * Classic Dracula color scheme for rofi
+ */
+
+* {
+    /* Dracula Colors */
+    background-color: #282a36;
+    current-line:     #44475a;
+    selection:        #44475a;
+    foreground:       #f8f8f2;
+    comment:          #6272a4;
+    cyan:             #8be9fd;
+    green:            #50fa7b;
+    orange:           #ffb86c;
+    pink:             #ff79c6;
+    purple:           #bd93f9;
+    red:              #ff5555;
+    yellow:           #f1fa8c;
+    
+    /* Theme Variables */
+    background:       #282a36;
+    background-alt:   #44475a;
+    foreground:       #f8f8f2;
+    selected:         #bd93f9;
+    active:           #50fa7b;
+    urgent:           #ff5555;
+    
+    background-color: transparent;
+    text-color:       @foreground;
+    
+    margin:           0;
+    padding:          0;
+    spacing:          0;
+}
+
+/*---------- Main Window ----------*/
+window {
+    location:         center;
+    anchor:           center;
+    fullscreen:       false;
+    width:            650px;
+    x-offset:         0px;
+    y-offset:         0px;
+    
+    enabled:          true;
+    border-radius:    12px;
+    border:           3px solid;
+    border-color:     @purple;
+    cursor:           "default";
+    background-color: @background;
+}
+
+/*---------- Main Container ----------*/
+mainbox {
+    enabled:          true;
+    spacing:          0px;
+    background-color: transparent;
+    orientation:      vertical;
+    children:         [ "inputbar", "message", "listview", "mode-switcher" ];
+}
+
+/*---------- Inputbar ----------*/
+inputbar {
+    enabled:          true;
+    spacing:          10px;
+    padding:          20px;
+    background-color: @current-line;
+    text-color:       @foreground;
+    orientation:      horizontal;
+    children:         [ "textbox-prompt-colon", "entry" ];
+}
+
+textbox-prompt-colon {
+    enabled:          true;
+    expand:           false;
+    str:              " ";
+    padding:          12px 14px;
+    border-radius:    8px;
+    background-color: @purple;
+    text-color:       @background;
+    font:             "JetBrainsMono Nerd Font 16";
+}
+
+entry {
+    enabled:          true;
+    expand:           true;
+    padding:          12px;
+    border-radius:    8px;
+    background-color: @background;
+    text-color:       @foreground;
+    cursor:           text;
+    placeholder:      "Type to search...";
+    placeholder-color: @comment;
+}
+
+/*---------- Listview ----------*/
+listview {
+    enabled:          true;
+    columns:          1;
+    lines:            8;
+    cycle:            true;
+    dynamic:          true;
+    scrollbar:        true;
+    layout:           vertical;
+    reverse:          false;
+    fixed-height:     true;
+    fixed-columns:    true;
+    
+    spacing:          5px;
+    padding:          10px;
+    background-color: transparent;
+    text-color:       @foreground;
+    cursor:           "default";
+}
+
+scrollbar {
+    handle-width:     5px;
+    handle-color:     @purple;
+    border-radius:    8px;
+    background-color: @current-line;
+}
+
+/*---------- Elements ----------*/
+element {
+    enabled:          true;
+    spacing:          15px;
+    padding:          10px 15px;
+    border-radius:    8px;
+    background-color: transparent;
+    text-color:       @foreground;
+    cursor:           pointer;
+}
+
+element normal.normal {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+element normal.urgent {
+    background-color: @urgent;
+    text-color:       @background;
+}
+
+element normal.active {
+    background-color: @active;
+    text-color:       @background;
+}
+
+element selected.normal {
+    background-color: @purple;
+    text-color:       @background;
+}
+
+element selected.urgent {
+    background-color: @urgent;
+    text-color:       @background;
+}
+
+element selected.active {
+    background-color: @active;
+    text-color:       @background;
+}
+
+element-icon {
+    background-color: transparent;
+    text-color:       inherit;
+    size:             32px;
+    cursor:           inherit;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    cursor:           inherit;
+    vertical-align:   0.5;
+    horizontal-align: 0.0;
+}
+
+/*---------- Mode Switcher ----------*/
+mode-switcher {
+    enabled:          true;
+    spacing:          10px;
+    padding:          15px;
+    background-color: @current-line;
+    text-color:       @foreground;
+}
+
+button {
+    padding:          10px 20px;
+    border-radius:    8px;
+    background-color: @background;
+    text-color:       @foreground;
+    cursor:           pointer;
+}
+
+button selected {
+    background-color: @purple;
+    text-color:       @background;
+}
+
+/*---------- Message ----------*/
+message {
+    background-color: transparent;
+    padding:          10px;
+}
+
+textbox {
+    padding:          12px;
+    border-radius:    8px;
+    background-color: @current-line;
+    text-color:       @foreground;
+    vertical-align:   0.5;
+    horizontal-align: 0.0;
+}
+
+error-message {
+    padding:          15px;
+    border-radius:    12px;
+    background-color: @background;
+    text-color:       @red;
+}

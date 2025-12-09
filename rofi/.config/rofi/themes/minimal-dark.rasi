@@ -1,0 +1,181 @@
+/**
+ * ╔══════════════════════════════════════════════════════════════════════════╗
+ * ║                       Minimal Dark Theme                                  ║
+ * ║                  Clean, distraction-free launcher                        ║
+ * ╚══════════════════════════════════════════════════════════════════════════╝
+ *
+ * A minimal theme focusing on simplicity and usability
+ */
+
+* {
+    /* Minimal Colors */
+    black:           #0d0d0d;
+    dark:            #1a1a1a;
+    dark-alt:        #262626;
+    gray:            #404040;
+    gray-light:      #8c8c8c;
+    white:           #f2f2f2;
+    white-dim:       #d9d9d9;
+    accent:          #5c9fff;
+    accent-alt:      #4080e6;
+    green:           #73d973;
+    red:             #ff6666;
+    
+    /* Theme Variables */
+    background:      @dark;
+    background-alt:  @dark-alt;
+    foreground:      @white;
+    selected:        @accent;
+    active:          @green;
+    urgent:          @red;
+    
+    background-color: transparent;
+    text-color:       @foreground;
+    
+    margin:           0;
+    padding:          0;
+    spacing:          0;
+}
+
+/*---------- Main Window ----------*/
+window {
+    location:         center;
+    anchor:           center;
+    fullscreen:       false;
+    width:            500px;
+    x-offset:         0px;
+    y-offset:         -100px;
+    
+    enabled:          true;
+    border-radius:    0px;
+    border:           0px;
+    cursor:           "default";
+    background-color: @background;
+}
+
+/*---------- Main Container ----------*/
+mainbox {
+    enabled:          true;
+    spacing:          0px;
+    background-color: transparent;
+    orientation:      vertical;
+    children:         [ "inputbar", "listview" ];
+}
+
+/*---------- Inputbar ----------*/
+inputbar {
+    enabled:          true;
+    spacing:          0px;
+    padding:          20px;
+    background-color: @black;
+    text-color:       @foreground;
+    orientation:      horizontal;
+    children:         [ "entry" ];
+}
+
+entry {
+    enabled:          true;
+    expand:           true;
+    padding:          0px;
+    background-color: transparent;
+    text-color:       @foreground;
+    cursor:           text;
+    placeholder:      "Type to search...";
+    placeholder-color: @gray;
+    font:             "SF Pro Display 14";
+}
+
+/*---------- Listview ----------*/
+listview {
+    enabled:          true;
+    columns:          1;
+    lines:            8;
+    cycle:            true;
+    dynamic:          true;
+    scrollbar:        false;
+    layout:           vertical;
+    reverse:          false;
+    fixed-height:     true;
+    fixed-columns:    true;
+    
+    spacing:          0px;
+    padding:          0px;
+    background-color: transparent;
+    text-color:       @foreground;
+    cursor:           "default";
+}
+
+/*---------- Elements ----------*/
+element {
+    enabled:          true;
+    spacing:          15px;
+    padding:          15px 20px;
+    background-color: transparent;
+    text-color:       @gray-light;
+    cursor:           pointer;
+}
+
+element normal.normal {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+element normal.urgent {
+    background-color: inherit;
+    text-color:       @urgent;
+}
+
+element normal.active {
+    background-color: inherit;
+    text-color:       @active;
+}
+
+element selected.normal {
+    background-color: @background-alt;
+    text-color:       @foreground;
+}
+
+element selected.urgent {
+    background-color: @background-alt;
+    text-color:       @urgent;
+}
+
+element selected.active {
+    background-color: @background-alt;
+    text-color:       @active;
+}
+
+element-icon {
+    background-color: transparent;
+    text-color:       inherit;
+    size:             24px;
+    cursor:           inherit;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    cursor:           inherit;
+    vertical-align:   0.5;
+    horizontal-align: 0.0;
+}
+
+/*---------- Message ----------*/
+message {
+    background-color: @black;
+    padding:          15px 20px;
+}
+
+textbox {
+    padding:          0px;
+    background-color: transparent;
+    text-color:       @gray-light;
+    vertical-align:   0.5;
+    horizontal-align: 0.0;
+}
+
+error-message {
+    padding:          15px 20px;
+    background-color: @background;
+    text-color:       @red;
+}

@@ -1,0 +1,82 @@
+/**
+ * ╔══════════════════════════════════════════════════════════════════════════╗
+ * ║                     Modern Rofi Configuration                            ║
+ * ║              A clean, minimal, and highly customizable setup             ║
+ * ╚══════════════════════════════════════════════════════════════════════════╝
+ * 
+ * Author: Generated with ❤️
+ * Version: 2.0
+ * 
+ * Features:
+ *   • Fuzzy matching for faster searching
+ *   • Vim-style keybindings (j/k navigation)
+ *   • Modern icon support with Nerd Fonts
+ *   • Multiple theme support
+ *   • Hover selection enabled
+ */
+
+configuration {
+    /*---------- General Settings ----------*/
+    modes:                       "drun,run,window,filebrowser";
+    font:                        "JetBrainsMono Nerd Font 11";
+    show-icons:                  true;
+    icon-theme:                  "Papirus-Dark";
+    display-drun:                " Apps";
+    display-run:                 " Run";
+    display-window:              " Windows";
+    display-filebrowser:         " Files";
+    
+    /*---------- Matching ----------*/
+    matching:                    "fuzzy";
+    tokenize:                    true;
+    sort:                        true;
+    sorting-method:              "fzf";
+    case-sensitive:              false;
+    
+    /*---------- History & Cache ----------*/
+    disable-history:             false;
+    max-history-size:            25;
+    
+    /*---------- Display ----------*/
+    cycle:                       true;
+    scroll-method:               0;
+    click-to-exit:               true;
+    hover-select:                true;
+    
+    /*---------- Drun Settings ----------*/
+    drun-match-fields:           "name,generic,exec,categories,keywords";
+    drun-display-format:         "{name}";
+    drun-show-actions:           false;
+    
+    /*---------- Window Settings ----------*/
+    window-format:               "{w} · {c} · {t:0}";
+    window-thumbnail:            false;
+    
+    /*---------- File Browser ----------*/
+    filebrowser {
+        directories-first:       true;
+        sorting-method:          "name";
+    }
+    
+    /*---------- Timeout ----------*/
+    timeout {
+        action:                  "kb-cancel";
+        delay:                   0;
+    }
+    
+    /*---------- Keybindings ----------*/
+    /* Using defaults with minimal customization to avoid conflicts */
+    kb-remove-word-back:         "Control+BackSpace,Control+Alt+h";
+    kb-remove-word-forward:      "Control+Alt+d";
+    kb-remove-to-sol:            "";
+    kb-mode-complete:            "";
+    kb-row-up:                   "Up,Control+p";
+    kb-row-down:                 "Down,Control+n";
+    kb-accept-entry:             "Return,KP_Enter";
+    kb-cancel:                   "Escape,Control+g,Control+bracketleft";
+    kb-mode-next:                "Shift+Right,Control+Tab";
+    kb-mode-previous:            "Shift+Left,Control+ISO_Left_Tab";
+}
+
+/* Import the active theme - change this to switch themes */
+@theme "themes/tokyo-night.rasi"

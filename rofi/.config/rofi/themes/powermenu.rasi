@@ -1,0 +1,63 @@
+/**
+ * ╔══════════════════════════════════════════════════════════════════════════╗
+ * ║                       Power Menu Theme                                    ║
+ * ║               Specialized layout for power/logout menus                  ║
+ * ╚══════════════════════════════════════════════════════════════════════════╝
+ */
+
+@import "catppuccin-mocha.rasi"
+
+* {
+    font: "JetBrainsMono Nerd Font 14";
+}
+
+window {
+    width:            400px;
+    border-radius:    20px;
+    padding:          0px;
+}
+
+mainbox {
+    children:         [ "message", "listview" ];
+    padding:          20px;
+    spacing:          15px;
+}
+
+message {
+    padding:          0px;
+}
+
+textbox {
+    font:             "JetBrainsMono Nerd Font 24";
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+    padding:          15px;
+}
+
+listview {
+    columns:          5;
+    lines:            1;
+    spacing:          15px;
+    cycle:            true;
+    layout:           horizontal;
+}
+
+element {
+    padding:          20px;
+    border-radius:    15px;
+    orientation:      vertical;
+}
+
+element-icon {
+    size:             0px;
+}
+
+element-text {
+    font:             "JetBrainsMono Nerd Font 28";
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+}
+
+inputbar {
+    enabled: false;
+}

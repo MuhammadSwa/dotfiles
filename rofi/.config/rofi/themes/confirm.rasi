@@ -1,0 +1,55 @@
+/**
+ * ╔══════════════════════════════════════════════════════════════════════════╗
+ * ║                       Confirm Dialog Theme                                ║
+ * ║              Simple yes/no confirmation dialog                           ║
+ * ╚══════════════════════════════════════════════════════════════════════════╝
+ */
+
+@import "catppuccin-mocha.rasi"
+
+window {
+    width:            300px;
+    border-radius:    16px;
+}
+
+mainbox {
+    children:         [ "message", "listview" ];
+    padding:          20px;
+    spacing:          20px;
+}
+
+message {
+    padding:          0px;
+}
+
+textbox {
+    font:             "JetBrainsMono Nerd Font 12";
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+    padding:          10px;
+}
+
+listview {
+    columns:          2;
+    lines:            1;
+    spacing:          15px;
+    cycle:            true;
+}
+
+element {
+    padding:          15px 25px;
+    border-radius:    12px;
+}
+
+element-icon {
+    size:             0px;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+}
+
+inputbar {
+    enabled: false;
+}

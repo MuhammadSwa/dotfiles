@@ -1,0 +1,206 @@
+/**
+ * ╔══════════════════════════════════════════════════════════════════════════╗
+ * ║                           Nord Theme                                      ║
+ * ║               An arctic, north-bluish color palette                       ║
+ * ╚══════════════════════════════════════════════════════════════════════════╝
+ *
+ * Inspired by the beauty of the arctic
+ */
+
+* {
+    /* Nord Colors - Polar Night */
+    nord0:           #2e3440;
+    nord1:           #3b4252;
+    nord2:           #434c5e;
+    nord3:           #4c566a;
+    
+    /* Nord Colors - Snow Storm */
+    nord4:           #d8dee9;
+    nord5:           #e5e9f0;
+    nord6:           #eceff4;
+    
+    /* Nord Colors - Frost */
+    nord7:           #8fbcbb;
+    nord8:           #88c0d0;
+    nord9:           #81a1c1;
+    nord10:          #5e81ac;
+    
+    /* Nord Colors - Aurora */
+    nord11:          #bf616a;
+    nord12:          #d08770;
+    nord13:          #ebcb8b;
+    nord14:          #a3be8c;
+    nord15:          #b48ead;
+    
+    /* Theme Variables */
+    background:      @nord0;
+    background-alt:  @nord1;
+    foreground:      @nord4;
+    selected:        @nord8;
+    active:          @nord14;
+    urgent:          @nord11;
+    
+    background-color: transparent;
+    text-color:       @foreground;
+    
+    margin:           0;
+    padding:          0;
+    spacing:          0;
+}
+
+/*---------- Main Window ----------*/
+window {
+    location:         center;
+    anchor:           center;
+    fullscreen:       false;
+    width:            550px;
+    x-offset:         0px;
+    y-offset:         0px;
+    
+    enabled:          true;
+    border-radius:    0px;
+    border:           2px solid;
+    border-color:     @nord3;
+    cursor:           "default";
+    background-color: @background;
+}
+
+/*---------- Main Container ----------*/
+mainbox {
+    enabled:          true;
+    spacing:          0px;
+    background-color: transparent;
+    orientation:      vertical;
+    children:         [ "inputbar", "listview", "message" ];
+}
+
+/*---------- Inputbar ----------*/
+inputbar {
+    enabled:          true;
+    spacing:          0px;
+    padding:          0px;
+    background-color: @nord1;
+    text-color:       @foreground;
+    orientation:      horizontal;
+    children:         [ "textbox-prompt-colon", "entry" ];
+}
+
+textbox-prompt-colon {
+    enabled:          true;
+    expand:           false;
+    str:              "  ";
+    padding:          15px 12px;
+    background-color: @nord8;
+    text-color:       @nord0;
+    font:             "JetBrainsMono Nerd Font 14";
+}
+
+entry {
+    enabled:          true;
+    expand:           true;
+    padding:          15px;
+    background-color: @nord1;
+    text-color:       @foreground;
+    cursor:           text;
+    placeholder:      "Search applications...";
+    placeholder-color: @nord3;
+}
+
+/*---------- Listview ----------*/
+listview {
+    enabled:          true;
+    columns:          1;
+    lines:            6;
+    cycle:            true;
+    dynamic:          true;
+    scrollbar:        false;
+    layout:           vertical;
+    reverse:          false;
+    fixed-height:     true;
+    fixed-columns:    true;
+    
+    spacing:          0px;
+    padding:          0px;
+    background-color: transparent;
+    text-color:       @foreground;
+    cursor:           "default";
+}
+
+/*---------- Elements ----------*/
+element {
+    enabled:          true;
+    spacing:          12px;
+    padding:          12px 15px;
+    background-color: transparent;
+    text-color:       @foreground;
+    cursor:           pointer;
+    border:           0px 0px 1px 0px;
+    border-color:     @nord1;
+}
+
+element normal.normal {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+element normal.urgent {
+    background-color: @urgent;
+    text-color:       @nord0;
+}
+
+element normal.active {
+    background-color: @active;
+    text-color:       @nord0;
+}
+
+element selected.normal {
+    background-color: @nord2;
+    text-color:       @nord8;
+    border:           0px 0px 0px 4px solid;
+    border-color:     @nord8;
+}
+
+element selected.urgent {
+    background-color: @urgent;
+    text-color:       @nord0;
+}
+
+element selected.active {
+    background-color: @active;
+    text-color:       @nord0;
+}
+
+element-icon {
+    background-color: transparent;
+    text-color:       inherit;
+    size:             26px;
+    cursor:           inherit;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    cursor:           inherit;
+    vertical-align:   0.5;
+    horizontal-align: 0.0;
+}
+
+/*---------- Message ----------*/
+message {
+    background-color: @nord1;
+    padding:          0px;
+}
+
+textbox {
+    padding:          15px;
+    background-color: inherit;
+    text-color:       @nord13;
+    vertical-align:   0.5;
+    horizontal-align: 0.0;
+}
+
+error-message {
+    padding:          15px;
+    background-color: @background;
+    text-color:       @nord11;
+}
