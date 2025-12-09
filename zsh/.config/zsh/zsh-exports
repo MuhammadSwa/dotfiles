@@ -1,20 +1,93 @@
-#!/bin/sh
+#!/usr/bin/env zsh
+# ╔═══════════════════════════════════════════════════════════════════════════╗
+# ║                           Environment Exports                             ║
+# ╚═══════════════════════════════════════════════════════════════════════════╝
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                              PATH Setup                                   │
+# └───────────────────────────────────────────────────────────────────────────┘
+# Function to safely add to PATH (avoids duplicates)
+function path_prepend() {
+    [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]] && PATH="$1:$PATH"
+}
+
+function path_append() {
+    [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]] && PATH="$PATH:$1"
+}
+
+# User binaries
+path_prepend "$HOME/.local/bin"
+path_prepend "$HOME/bin"
+
+# Go
+export GOPATH="${GOPATH:-$HOME/go}"
+path_append "$GOPATH/bin"
+
+# Rust
+path_append "$HOME/.cargo/bin"
+
+# Bun
+export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+path_append "$BUN_INSTALL/bin"
+# Legacy bun location
+path_append "/media/Maind/.bun/bin"
+
+# Android SDK
+if [[ -d "/media/Maind/Android/Sdk" ]]; then
+    export ANDROID_HOME="/media/Maind/Android/Sdk"
+    path_append "$ANDROID_HOME/emulator"
+    path_append "$ANDROID_HOME/platform-tools"
+    path_append "$ANDROID_HOME/cmdline-tools/latest/bin"
+    unset ANDROID_SDK_ROOT  # Deprecated, use ANDROID_HOME
+fi
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           Application Config                              │
+# └───────────────────────────────────────────────────────────────────────────┘
+# Man pages
 export MANWIDTH=999
-export PATH=$PATH:$HOME/.local/bin
-export GOPATH=$HOME/go
-export PATH=$PATH:$HOME/go/bin
-export PATH=$PATH:/media/Maind/.bun/bin
-export TODO_FILE_PATH="$HOME/.config/todo/todo.json"
-#eval "$(fnm env)"
-# eval "$(zoxide init zsh)"
-# eval "`pip completion --zsh`"
+export MANPAGER='nvim +Man!'
 
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_DATA_HOME=$HOME/.local/share
-export ZDOTDIR=$HOME/.config/zsh
+# Less pager
+export LESS='-R --use-color -Dd+r$Du+b'
+export LESSHISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/less/history"
 
-export ANDROID_HOME=/media/Maind/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-unset ANDROID_SDK_ROOT
+# Todo app
+export TODO_FILE_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/todo/todo.json"
+
+# GPG
+export GPG_TTY=$(tty)
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           Development                                     │
+# └───────────────────────────────────────────────────────────────────────────┘
+# Node.js memory
+export NODE_OPTIONS="--max-old-space-size=4096"
+
+# Python
+export PYTHONDONTWRITEBYTECODE=1
+export PYTHONUNBUFFERED=1
+
+# Docker
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           Colors & Appearance                             │
+# └───────────────────────────────────────────────────────────────────────────┘
+# Enable 256 colors
+export TERM="${TERM:-xterm-256color}"
+
+# Set LS_COLORS (modern dircolors)
+if (( $+commands[dircolors] )); then
+    if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/dircolors" ]]; then
+        eval "$(dircolors -b "${XDG_CONFIG_HOME:-$HOME/.config}/dircolors")"
+    else
+        eval "$(dircolors -b)"
+    fi
+fi
+
+# GCC colors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# vim: ft=zsh sw=4 ts=4 et

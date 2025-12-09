@@ -1,0 +1,163 @@
+#!/usr/bin/env zsh
+# ╔═══════════════════════════════════════════════════════════════════════════╗
+# ║                         Additional Key Bindings                           ║
+# ╚═══════════════════════════════════════════════════════════════════════════╝
+
+# This file contains extra key bindings beyond vi-mode
+# Loaded after vim-mode to ensure these take precedence
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                         Quick Commands                                    │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+# Ctrl+Z - Use zoxide interactive
+bindkey -s '^z' 'zi\n'
+
+# Ctrl+O - Open file manager
+bindkey -s '^o' 'ranger\n'
+
+# Ctrl+G - lazygit
+bindkey -s '^g' 'lg\n'
+
+# Alt+. - Insert last word from previous command
+bindkey '\e.' insert-last-word
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                         Navigation                                        │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+# Alt+Left/Right for word movement
+bindkey '\e[1;3D' backward-word
+bindkey '\e[1;3C' forward-word
+bindkey '\eb' backward-word
+bindkey '\ef' forward-word
+
+# Ctrl+Left/Right for word movement (alternative)
+bindkey '\e[1;5D' backward-word
+bindkey '\e[1;5C' forward-word
+
+# Home/End keys
+bindkey '\e[H' beginning-of-line
+bindkey '\e[F' end-of-line
+bindkey '\e[1~' beginning-of-line
+bindkey '\e[4~' end-of-line
+bindkey '\eOH' beginning-of-line
+bindkey '\eOF' end-of-line
+
+# Delete key
+bindkey '\e[3~' delete-char
+bindkey '\e[P' delete-char
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                         Text Manipulation                                 │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+# Alt+Backspace - Delete word backward
+bindkey '\e^?' backward-kill-word
+bindkey '\e\x7f' backward-kill-word
+
+# Alt+D - Delete word forward
+bindkey '\ed' kill-word
+
+# Ctrl+K - Delete to end of line
+bindkey '^K' kill-line
+
+# Ctrl+U - Delete to beginning of line
+bindkey '^U' backward-kill-line
+
+# Ctrl+Y - Paste (yank) killed text
+bindkey '^Y' yank
+
+# Ctrl+T - Transpose characters
+bindkey '^T' transpose-chars
+
+# Alt+T - Transpose words
+bindkey '\et' transpose-words
+
+# Alt+U - Uppercase word
+bindkey '\eu' up-case-word
+
+# Alt+L - Lowercase word
+bindkey '\el' down-case-word
+
+# Alt+C - Capitalize word
+bindkey '\ec' capitalize-word
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                         FZF Integration                                   │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+# Ctrl+R - FZF history search (if fzf is available, it overrides this)
+# Already set up in .zshrc via fzf key-bindings
+
+# Ctrl+F - FZF file search and edit
+function fzf-file-widget() {
+    local file
+    if (( $+commands[fzf] )); then
+        file=$(fzf --preview 'bat --color=always --style=numbers --line-range=:500 {} 2>/dev/null || cat {}')
+        if [[ -n "$file" ]]; then
+            LBUFFER+="$file"
+        fi
+    fi
+    zle reset-prompt
+}
+zle -N fzf-file-widget
+bindkey '^F' fzf-file-widget
+
+# Alt+C - FZF cd into directory (if fzf is configured)
+# Already set up in .zshrc via fzf key-bindings
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                         History Navigation                                │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+# Already configured in .zshrc, but ensure they work
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+# Arrow keys - search history with current prefix
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+bindkey '^[OA' up-line-or-beginning-search
+bindkey '^[OB' down-line-or-beginning-search
+
+# Ctrl+P/N - same as arrows
+bindkey '^P' up-line-or-beginning-search
+bindkey '^N' down-line-or-beginning-search
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                         Utility Widgets                                   │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+# Ctrl+L - Clear screen (keep buffer)
+bindkey '^L' clear-screen
+
+# Ctrl+X Ctrl+E - Edit command in editor
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
+# Ctrl+X Ctrl+L - Accept line and clear screen
+function accept-and-clear() {
+    zle accept-line
+    clear
+}
+zle -N accept-and-clear
+bindkey '^X^L' accept-and-clear
+
+# Expand alias when pressing Space
+function expand-alias-space() {
+    zle _expand_alias
+    zle self-insert
+}
+zle -N expand-alias-space
+# bindkey ' ' expand-alias-space  # Uncomment to enable
+
+# Ctrl+Space - Accept autosuggestion
+bindkey '^ ' autosuggest-accept
+
+# Alt+Enter - Insert newline without executing
+bindkey '\e^M' self-insert-unmeta
+
+# vim: ft=zsh sw=4 ts=4 et

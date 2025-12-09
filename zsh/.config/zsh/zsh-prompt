@@ -1,40 +1,56 @@
-#!/bin/sh
+#!/usr/bin/env zsh
+# ╔═══════════════════════════════════════════════════════════════════════════╗
+# ║                            ZSH Prompt                                     ║
+# ╚═══════════════════════════════════════════════════════════════════════════╝
 
-## autoload vcs and colors
+# Load required modules
 autoload -Uz vcs_info
-autoload -U colors && colors
+autoload -Uz colors && colors
 
-# enable only git
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                         Git Integration                                   │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+# Enable only git (faster than checking all VCS)
 zstyle ':vcs_info:*' enable git
 
-# setup a hook that runs before every ptompt.
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
-setopt prompt_subst
+# Check for changes
+zstyle ':vcs_info:*' check-for-changes true
 
-# add a function to check for untracked files in the directory.
-# from https://github.com/zsh-users/zsh/blob/master/Misc/vcs_info-examples
-zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
-#
-+vi-git-untracked(){
-    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
-        git status --porcelain | grep '??' &> /dev/null ; then
-        # This will show the marker if there are any untracked files in repo.
-        # If instead you want to show the marker only if there are untracked
-        # files in $PWD, use:
-        #[[ -n $(git ls-files --others --exclude-standard) ]] ; then
-        hook_com[staged]+='!' # signify new files with a bang
+# Hook for untracked files (adds ! marker)
++vi-git-untracked() {
+    if [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == 'true' ]] && \
+        git status --porcelain | grep -q '??' 2>/dev/null; then
+        hook_com[staged]+='!'
     fi
 }
 
-zstyle ':vcs_info:*' check-for-changes true
-# zstyle ':vcs_info:git:*' formats " %r/%S %b %m%u%c "
-zstyle ':vcs_info:git:*' formats " %{$fg[blue]%}(%{$fg[red]%}%m%u%c%{$fg[yellow]%}%{$fg[magenta]%} %b%{$fg[blue]%})"
+zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 
-# format our main prompt for hostname current folder, and permissions.
+# Git format: (●!∂ branch) - staged=●, unstaged=∂, untracked=!
+zstyle ':vcs_info:git:*' formats " %{$fg[blue]%}(%{$fg[red]%}%m%u%c%{$fg[yellow]%}%{$fg[magenta]%} %b%{$fg[blue]%})"
+zstyle ':vcs_info:git:*' actionformats " %{$fg[blue]%}(%{$fg[red]%}%m%u%c%{$fg[yellow]%}%{$fg[magenta]%} %b|%a%{$fg[blue]%})"
+zstyle ':vcs_info:git:*' stagedstr '●'
+zstyle ':vcs_info:git:*' unstagedstr '∂'
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                         Prompt Configuration                              │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+# Run vcs_info before each prompt
+precmd_vcs_info() { vcs_info }
+precmd_functions+=(precmd_vcs_info)
+
+# Enable prompt substitution
+setopt prompt_subst
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                      Original Style Prompt                                │
+# │                [user@host] ➜ directory (●! branch)                        │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+# Format: [user@host] ➜ directory (git info)
 PROMPT="%B%{$fg[blue]%}[%{$fg[white]%}%n%{$fg[red]%}@%{$fg[white]%}%m%{$fg[blue]%}] %(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )%{$fg[cyan]%}%c%{$reset_color%}"
-# PROMPT="%{$fg[green]%}%n@%m %~ %{$reset_color%}%#> "
 PROMPT+="\$vcs_info_msg_0_ "
-# TODO look into this for more colors
-# https://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
-# also ascii escape codes
+
+# vim: ft=zsh sw=4 ts=4 et

@@ -1,71 +1,300 @@
-#!/bin/sh
-alias vim='nvim'
-alias sx='~/scripts/xsh.sh'
-alias warp-svc='sudo warp-svc'
-alias xpdf='xpdf -z 250'
-alias f='~/scripts/fzf.sh'
-alias p='sudo pacman -S'
-alias pa='paru -S'
-alias g='lazygit'
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-alias gl='git log'
-alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull -q"
-alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
-alias arafyne="export FYNE_FONT="/media/Maind/arial-cufonfonts/ARIAL.TTF""
-alias lg="lazygit"
-alias fb='flutter build apk --release --target-platform android-arm64'
-alias fr= 'flutter run -d linux'
-pandoc(){
-  docker run --rm --volume $(pwd):/data pandoc/latex $@
-}
-ocrd(){
-for f in ./*.pdf; do ocrmypdf "$f" "$(basename "$f" ".pdf")_ocr.pdf"; done 
-}
-# setxkbmap -option grp:alt_shift_toggle us,ar
-# Colorize grep output (good for log files)
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-gowr(){
-    gow -c -e=go,mod,tmpl run $1
-}
+#!/usr/bin/env zsh
+# ╔═══════════════════════════════════════════════════════════════════════════╗
+# ║                            Shell Aliases                                  ║
+# ╚═══════════════════════════════════════════════════════════════════════════╝
 
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           Core Utilities                                  │
+# └───────────────────────────────────────────────────────────────────────────┘
+# Editor
+alias v='nvim'
+alias vim='nvim'
+alias vi='nvim'
+
+# Modern replacements (use if available)
+if (( $+commands[eza] )); then
+    alias ls='eza --icons --group-directories-first'
+    alias ll='eza -l --icons --group-directories-first --git'
+    alias la='eza -la --icons --group-directories-first --git'
+    alias lt='eza -T --icons --level=2'
+    alias lta='eza -Ta --icons --level=2'
+elif (( $+commands[exa] )); then
+    alias ls='exa --icons --group-directories-first'
+    alias ll='exa -l --icons --group-directories-first --git'
+    alias la='exa -la --icons --group-directories-first --git'
+    alias lt='exa -T --icons --level=2'
+else
+    case "$(uname -s)" in
+        Darwin) alias ls='ls -G' ;;
+        *)      alias ls='ls --color=auto' ;;
+    esac
+    alias ll='ls -lh'
+    alias la='ls -lah'
+fi
+
+# bat (better cat)
+if (( $+commands[bat] )); then
+    alias cat='bat --paging=never'
+    alias catp='bat --plain'
+fi
+
+# ripgrep
+if (( $+commands[rg] )); then
+    alias grep='rg'
+else
+    alias grep='grep --color=auto'
+fi
+alias egrep='grep -E --color=auto'
+alias fgrep='grep -F --color=auto'
+
+# fd (better find)
+(( $+commands[fd] )) && alias find='fd'
+
+# dust (better du)
+(( $+commands[dust] )) && alias du='dust'
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           File Operations                                 │
+# └───────────────────────────────────────────────────────────────────────────┘
+# Safety nets
+alias rm='rm -I --preserve-root'
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+
+# Permissions
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+alias cx='chmod +x'
+alias mkdir='mkdir -pv'
+
+# Disk usage
+alias df='df -h'
+alias du='du -h'
+alias free='free -h'
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           Git Shortcuts                                   │
+# └───────────────────────────────────────────────────────────────────────────┘
+alias g='lazygit'
+alias lg='lazygit'
+
+# Status & Info
+alias gs='git status -sb'
+alias gss='git status'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gl='git log --oneline -10'
+alias gll='git log --graph --oneline --all'
+alias glg='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
+
+# Staging & Committing
+alias ga='git add'
+alias gaa='git add --all'
+alias gap='git add -p'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gca='git commit --amend'
+alias gcan='git commit --amend --no-edit'
+
+# Branches & Remote
+alias gb='git branch'
+alias gba='git branch -a'
+alias gco='git checkout'
+alias gsw='git switch'
+alias gsc='git switch -c'
+alias gp='git push'
+alias gpf='git push --force-with-lease'
+alias gpu='git push -u origin HEAD'
+alias gpl='git pull'
+alias gf='git fetch --all --prune'
+
+# Stash
+alias gst='git stash'
+alias gstp='git stash pop'
+alias gstl='git stash list'
+
+# Reset & Clean
+alias grh='git reset HEAD'
+alias grhh='git reset --hard HEAD'
+alias gclean='git clean -fd'
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           Package Managers                                │
+# └───────────────────────────────────────────────────────────────────────────┘
+# Arch Linux
+if (( $+commands[pacman] )); then
+    alias p='sudo pacman -S'
+    alias pu='sudo pacman -Syu'
+    alias pr='sudo pacman -Rns'
+    alias pq='pacman -Qi'
+    alias ps='pacman -Ss'
+    alias pc='sudo pacman -Sc'
+    alias pls='pacman -Qs'
+fi
+
+if (( $+commands[paru] )); then
+    alias pa='paru -S'
+    alias pau='paru -Syu'
+    alias pas='paru -Ss'
+fi
+
+if (( $+commands[yay] )); then
+    alias ya='yay -S'
+    alias yau='yay -Syu'
+    alias yas='yay -Ss'
+fi
+
+# npm/pnpm
+alias ni='npm install'
+alias nid='npm install -D'
+alias nig='npm install -g'
+alias nr='npm run'
+alias nrd='npm run dev'
+alias nrb='npm run build'
+
+alias pni='pnpm install'
+alias pna='pnpm add'
+alias pnad='pnpm add -D'
+alias pnr='pnpm run'
+alias pnx='pnpm dlx'
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           Docker                                          │
+# └───────────────────────────────────────────────────────────────────────────┘
+alias d='docker'
+alias dc='docker compose'
+alias dcu='docker compose up -d'
+alias dcd='docker compose down'
+alias dcl='docker compose logs -f'
+alias dps='docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
+alias dpsa='docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
+alias di='docker images'
+alias dex='docker exec -it'
+alias dlog='docker logs -f'
+alias dprune='docker system prune -af'
+
+# Your custom docker aliases
 alias dockerre='docker restart personal_db'
 alias dockerex='docker exec -it personal_db psql -U postgres'
-# /media/Maind/docker/volumes/personal_lib_db/_data:/var/lib/postgresql/data
 
-# confirm before overwriting something
-alias rm='rm -i'
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           Flutter                                         │
+# └───────────────────────────────────────────────────────────────────────────┘
+alias fl='flutter'
+alias flr='flutter run'
+alias flrd='flutter run -d linux'
+alias flrw='flutter run -d chrome'
+alias flb='flutter build apk --release --target-platform android-arm64'
+alias flc='flutter clean'
+alias flpg='flutter pub get'
 
-alias df='df -h'     # human-readable sizes
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           System & Process                                │
+# └───────────────────────────────────────────────────────────────────────────┘
+# Process management
+alias psmem='ps auxf | sort -nr -k 4 | head -10'
+alias pscpu='ps auxf | sort -nr -k 3 | head -10'
+alias psg='ps aux | grep -v grep | grep -i'
 
-# get top process eating memory
-alias psmem='ps auxf | sort -nr -k 4 | head -5'
+# System info
+if (( $+commands[btop] )); then
+    alias top='btop'
+elif (( $+commands[htop] )); then
+    alias top='htop'
+fi
 
-# get top process eating cpu ##
-alias pscpu='ps auxf | sort -nr -k 3 | head -5'
+# Network
+alias ports='ss -tulanp'
+alias myip='curl -s ifconfig.me'
+alias localip='ip -br addr | grep UP'
 
-# For when keys break
-alias archlinx-fix-keys="sudo pacman-key --init && sudo pacman-key --populate archlinux && sudo pacman-key --refresh-keys"
+# Systemd
+alias sc='sudo systemctl'
+alias scu='systemctl --user'
+alias scr='sudo systemctl restart'
+alias scs='sudo systemctl status'
+alias scl='journalctl -fu'
 
-case "$(uname -s)" in
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           Utilities                                       │
+# └───────────────────────────────────────────────────────────────────────────┘
+# Quick navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ~='cd ~'
+alias -- -='cd -'
 
-    Darwin)
-        # echo 'Mac OS X'
-        alias ls='ls -G'
-        ;;
+# Directory stack
+alias d='dirs -v'
+alias 1='cd -1'
+alias 2='cd -2'
+alias 3='cd -3'
+alias 4='cd -4'
+alias 5='cd -5'
 
-    Linux)
-        alias ls='ls --color=auto'
-        ;;
+# Quick edits
+alias zshrc='${EDITOR:-nvim} $ZDOTDIR/.zshrc'
+alias zshenv='${EDITOR:-nvim} $ZDOTDIR/zsh-exports'
+alias zshalias='${EDITOR:-nvim} $ZDOTDIR/zsh-aliases'
+alias vimrc='${EDITOR:-nvim} ~/.config/nvim/init.lua'
+alias reload='exec zsh'
 
-    CYGWIN* | MINGW32* | MSYS* | MINGW*)
-        # echo 'MS Windows'
-        ;;
-    *)
-        # echo 'Other OS'
-        ;;
-esac
+# Misc
+alias c='clear'
+alias h='history'
+alias j='jobs -l'
+alias q='exit'
+alias path='echo -e ${PATH//:/\\n}'
+alias now='date +"%Y-%m-%d %H:%M:%S"'
+alias week='date +%V'
+alias weather='curl -s "wttr.in?format=3"'
+
+# Clipboard
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+
+# PDF viewer
+(( $+commands[xpdf] )) && alias xpdf='xpdf -z 250'
+(( $+commands[zathura] )) && alias pdf='zathura'
+
+# Scripts
+alias sx='~/scripts/xsh.sh'
+alias f='~/scripts/fzf.sh'
+
+# Warp (Cloudflare)
+alias warp-svc='sudo warp-svc'
+
+# Mirror (Arch)
+alias mirror='sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist'
+
+# Arch key fix
+alias archlinux-fix-keys='sudo pacman-key --init && sudo pacman-key --populate archlinux && sudo pacman-key --refresh-keys'
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │                           Development                                     │
+# └───────────────────────────────────────────────────────────────────────────┘
+# Python
+alias py='python3'
+alias pip='python3 -m pip'
+alias venv='python3 -m venv'
+alias activate='source .venv/bin/activate'
+
+# Go
+alias gor='go run .'
+alias gob='go build .'
+alias got='go test ./...'
+alias gom='go mod tidy'
+
+# Rust
+alias cb='cargo build'
+alias cr='cargo run'
+alias ct='cargo test'
+alias cc='cargo check'
+alias cw='cargo watch -x run'
+
+# vim: ft=zsh sw=4 ts=4 et
