@@ -63,20 +63,20 @@ smart_gaps on
 gaps inner 8
 gaps outer 4
 
-# Title bar font
-font pango:JetBrainsMono Nerd Font 10
+# Title bar font (larger for better tab visibility)
+font pango:JetBrainsMono Nerd Font Bold 12
 
 # Window colors         border     background  text       indicator  child_border
-client.focused          $mauve     $base       $text      $mauve     $mauve
+client.focused          $mauve     $mauve      $crust     $mauve     $mauve
 client.focused_inactive $surface1  $base       $subtext1  $surface1  $surface1
 client.unfocused        $surface0  $base       $overlay0  $surface0  $surface0
 client.urgent           $red       $base       $red       $red       $red
 client.placeholder      $base      $base       $text      $base      $base
 client.background       $base
 
-# Hide window title bars
-titlebar_border_thickness 0
-titlebar_padding 0
+# Title bar configuration for tabs
+titlebar_border_thickness 2
+titlebar_padding 8 4
 
 # Cursor theme
 seat seat0 xcursor_theme Adwaita 24
@@ -98,10 +98,8 @@ output * adaptive_sync on
 input type:keyboard {
     xkb_layout us,ara
     xkb_options grp:alt_shift_toggle,caps:escape
-    repeat_delay 400
-    repeat_rate 30
-    # repeat_delay 300 (300ms before repeating starts)
-    # repeat_rate 50 (50 repeats per second)
+    repeat_delay 300
+    repeat_rate 25
 }
 
 input type:touchpad {
@@ -170,8 +168,7 @@ bindsym --to-code $mod+n      exec $fileManager
 bindsym --to-code $mod+c kill
 bindsym --to-code $mod+f fullscreen toggle
 bindsym --to-code $mod+Shift+space floating toggle
-# bindsym --to-code $mod+space layout toggle split tabbed stacking
-bindsym --to-code $mod+space layout toggle split tabbed
+bindsym --to-code $mod+space layout toggle split tabbed stacking
 bindsym --to-code $mod+v splitv
 bindsym --to-code $mod+Shift+v splith
 
@@ -380,7 +377,7 @@ bindsym --to-code $mod+equal exec rofi -show calc -modi calc -no-show-match -no-
 # ─── Session Management ─────────────────────────────────────────────────────
 
 bindsym --to-code $mod+Shift+r reload
-bindsym --to-code $mod+Shift+q exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
+bindsym --to-code $mod+Shift+q exec swahlynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
 
 # ┌───────────────────────────────────────────────────────────────────────────┐
 # │                        WINDOW RULES                                       │

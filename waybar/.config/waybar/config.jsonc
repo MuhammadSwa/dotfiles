@@ -74,7 +74,7 @@
   // ==================== CENTER MODULES ====================
 
   "clock": {
-    "format": "󰥔 {:%H:%M}",
+    "format": "󰥔 {:%I:%M %p}",
     "format-alt": "󰃭 {:%A, %B %d, %Y}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "calendar": {

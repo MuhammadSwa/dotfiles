@@ -73,49 +73,49 @@ vim.lsp.config("bashls", {})
 -- ═══════════════════════════════════════════════════════════════════
 -- HTML Language Server
 -- ═══════════════════════════════════════════════════════════════════
-vim.lsp.config("html", {
-  init_options = {
-    provideFormatter = false, -- Use prettier instead
-  },
-})
+-- vim.lsp.config("html", {
+--   init_options = {
+--     provideFormatter = false, -- Use prettier instead
+--   },
+-- })
 
 -- ═══════════════════════════════════════════════════════════════════
 -- CSS Language Server
 -- ═══════════════════════════════════════════════════════════════════
-vim.lsp.config("cssls", {
-  settings = {
-    css = { validate = true, lint = { unknownAtRules = "ignore" } },
-    scss = { validate = true },
-    less = { validate = true },
-  },
-})
+-- vim.lsp.config("cssls", {
+--   settings = {
+--     css = { validate = true, lint = { unknownAtRules = "ignore" } },
+--     scss = { validate = true },
+--     less = { validate = true },
+--   },
+-- })
 
 -- ═══════════════════════════════════════════════════════════════════
 -- Tailwind CSS Language Server (Frontend Essential)
 -- ═══════════════════════════════════════════════════════════════════
-vim.lsp.config("tailwindcss", {
-  filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact" },
-  settings = {
-    tailwindCSS = {
-      experimental = {
-        classRegex = {
-          -- SolidJS/React class attribute patterns
-          { "class\\s*=\\s*[\"']([^\"']*)[\"']", 1 },
-          { "classList\\s*=\\s*\\{([^}]*)\\}", 1 },
-          { "className\\s*=\\s*[\"']([^\"']*)[\"']", 1 },
-          -- clsx/classnames/cn patterns
-          { "(?:clsx|classnames|cn|cva|cx)\\(([^)]*)\\)", 1 },
-          -- tw tagged template literal
-          { "tw`([^`]*)`", 1 },
-        },
-      },
-      includeLanguages = {
-        typescriptreact = "html",
-        javascriptreact = "html",
-      },
-    },
-  },
-})
+-- vim.lsp.config("tailwindcss", {
+--   filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+--   settings = {
+--     tailwindCSS = {
+--       experimental = {
+--         classRegex = {
+--           -- SolidJS/React class attribute patterns
+--           { "class\\s*=\\s*[\"']([^\"']*)[\"']", 1 },
+--           { "classList\\s*=\\s*\\{([^}]*)\\}", 1 },
+--           { "className\\s*=\\s*[\"']([^\"']*)[\"']", 1 },
+--           -- clsx/classnames/cn patterns
+--           { "(?:clsx|classnames|cn|cva|cx)\\(([^)]*)\\)", 1 },
+--           -- tw tagged template literal
+--           { "tw`([^`]*)`", 1 },
+--         },
+--       },
+--       includeLanguages = {
+--         typescriptreact = "html",
+--         javascriptreact = "html",
+--       },
+--     },
+--   },
+-- })
 
 -- ═══════════════════════════════════════════════════════════════════
 -- Emmet Language Server (Fast HTML/JSX Expansion)
