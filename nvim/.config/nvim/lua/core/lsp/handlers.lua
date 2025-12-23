@@ -18,8 +18,8 @@ M.setup = function()
       --   [vim.diagnostic.severity.ERROR] = "DiagnosticVirtualTextError",
       -- },
     },
-    update_in_insert = true,
-    underline = true,
+    update_in_insert = false,
+    underline = false,
     severity_sort = true,
 
     float = {

@@ -1,13 +1,14 @@
 return {
-  {
-    "nvim-flutter/flutter-tools.nvim",
-    lazy = false,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "stevearc/dressing.nvim", -- optional for vim.ui.select
-    },
-    config = true,
-  },
+  -- DISABLED: Flutter tools - only enable if you use Flutter
+  -- {
+  --   "nvim-flutter/flutter-tools.nvim",
+  --   lazy = false,
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "stevearc/dressing.nvim", -- optional for vim.ui.select
+  --   },
+  --   config = true,
+  -- },
   -- lsp
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
@@ -39,24 +40,25 @@ return {
   },
 
   -- Linting
-  {
-    "mfussenegger/nvim-lint",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      local lint = require("lint")
-      lint.linters_by_ft = {
-        javascript = { "eslint_d" },
-        typescript = { "eslint_d" },
-        javascriptreact = { "eslint_d" },
-        typescriptreact = { "eslint_d" },
-      }
-      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
-        callback = function()
-          lint.try_lint()
-        end,
-      })
-    end,
-  },
+  -- DISABLED: eslint_d runs frequently and slows down editing
+  -- {
+  --   "mfussenegger/nvim-lint",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   config = function()
+  --     local lint = require("lint")
+  --     lint.linters_by_ft = {
+  --       javascript = { "eslint_d" },
+  --       typescript = { "eslint_d" },
+  --       javascriptreact = { "eslint_d" },
+  --       typescriptreact = { "eslint_d" },
+  --     }
+  --     vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+  --       callback = function()
+  --         lint.try_lint()
+  --       end,
+  --     })
+  --   end,
+  -- },
 
   -- Emmet for rapid HTML/JSX expansion
   {
@@ -74,45 +76,47 @@ return {
   },
 
   -- Color highlighting for CSS colors (includes Tailwind support)
-  {
-    "NvChad/nvim-colorizer.lua",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      filetypes = { "*" },
-      user_default_options = {
-        RGB = true,
-        RRGGBB = true,
-        names = false,
-        RRGGBBAA = true,
-        css = true,
-        css_fn = true,
-        tailwind = true,
-        mode = "background",
-      },
-    },
-  },
+  -- DISABLED: Heavy with tailwind scanning on large files
+  -- {
+  --   "NvChad/nvim-colorizer.lua",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   opts = {
+  --     filetypes = { "*" },
+  --     user_default_options = {
+  --       RGB = true,
+  --       RRGGBB = true,
+  --       names = false,
+  --       RRGGBBAA = true,
+  --       css = true,
+  --       css_fn = true,
+  --       tailwind = true,
+  --       mode = "background",
+  --     },
+  --   },
+  -- },
 
   -- TypeScript enhanced features
-  {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-    opts = {
-      settings = {
-        separate_diagnostic_server = true,
-        publish_diagnostic_on = "insert_leave",
-        tsserver_file_preferences = {
-          includeInlayParameterNameHints = "all",
-          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-          includeInlayFunctionParameterTypeHints = true,
-          includeInlayVariableTypeHints = true,
-          includeInlayPropertyDeclarationTypeHints = true,
-          includeInlayFunctionLikeReturnTypeHints = true,
-          includeInlayEnumMemberValueHints = true,
-        },
-      },
-    },
-  },
+  -- DISABLED: Heavy plugin with many inlay hints, uses lots of memory
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+  --   opts = {
+  --     settings = {
+  --       separate_diagnostic_server = true,
+  --       publish_diagnostic_on = "insert_leave",
+  --       tsserver_file_preferences = {
+  --         includeInlayParameterNameHints = "all",
+  --         includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+  --         includeInlayFunctionParameterTypeHints = true,
+  --         includeInlayVariableTypeHints = true,
+  --         includeInlayPropertyDeclarationTypeHints = true,
+  --         includeInlayFunctionLikeReturnTypeHints = true,
+  --         includeInlayEnumMemberValueHints = true,
+  --       },
+  --     },
+  --   },
+  -- },
 
   -- ═══════════════════════════════════════════════════════════
   -- Lua Development
@@ -135,10 +139,11 @@ return {
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
   },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-  },
+  -- DISABLED: Heavy treesitter textobjects
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-textobjects",
+  --   dependencies = { "nvim-treesitter/nvim-treesitter" },
+  -- },
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
     lazy = true,
@@ -169,11 +174,12 @@ return {
   -- ═══════════════════════════════════════════════════════════
   -- Git Integration
   -- ═══════════════════════════════════════════════════════════
-  {
-    "lewis6991/gitsigns.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {},
-  },
+  -- DISABLED: Updates frequently, can slow down large repos
+  -- {
+  --   "lewis6991/gitsigns.nvim",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   opts = {},
+  -- },
 
   -- ═══════════════════════════════════════════════════════════
   -- UI Components
@@ -187,25 +193,26 @@ return {
   -- ═══════════════════════════════════════════════════════════
   -- AI Assistance (Codeium)
   -- ═══════════════════════════════════════════════════════════
-  {
-    "Exafunction/codeium.vim",
-    event = "InsertEnter",
-    config = function()
-      vim.g.codeium_disable_bindings = 1
-      vim.keymap.set("i", "<C-g>", function()
-        return vim.fn["codeium#Accept"]()
-      end, { expr = true, silent = true, desc = "Codeium Accept" })
-      vim.keymap.set("i", "<M-]>", function()
-        return vim.fn["codeium#CycleCompletions"](1)
-      end, { expr = true, silent = true, desc = "Codeium Next" })
-      vim.keymap.set("i", "<M-[>", function()
-        return vim.fn["codeium#CycleCompletions"](-1)
-      end, { expr = true, silent = true, desc = "Codeium Prev" })
-      vim.keymap.set("i", "<C-x>", function()
-        return vim.fn["codeium#Clear"]()
-      end, { expr = true, silent = true, desc = "Codeium Clear" })
-    end,
-  },
+  -- DISABLED: Heavy AI completion, runs constantly in background
+  -- {
+  --   "Exafunction/codeium.vim",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     vim.g.codeium_disable_bindings = 1
+  --     vim.keymap.set("i", "<C-g>", function()
+  --       return vim.fn["codeium#Accept"]()
+  --     end, { expr = true, silent = true, desc = "Codeium Accept" })
+  --     vim.keymap.set("i", "<M-]>", function()
+  --       return vim.fn["codeium#CycleCompletions"](1)
+  --     end, { expr = true, silent = true, desc = "Codeium Next" }) })
+  --     vim.keymap.set("i", "<M-[>", function()
+  --       return vim.fn["codeium#CycleCompletions"](-1)
+  --     end, { expr = true, silent = true, desc = "Codeium Prev" })
+  --     vim.keymap.set("i", "<C-x>", function()
+  --       return vim.fn["codeium#Clear"]()
+  --     end, { expr = true, silent = true, desc = "Codeium Clear" })
+  --   end,
+  -- },
 
   -- ═══════════════════════════════════════════════════════════
   -- Editor Enhancements
@@ -227,17 +234,18 @@ return {
       },
     },
   },
-  {
-    "RRethy/vim-illuminate",
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      delay = 200,
-      large_file_cutoff = 2000,
-    },
-    config = function(_, opts)
-      require("illuminate").configure(opts)
-    end,
-  },
+  -- DISABLED: Heavy reference highlighting, uses LSP/treesitter constantly
+  -- {
+  --   "RRethy/vim-illuminate",
+  --   event = { "BufReadPost", "BufNewFile" },
+  --   opts = {
+  --     delay = 200,
+  --     large_file_cutoff = 2000,
+  --   },
+  --   config = function(_, opts)
+  --     require("illuminate").configure(opts)
+  --   end,
+  -- },
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
@@ -250,13 +258,14 @@ return {
       },
     },
   },
-  {
-    "andymass/vim-matchup",
-    event = "BufReadPost",
-    init = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup" }
-    end,
-  },
+  -- DISABLED: Adds parsing overhead for matching pairs
+  -- {
+  --   "andymass/vim-matchup",
+  --   event = "BufReadPost",
+  --   init = function()
+  --     vim.g.matchup_matchparen_offscreen = { method = "popup" }
+  --   end,
+  -- },
   {
     "windwp/nvim-ts-autotag",
     event = "InsertEnter",
@@ -266,12 +275,13 @@ return {
   -- ═══════════════════════════════════════════════════════════
   -- Comments & TODOs
   -- ═══════════════════════════════════════════════════════════
-  {
-    "folke/todo-comments.nvim",
-    event = { "BufReadPost", "BufNewFile" },
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {},
-  },
+  -- DISABLED: Scans buffers for TODO patterns constantly
+  -- {
+  --   "folke/todo-comments.nvim",
+  --   event = { "BufReadPost", "BufNewFile" },
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  --   opts = {},
+  -- },
   {
     "folke/ts-comments.nvim",
     event = "VeryLazy",
@@ -282,15 +292,16 @@ return {
   -- ═══════════════════════════════════════════════════════════
   -- Indentation Guides
   -- ═══════════════════════════════════════════════════════════
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      indent = { char = "│" },
-      scope = { enabled = true },
-    },
-  },
+  -- DISABLED: Heavy indentation calculation on large files
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   main = "ibl",
+  --   event = { "BufReadPost", "BufNewFile" },
+  --   opts = {
+  --     indent = { char = "│" },
+  --     scope = { enabled = true },
+  --   },
+  -- },
 
   -- ═══════════════════════════════════════════════════════════
   -- Motion & Navigation
@@ -349,11 +360,12 @@ return {
   -- ═══════════════════════════════════════════════════════════
   -- Marks & Bookmarks
   -- ═══════════════════════════════════════════════════════════
-  {
-    "chentoast/marks.nvim",
-    event = "VeryLazy",
-    opts = {},
-  },
+  -- DISABLED: Not essential, reduces memory usage
+  -- {
+  --   "chentoast/marks.nvim",
+  --   event = "VeryLazy",
+  --   opts = {},
+  -- },
 
   -- ═══════════════════════════════════════════════════════════
   -- Code Manipulation

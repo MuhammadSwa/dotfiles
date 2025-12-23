@@ -81,19 +81,17 @@ require("mason-lspconfig").setup({
   -- Automatically install these LSPs
   ensure_installed = {
     'lua_ls',      -- Lua
-    'ts_ls',       -- TypeScript/JavaScript (fallback, typescript-tools preferred)
+    'ts_ls',       -- TypeScript/JavaScript
     'gopls',       -- Go
     'jsonls',      -- JSON
-    'html',        -- HTML
-    'cssls',       -- CSS
-    'tailwindcss', -- Tailwind CSS
+    -- 'html',        -- HTML (DISABLED: use emmet instead)
+    -- 'cssls',       -- CSS (DISABLED: not essential)
+    -- 'tailwindcss', -- Tailwind CSS (DISABLED: heavy)
     'bashls',      -- Bash
     'emmet_ls',    -- Emmet LSP for faster HTML/JSX
   },
   -- Automatically enable installed servers via vim.lsp.enable()
-  automatic_enable = {
-    exclude = { 'ts_ls' }, -- Exclude ts_ls since we use typescript-tools
-  },
+  automatic_enable = true,  -- Enable all installed servers including ts_ls
 })
 
 -- Install formatters and linters via Mason

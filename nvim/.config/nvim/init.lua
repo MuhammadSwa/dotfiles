@@ -8,7 +8,7 @@ require("core.keymaps")
 require("core.nvim-tree")
 require("core.bufferline")
 require("core.colorscheme")
-require("core.codium")
+-- require("core.codium")  -- DISABLED: Codeium AI is heavy
 require("core.toggleterm")
 require("core.lualine")
-require("flutter-tools").setup {} -- use defaults
+-- require("flutter-tools").setup {} -- DISABLED: Only enable if you use Flutter
