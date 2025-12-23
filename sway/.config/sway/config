@@ -321,12 +321,13 @@ mode $tools_mode {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym --to-code $mod+t mode $tools_mode
+bindsym --to-code $mod+e mode $tools_mode
 
 # ─── Custom Scripts ─────────────────────────────────────────────────────────
 
 bindsym --to-code $mod+i exec ~/scripts/unduck-cli/unduck.sh
 bindsym --to-code $mod+u exec ~/scripts/books.sh
+bindsym --to-code $mod+equal exec systemctl suspend
 
 # ─── Screenshots ────────────────────────────────────────────────────────────
 
@@ -372,7 +373,7 @@ bindsym --to-code $mod+Shift+p exec cliphist list | rofi -dmenu -p "Clipboard" |
 bindsym --to-code $mod+Shift+c exec grim -g "$(slurp -p)" -t ppm - | convert - -format '%[pixel:p{0,0}]' txt:- | tail -1 | cut -d' ' -f4 | wl-copy && notify-send "Color copied"
 
 # Quick calculator
-bindsym --to-code $mod+equal exec rofi -show calc -modi calc -no-show-match -no-sort
+# bindsym --to-code $mod+equal exec rofi -show calc -modi calc -no-show-match -no-sort
 
 # ─── Session Management ─────────────────────────────────────────────────────
 
