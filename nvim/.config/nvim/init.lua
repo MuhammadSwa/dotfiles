@@ -1,14 +1,14 @@
 require("core.lazy")
 require("core.options")
-require("core.mason")      -- Mason must be loaded before LSP for automatic_enable
-require("core.lsp")        -- LSP config uses vim.lsp.config() (Neovim 0.11+)
+require("core.mason") -- Mason must be loaded before LSP for automatic_enable
+require("core.lsp") -- LSP config uses vim.lsp.config() (Neovim 0.11+)
 require("core.treesitter")
 require("core.cmp")
 require("core.keymaps")
 require("core.nvim-tree")
 require("core.bufferline")
 require("core.colorscheme")
--- require("core.codium")  -- DISABLED: Codeium AI is heavy
+require("core.codium")
 require("core.toggleterm")
 require("core.lualine")
 -- require("flutter-tools").setup {} -- DISABLED: Only enable if you use Flutter
