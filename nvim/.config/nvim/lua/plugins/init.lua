@@ -194,25 +194,25 @@ return {
   -- AI Assistance (Codeium)
   -- ═══════════════════════════════════════════════════════════
   -- DISABLED: Heavy AI completion, runs constantly in background
-  -- {
-  --   "Exafunction/codeium.vim",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     vim.g.codeium_disable_bindings = 1
-  --     vim.keymap.set("i", "<C-g>", function()
-  --       return vim.fn["codeium#Accept"]()
-  --     end, { expr = true, silent = true, desc = "Codeium Accept" })
-  --     vim.keymap.set("i", "<M-]>", function()
-  --       return vim.fn["codeium#CycleCompletions"](1)
-  --     end, { expr = true, silent = true, desc = "Codeium Next" }) })
-  --     vim.keymap.set("i", "<M-[>", function()
-  --       return vim.fn["codeium#CycleCompletions"](-1)
-  --     end, { expr = true, silent = true, desc = "Codeium Prev" })
-  --     vim.keymap.set("i", "<C-x>", function()
-  --       return vim.fn["codeium#Clear"]()
-  --     end, { expr = true, silent = true, desc = "Codeium Clear" })
-  --   end,
-  -- },
+  {
+    "Exafunction/codeium.vim",
+    event = "InsertEnter",
+    config = function()
+      vim.g.codeium_disable_bindings = 1
+      vim.keymap.set("i", "<C-g>", function()
+        return vim.fn["codeium#Accept"]()
+      end, { expr = true, silent = true, desc = "Codeium Accept" })
+      vim.keymap.set("i", "<M-]>", function()
+        return vim.fn["codeium#CycleCompletions"](1)
+      end, { expr = true, silent = true, desc = "Codeium Next" })
+      vim.keymap.set("i", "<M-[>", function()
+        return vim.fn["codeium#CycleCompletions"](-1)
+      end, { expr = true, silent = true, desc = "Codeium Prev" })
+      vim.keymap.set("i", "<C-x>", function()
+        return vim.fn["codeium#Clear"]()
+      end, { expr = true, silent = true, desc = "Codeium Clear" })
+    end,
+  },
 
   -- ═══════════════════════════════════════════════════════════
   -- Editor Enhancements
@@ -258,14 +258,13 @@ return {
       },
     },
   },
-  -- DISABLED: Adds parsing overhead for matching pairs
-  -- {
-  --   "andymass/vim-matchup",
-  --   event = "BufReadPost",
-  --   init = function()
-  --     vim.g.matchup_matchparen_offscreen = { method = "popup" }
-  --   end,
-  -- },
+  {
+    "andymass/vim-matchup",
+    event = "BufReadPost",
+    init = function()
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end,
+  },
   {
     "windwp/nvim-ts-autotag",
     event = "InsertEnter",
@@ -360,12 +359,11 @@ return {
   -- ═══════════════════════════════════════════════════════════
   -- Marks & Bookmarks
   -- ═══════════════════════════════════════════════════════════
-  -- DISABLED: Not essential, reduces memory usage
-  -- {
-  --   "chentoast/marks.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  -- },
+  {
+    "chentoast/marks.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
 
   -- ═══════════════════════════════════════════════════════════
   -- Code Manipulation
