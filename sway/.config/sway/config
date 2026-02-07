@@ -329,6 +329,9 @@ bindsym --to-code $mod+i exec ~/scripts/unduck-cli/unduck.sh
 bindsym --to-code $mod+u exec ~/scripts/books.sh
 bindsym --to-code $mod+equal exec systemctl suspend
 
+
+bindsym --to-code $mod+g exec pkill -f gradle
+
 # ─── Screenshots ────────────────────────────────────────────────────────────
 
 # Full screen screenshot
