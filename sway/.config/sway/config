@@ -403,12 +403,12 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 for_window [class=".*"]  inhibit_idle fullscreen
 
 # Assign apps to workspaces
-assign [app_id="brave-browser"] $ws2
-assign [class="Brave-browser"]  $ws2
-assign [app_id="obsidian"]      $ws3
-assign [class="obsidian"]       $ws3
-assign [class="discord"]        $ws4
-assign [class="Spotify"]        $ws5
+# assign [app_id="brave-browser"] $ws2
+# assign [class="Brave-browser"]  $ws2
+# assign [app_id="obsidian"]      $ws3
+# assign [class="obsidian"]       $ws3
+# assign [class="discord"]        $ws4
+# assign [class="Spotify"]        $ws5
 
 # ┌───────────────────────────────────────────────────────────────────────────┐
 # │                           STATUS BAR                                      │
