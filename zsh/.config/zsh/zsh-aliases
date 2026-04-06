@@ -11,7 +11,8 @@ alias v='nvim'
 alias vim='nvim'
 alias vi='nvim'
 alias ba='bash ~/dotfiles/scripts/scripts/android.sh'
-alias bar='./gradlew assembleRelease && adb install -r app/build/outputs/apk/release/app-release.apk'
+# alias bar='./gradlew assembleRelease && adb install -r app/build/outputs/apk/release/app-release.apk'
+alias bar='./gradlew assembleFast && adb install -r app/build/outputs/apk/fast/app-fast.apk'
 
 # Modern replacements (use if available)
 if (( $+commands[eza] )); then
