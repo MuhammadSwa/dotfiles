@@ -29,7 +29,7 @@ require("lazy").setup({
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "habamax" } },
+  install = { colorscheme = { "habamax" }, timeout = 60000 },
   -- automatically check for plugin updates
   -- Automatically check for updates (consider doing this manually with :Lazy sync)
   checker = {

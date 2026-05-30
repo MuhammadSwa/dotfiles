@@ -195,6 +195,7 @@ return {
   -- ═══════════════════════════════════════════════════════════
   {
     "zbirenbaum/copilot.lua",
+    dir = vim.fn.stdpath("data") .. "/local_plugins/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
