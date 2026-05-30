@@ -49,6 +49,7 @@ local kind_icons = {
   Operator = "󰆕",
   TypeParameter = "󰊄",
   Codeium = "",
+  Copilot = "",
 }
 
 -- Main CMP Setup
@@ -106,6 +107,7 @@ cmp.setup({
         luasnip = "[Snippet]",
         buffer = "[Buffer]",
         path = "[Path]",
+        copilot = "[AI]",
         codeium = "[AI]",
         lazydev = "[Lua]",
       })[entry.source.name]
@@ -116,6 +118,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = "luasnip", group_index = 1, keyword_length = 2 },
     { name = "lazydev", group_index = 0 },
+    { name = "copilot", group_index = 1 },
     { name = "nvim_lsp", group_index = 1 },
     { name = "path", group_index = 1 },
     { name = "buffer", group_index = 2, keyword_length = 3 },

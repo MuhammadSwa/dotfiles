@@ -191,28 +191,54 @@ return {
   },
 
   -- ═══════════════════════════════════════════════════════════
-  -- AI Assistance (Codeium)
+  -- AI Assistance
   -- ═══════════════════════════════════════════════════════════
-  -- DISABLED: Heavy AI completion, runs constantly in background
   {
-    "Exafunction/codeium.vim",
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
     event = "InsertEnter",
     config = function()
-      vim.g.codeium_disable_bindings = 1
-      vim.keymap.set("i", "<C-g>", function()
-        return vim.fn["codeium#Accept"]()
-      end, { expr = true, silent = true, desc = "Codeium Accept" })
-      vim.keymap.set("i", "<M-]>", function()
-        return vim.fn["codeium#CycleCompletions"](1)
-      end, { expr = true, silent = true, desc = "Codeium Next" })
-      vim.keymap.set("i", "<M-[>", function()
-        return vim.fn["codeium#CycleCompletions"](-1)
-      end, { expr = true, silent = true, desc = "Codeium Prev" })
-      vim.keymap.set("i", "<C-x>", function()
-        return vim.fn["codeium#Clear"]()
-      end, { expr = true, silent = true, desc = "Codeium Clear" })
+      require("copilot").setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = "<C-j>",
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-x>",
+          },
+        },
+        panel = { enabled = true },
+      })
     end,
   },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function()
+      require("copilot_cmp").setup()
+    end,
+  },
+  -- DISABLED: Heavy AI completion, runs constantly in background
+  -- {
+  --   "Exafunction/codeium.vim",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     vim.g.codeium_disable_bindings = 1
+  --     vim.keymap.set("i", "<C-g>", function()
+  --       return vim.fn["codeium#Accept"]()
+  --     end, { expr = true, silent = true, desc = "Codeium Accept" })
+  --     vim.keymap.set("i", "<M-]>", function()
+  --       return vim.fn["codeium#CycleCompletions"](1)
+  --     end, { expr = true, silent = true, desc = "Codeium Next" })
+  --     vim.keymap.set("i", "<M-[>", function()
+  --       return vim.fn["codeium#CycleCompletions"](-1)
+  --     end, { expr = true, silent = true, desc = "Codeium Prev" })
+  --     vim.keymap.set("i", "<C-x>", function()
+  --       return vim.fn["codeium#Clear"]()
+  --     end, { expr = true, silent = true, desc = "Codeium Clear" })
+  --   end,
+  -- },
 
   -- ═══════════════════════════════════════════════════════════
   -- Editor Enhancements
