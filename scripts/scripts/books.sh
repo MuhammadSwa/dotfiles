@@ -1,15 +1,6 @@
 #!/bin/bash
 
-# books=(
-#     "~/Books/Powerful Command-Line Applications in GO.epub"
-#     "~/Books/A Common-Sense Guide to Data Structures and Algorithms.pdf"
-#     "/home/alien/Zotero/storage/BJQE6UY4/Noor-Book.com  ما لا يسع المسلم جهله 2 .pdf"
-# )
-
-# chosen_book=$(printf "%s\n" "${books[@]}" | rofi -dmenu -p "books")
-
 # chosen_book=$(find ~/Books/ /media/Maind/كتب2/ /media/Maind/كتب/ /media/Maind/Dental_books/ -type f ! -path "$HOME/Books/site/*" | rofi -dmenu -p "books" -keep-right -i)
-# chosen_book=$(find ~/Books/ /media/Maind/كتب2/ /media/Maind/كتب/ /media/Maind/Dental_books/ -type f ! -path "$HOME/Books/site/*" | ~/Mzahrawi/productivity/badi/zig-out/bin/badi)
 tmpfile=$(mktemp)
 find ~/Books/ /media/Maind/كتب2/ /media/Maind/كتب/ /media/Maind/Dental_books/ -type f ! -path "$HOME/Books/site/*" >"$tmpfile"
 chosen_book=$(sed 's|.*/\([^/]*\)/\([^/]*\)$|\1/\2|' "$tmpfile" | ~/Mzahrawi/productivity/badi/zig-out/bin/badi)
