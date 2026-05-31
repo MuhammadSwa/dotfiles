@@ -21,7 +21,7 @@ set $term        ghostty
 set $browser     brave --enable-features=UseOzonePlatform --ozone-platform=wayland
 set $fileManager thunar
 # set $menu        rofi -show drun -show-icons -theme ~/.config/rofi/config.rasi
-set $menu        ~/Mzahrawi/productivity/badi/zig-out/bin/Badi
+set $menu        ~/Mzahrawi/productivity/badi/zig-out/bin/badi
 set $lock        swaylock -f -e -l -L -s fill -i ~/dotfiles/Data/Data/Arabic-Background-HD.webp
 
 # Colors (Catppuccin Mocha inspired)
