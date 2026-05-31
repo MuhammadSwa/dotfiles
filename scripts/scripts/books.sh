@@ -8,7 +8,8 @@
 
 # chosen_book=$(printf "%s\n" "${books[@]}" | rofi -dmenu -p "books")
 
-chosen_book=$(find ~/Books/ /media/Maind/كتب2/ /media/Maind/كتب/ /media/Maind/Dental_books/ -type f ! -path "$HOME/Books/site/*" | rofi -dmenu -p "books" -keep-right -i)
+# chosen_book=$(find ~/Books/ /media/Maind/كتب2/ /media/Maind/كتب/ /media/Maind/Dental_books/ -type f ! -path "$HOME/Books/site/*" | rofi -dmenu -p "books" -keep-right -i)
+chosen_book=$(find ~/Books/ /media/Maind/كتب2/ /media/Maind/كتب/ /media/Maind/Dental_books/ -type f ! -path "$HOME/Books/site/*" | ~/Mzahrawi/productivity/badi/zig-out/bin/Badi)
 
 [[ $? -eq 1 ]] && exit 1
 # echo $chosen_book
