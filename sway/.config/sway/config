@@ -318,7 +318,7 @@ mode $tools_mode {
     bindsym --to-code r exec killall -CONT pomodoro; mode "default"
     bindsym --to-code h exec /media/Maind/zahrawi/islamic/gopray-cli/gopray next | xargs -I {} notify-send "{}"; mode "default"
     # bindsym --to-code e exec rofi -modi emoji -show emoji; mode "default"
-    bindsym --to-code e exec ~/Mzahrawi/productivity/badi/zig-out/bin/badi --emoji
+    bindsym --to-code e exec ~/Mzahrawi/productivity/badi/zig-out/bin/badi --emoji --type
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
