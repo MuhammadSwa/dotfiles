@@ -50,8 +50,8 @@ fi
 alias egrep='grep -E --color=auto'
 alias fgrep='grep -F --color=auto'
 
-# fd (better find)
-(( $+commands[fd] )) && alias find='fd'
+# # fd (better find)
+# (( $+commands[fd] )) && alias find='fd'
 
 # dust (better du)
 (( $+commands[dust] )) && alias du='dust'
