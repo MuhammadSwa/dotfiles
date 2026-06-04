@@ -41,14 +41,14 @@ if (( $+commands[bat] )); then
     alias catp='bat --plain'
 fi
 
-# ripgrep
-if (( $+commands[rg] )); then
-    alias grep='rg'
-else
-    alias grep='grep --color=auto'
-fi
-alias egrep='grep -E --color=auto'
-alias fgrep='grep -F --color=auto'
+# # ripgrep
+# if (( $+commands[rg] )); then
+#     alias grep='rg'
+# else
+#     alias grep='grep --color=auto'
+# fi
+# alias egrep='grep -E --color=auto'
+# alias fgrep='grep -F --color=auto'
 
 # # fd (better find)
 # (( $+commands[fd] )) && alias find='fd'
