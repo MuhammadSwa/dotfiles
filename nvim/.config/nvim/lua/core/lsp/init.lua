@@ -1,5 +1,4 @@
 -- Modern Neovim 0.11+ LSP Configuration
--- Uses vim.lsp.config() and vim.lsp.enable() instead of deprecated lspconfig framework
 
 require("core.lsp.handlers").setup()
 
