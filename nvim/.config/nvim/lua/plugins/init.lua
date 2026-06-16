@@ -138,6 +138,28 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      ensure_installed = {
+        "typescript", "tsx", "javascript", "html", "css",
+        "json", "jsonc", "lua", "vim", "vimdoc",
+        "bash", "yaml", "go", "dart",
+      },
+      highlight = {
+        enable = true,
+        disable = function(lang, buf)
+          local max_filesize = 100 * 1024
+          local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+            return true
+          end
+        end,
+      },
+      indent = { enable = true },
+    },
+    config = function(_, opts)
+      require("nvim-treesitter").setup(opts)
+      require("nvim-treesitter.install").prefer_git = true
+    end,
   },
   -- DISABLED: Heavy treesitter textobjects
   -- {
@@ -193,27 +215,27 @@ return {
   -- ═══════════════════════════════════════════════════════════
   -- AI Assistance
   -- ═══════════════════════════════════════════════════════════
-  {
-    "zbirenbaum/copilot.lua",
-    dir = vim.fn.stdpath("data") .. "/local_plugins/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          keymap = {
-            accept = "<C-j>",
-            next = "<M-]>",
-            prev = "<M-[>",
-            dismiss = "<C-x>",
-          },
-        },
-        panel = { enabled = true },
-      })
-    end,
-  },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   dir = vim.fn.stdpath("data") .. "/local_plugins/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot").setup({
+  --       suggestion = {
+  --         enabled = true,
+  --         auto_trigger = true,
+  --         keymap = {
+  --           accept = "<C-j>",
+  --           next = "<M-]>",
+  --           prev = "<M-[>",
+  --           dismiss = "<C-x>",
+  --         },
+  --       },
+  --       panel = { enabled = true },
+  --     })
+  --   end,
+  -- },
   {
     "zbirenbaum/copilot-cmp",
     config = function()
