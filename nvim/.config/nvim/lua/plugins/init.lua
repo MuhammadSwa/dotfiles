@@ -140,9 +140,20 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     opts = {
       ensure_installed = {
-        "typescript", "tsx", "javascript", "html", "css",
-        "json", "jsonc", "lua", "vim", "vimdoc",
-        "bash", "yaml", "go", "dart",
+        "typescript",
+        "tsx",
+        "javascript",
+        "html",
+        "css",
+        "json",
+        "jsonc",
+        "lua",
+        "vim",
+        "vimdoc",
+        "bash",
+        "yaml",
+        "go",
+        "dart",
       },
       highlight = {
         enable = true,
@@ -204,38 +215,31 @@ return {
   -- },
 
   -- ═══════════════════════════════════════════════════════════
-  -- UI Components
-  -- ═══════════════════════════════════════════════════════════
-  {
-    "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-  },
 
   -- ═══════════════════════════════════════════════════════════
   -- AI Assistance
   -- ═══════════════════════════════════════════════════════════
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   dir = vim.fn.stdpath("data") .. "/local_plugins/copilot.lua",
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot").setup({
-  --       suggestion = {
-  --         enabled = true,
-  --         auto_trigger = true,
-  --         keymap = {
-  --           accept = "<C-j>",
-  --           next = "<M-]>",
-  --           prev = "<M-[>",
-  --           dismiss = "<C-x>",
-  --         },
-  --       },
-  --       panel = { enabled = true },
-  --     })
-  --   end,
-  -- },
+  {
+    "zbirenbaum/copilot.lua",
+    dir = vim.fn.stdpath("data") .. "/local_plugins/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = "<C-j>",
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-x>",
+          },
+        },
+        panel = { enabled = true },
+      })
+    end,
+  },
   {
     "zbirenbaum/copilot-cmp",
     config = function()
@@ -266,23 +270,23 @@ return {
   -- ═══════════════════════════════════════════════════════════
   -- Editor Enhancements
   -- ═══════════════════════════════════════════════════════════
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    dependencies = { "echasnovski/mini.icons", "nvim-tree/nvim-web-devicons" },
-    opts = {
-      preset = "helix",
-      spec = {
-        { "<leader>f", group = "find/file" },
-        { "<leader>g", group = "git" },
-        { "<leader>t", group = "typescript" },
-        { "<leader>d", group = "dev/debug" },
-        { "<leader>x", group = "diagnostics" },
-        { "<leader>c", group = "code" },
-        { "<leader>w", group = "workspace" },
-      },
-    },
-  },
+  -- {
+  --   "folke/which-key.nvim",
+  --   event = "VeryLazy",
+  --   dependencies = { "echasnovski/mini.icons", "nvim-tree/nvim-web-devicons" },
+  --   opts = {
+  --     preset = "helix",
+  --     spec = {
+  --       { "<leader>f", group = "find/file" },
+  --       { "<leader>g", group = "git" },
+  --       { "<leader>t", group = "typescript" },
+  --       { "<leader>d", group = "dev/debug" },
+  --       { "<leader>x", group = "diagnostics" },
+  --       { "<leader>c", group = "code" },
+  --       { "<leader>w", group = "workspace" },
+  --     },
+  --   },
+  -- },
   -- DISABLED: Heavy reference highlighting, uses LSP/treesitter constantly
   -- {
   --   "RRethy/vim-illuminate",
@@ -330,12 +334,12 @@ return {
   --   dependencies = { "nvim-lua/plenary.nvim" },
   --   opts = {},
   -- },
-  {
-    "folke/ts-comments.nvim",
-    event = "VeryLazy",
-    opts = {},
-    enabled = vim.fn.has("nvim-0.10.0") == 1,
-  },
+  -- {
+  --   "folke/ts-comments.nvim",
+  --   event = "VeryLazy",
+  --   opts = {},
+  --   enabled = vim.fn.has("nvim-0.10.0") == 1,
+  -- },
 
   -- ═══════════════════════════════════════════════════════════
   -- Indentation Guides
@@ -374,44 +378,19 @@ return {
   },
 
   -- ═══════════════════════════════════════════════════════════
-  -- Fuzzy Finder (Telescope)
+  -- Fuzzy Finder (fzf-lua)
   -- ═══════════════════════════════════════════════════════════
   {
-    "nvim-telescope/telescope.nvim",
-    branch = "0.1.x",
-    cmd = "Telescope",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-        cond = function()
-          return vim.fn.executable("make") == 1
-        end,
-      },
-    },
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = "FzfLua",
     config = function()
-      local telescope = require("telescope")
-      telescope.setup({
-        defaults = {
-          file_ignore_patterns = { "node_modules", ".git/", "dist/", "build/" },
-          path_display = { "truncate" },
-        },
-        pickers = {
-          find_files = { hidden = true },
+      require("fzf-lua").setup({
+        files = {
+          fd_opts = "--color=never --type f --hidden --follow --exclude .git --exclude node_modules --exclude dist --exclude build",
         },
       })
-      pcall(telescope.load_extension, "fzf")
     end,
-  },
-
-  -- ═══════════════════════════════════════════════════════════
-  -- Marks & Bookmarks
-  -- ═══════════════════════════════════════════════════════════
-  {
-    "chentoast/marks.nvim",
-    event = "VeryLazy",
-    opts = {},
   },
 
   -- ═══════════════════════════════════════════════════════════
@@ -492,15 +471,5 @@ return {
       { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols" },
       { "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions" },
     },
-  },
-
-  -- ═══════════════════════════════════════════════════════════
-  -- Terminal
-  -- ═══════════════════════════════════════════════════════════
-  {
-    "akinsho/toggleterm.nvim",
-    version = "*",
-    cmd = { "ToggleTerm", "TermExec" },
-    keys = { { [[<C-\>]], desc = "Toggle terminal" } },
   },
 }

@@ -5,7 +5,7 @@ require("mason").setup({
     icons = {
       package_installed = "✓",
       package_pending = "➜",
-      package_uninstalled = "✗"
+      package_uninstalled = "✗",
     },
     -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
     border = "none",
@@ -58,21 +58,16 @@ require("mason").setup({
       -- Keymap to toggle the help view
       toggle_help = "g?",
     },
-
   },
-
 
   -- Limit for the maximum amount of packages to be installed at the same time. Once this limit is reached, any further
   -- packages that are requested to be installed will be put in a queue.
   max_concurrent_installers = 4,
 
-
   pip = {
     -- Whether to upgrade pip to the latest version in the virtual environment before installing packages.
     upgrade_pip = false,
   },
-
-
 })
 
 -- Modern mason-lspconfig setup for Neovim 0.11+
@@ -80,27 +75,28 @@ require("mason").setup({
 require("mason-lspconfig").setup({
   -- Automatically install these LSPs
   ensure_installed = {
-    'lua_ls',      -- Lua
-    'ts_ls',       -- TypeScript/JavaScript
-    'gopls',       -- Go
-    'jsonls',      -- JSON
+    "lua_ls",
+    "ts_ls",
+    "gopls",
+    "jsonls",
+    "zls",
     -- 'html',        -- HTML (DISABLED: use emmet instead)
     -- 'cssls',       -- CSS (DISABLED: not essential)
     -- 'tailwindcss', -- Tailwind CSS (DISABLED: heavy)
-    'bashls',      -- Bash
-    'emmet_ls',    -- Emmet LSP for faster HTML/JSX
+    "bashls",
+    "emmet_ls",
   },
   -- Automatically enable installed servers via vim.lsp.enable()
-  automatic_enable = true,  -- Enable all installed servers including ts_ls
+  automatic_enable = true, -- Enable all installed servers including ts_ls
 })
 
 -- Install formatters and linters via Mason
 local mason_registry_ok, mason_registry = pcall(require, "mason-registry")
 if mason_registry_ok then
   local tools = {
-    "prettierd",   -- Fast prettier daemon
-    "eslint_d",    -- Fast eslint daemon
-    "stylua",      -- Lua formatter
+    "prettierd", -- Fast prettier daemon
+    "eslint_d", -- Fast eslint daemon
+    "stylua", -- Lua formatter
   }
   for _, tool in ipairs(tools) do
     local pkg = mason_registry.get_package(tool)

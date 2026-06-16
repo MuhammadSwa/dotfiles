@@ -37,8 +37,9 @@ local options = {
   numberwidth = 2,           -- set number column width to 2 {default 4}
   signcolumn = "yes",        -- always show the sign column, otherwise it would shift the text each time
   wrap = false,              -- display lines as one long line
-  scrolloff = 8,             -- is one of my fav
-  sidescrolloff = 8,
+  scrolloff = 10,            -- keep 10 lines above/below cursor
+  sidescrolloff = 10,        -- keep 10 lines to left/right of cursor
+  synmaxcol = 300,           -- limit syntax highlighting column range
   guifont = "monospace:h17", -- the font used in graphical neovim applications
 
   breakindent = true,
@@ -83,4 +84,31 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
   end,
   desc = "Highlight yanked text",
+})
+
+-- Restore last cursor position
+vim.api.nvim_create_autocmd("BufReadPost", {
+  callback = function()
+    if vim.o.diff then
+      return
+    end
+    local last_pos = vim.api.nvim_buf_mark(0, '"')
+    local last_line = vim.api.nvim_buf_line_count(0)
+    local row = last_pos[1]
+    if row < 1 or row > last_line then
+      return
+    end
+    pcall(vim.api.nvim_win_set_cursor, 0, last_pos)
+  end,
+  desc = "Restore last cursor position",
+})
+
+-- Wrap, linebreak for markdown, gitcommit
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown", "gitcommit" },
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+  end,
+  desc = "Enable wrap for markdown/gitcommit",
 })

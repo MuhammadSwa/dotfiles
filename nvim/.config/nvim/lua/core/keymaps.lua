@@ -29,19 +29,43 @@ map("n", "<C-u>", "<C-u>zz", "Scroll up half page")
 map("n", "n", "nzzzv", "Next search result")
 map("n", "N", "Nzzzv", "Previous search result")
 
+-- Wrap-aware j/k movement
+vim.keymap.set("n", "j", function()
+  return vim.v.count == 0 and "gj" or "j"
+end, { expr = true, silent = true, desc = "Down (wrap-aware)" })
+vim.keymap.set("n", "k", function()
+  return vim.v.count == 0 and "gk" or "k"
+end, { expr = true, silent = true, desc = "Up (wrap-aware)" })
+
+-- Move lines up/down in normal mode
+map("n", "<A-j>", ":m .+1<CR>==", "Move line down")
+map("n", "<A-k>", ":m .-2<CR>==", "Move line up")
+
+-- Clipboard: delete without yanking
+map("x", "<leader>p", '"_dP', "Paste without yanking")
+map({ "n", "v" }, "<leader>x", '"_d', "Delete without yanking")
+map({ "n", "v" }, "x", '"_x', "Delete char without yanking")
+
+-- Yank and keep cursor at end of selection
+map("v", "y", "ygv<Esc>", "Yank and keep cursor at end")
+
 -- ═══════════════════════════════════════════════════════════════════
--- Window Navigation
+-- Window Navigation & Splits
 -- ═══════════════════════════════════════════════════════════════════
 map("n", "<C-h>", "<C-w>h", "Move to left window")
 map("n", "<C-j>", "<C-w>j", "Move to bottom window")
 map("n", "<C-k>", "<C-w>k", "Move to top window")
 map("n", "<C-l>", "<C-w>l", "Move to right window")
 
+-- Split shortcuts
+map("n", "<leader>sv", "<cmd>vsplit<CR>", "Split vertically")
+map("n", "<leader>sh", "<cmd>split<CR>", "Split horizontally")
+
 -- Window resizing
 map("n", "<C-Up>", "<cmd>resize +2<CR>", "Increase window height")
 map("n", "<C-Down>", "<cmd>resize -2<CR>", "Decrease window height")
-map("n", "<C-Left>", "<cmd>vertical resize +2<CR>", "Increase window width")
-map("n", "<C-Right>", "<cmd>vertical resize -2<CR>", "Decrease window width")
+map("n", "<C-Left>", "<cmd>vertical resize -2<CR>", "Increase window width")
+map("n", "<C-Right>", "<cmd>vertical resize +2<CR>", "Decrease window width")
 
 -- ═══════════════════════════════════════════════════════════════════
 -- Buffer Navigation (Bufferline)
@@ -76,28 +100,31 @@ map("", ",", "<cmd>HopChar2<CR>", "Hop to 2 chars")
 map("n", ";", "<cmd>HopLine<CR>", "Hop to line")
 
 -- ═══════════════════════════════════════════════════════════════════
--- Telescope (Fuzzy Finder)
+-- Fzf-lua (Fuzzy Finder)
 -- ═══════════════════════════════════════════════════════════════════
-local telescope_ok, builtin = pcall(require, "telescope.builtin")
-if telescope_ok then
-  -- File finding
-  map("n", "<leader>ff", builtin.find_files, "Find files")
-  map("n", "<leader>fg", builtin.live_grep, "Live grep")
-  map("n", "<leader>fb", builtin.buffers, "Find buffers")
-  map("n", "<leader>fh", builtin.help_tags, "Help tags")
-  map("n", "<leader>fw", builtin.grep_string, "Grep word under cursor")
-  map("n", "<leader>fo", builtin.oldfiles, "Recent files")
-
-  -- LSP with Telescope
-  map("n", "<leader>fd", builtin.diagnostics, "Find diagnostics")
-  map("n", "<leader>fr", builtin.lsp_references, "Find references")
-  map("n", "<leader>fs", builtin.lsp_document_symbols, "Document symbols")
-
-  -- Git with Telescope
-  map("n", "<leader>gc", builtin.git_commits, "Git commits")
-  map("n", "<leader>gs", builtin.git_status, "Git status")
-  map("n", "<leader>gb", builtin.git_branches, "Git branches")
+local function fzf_map(lhs, command, desc)
+  map("n", lhs, function()
+    require("fzf-lua")[command]()
+  end, desc)
 end
+
+-- File finding
+fzf_map("<leader>ff", "files", "Find files")
+fzf_map("<leader>fg", "live_grep", "Live grep")
+fzf_map("<leader>fb", "buffers", "Find buffers")
+fzf_map("<leader>fh", "help_tags", "Help tags")
+fzf_map("<leader>fw", "grep_string", "Grep word under cursor")
+fzf_map("<leader>fo", "oldfiles", "Recent files")
+
+-- LSP with Fzf
+fzf_map("<leader>fd", "diagnostics_workspace", "Find diagnostics")
+fzf_map("<leader>fr", "lsp_references", "Find references")
+fzf_map("<leader>fs", "lsp_document_symbols", "Document symbols")
+
+-- Git with Fzf
+fzf_map("<leader>gc", "git_commits", "Git commits")
+fzf_map("<leader>gs", "git_status", "Git status")
+fzf_map("<leader>gb", "git_branches", "Git branches")
 
 -- ═══════════════════════════════════════════════════════════════════
 -- Diagnostics
@@ -142,9 +169,9 @@ map("n", "<leader>td", "<cmd>TSToolsGoToSourceDefinition<CR>", "TS: Go to source
 -- ═══════════════════════════════════════════════════════════════════
 -- Development Commands (Terminal)
 -- ═══════════════════════════════════════════════════════════════════
-map("n", "<leader>dn", "<cmd>TermExec cmd='npm run dev'<CR>", "npm run dev")
-map("n", "<leader>dp", "<cmd>TermExec cmd='pnpm dev'<CR>", "pnpm dev")
-map("n", "<leader>db", "<cmd>TermExec cmd='npm run build'<CR>", "npm run build")
+map("n", "<leader>dn", function() floating_term_exec("npm run dev") end, "npm run dev")
+map("n", "<leader>dp", function() floating_term_exec("pnpm dev") end, "pnpm dev")
+map("n", "<leader>db", function() floating_term_exec("npm run build") end, "npm run build")
 map("n", "<leader>pk", "<cmd>edit package.json<CR>", "Open package.json")
 
 -- ═══════════════════════════════════════════════════════════════════

@@ -9,7 +9,7 @@
 
 -- To disable Codeium for specific filetypes, uncomment and modify:
 -- vim.g.codeium_filetypes = {
---   TelescopePrompt = false,
+--   fzf = false,
 --   markdown = false,
 -- }
 

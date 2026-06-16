@@ -9,6 +9,6 @@ require("core.nvim-tree")
 require("core.bufferline")
 require("core.colorscheme")
 require("core.codium")
-require("core.toggleterm")
-require("core.lualine")
--- require("flutter-tools").setup {} -- DISABLED: Only enable if you use Flutter
+require("core.terminal")
+require("core.statusline")
+-- require("flutter-tools").setup {}
