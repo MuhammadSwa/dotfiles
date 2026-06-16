@@ -17,7 +17,7 @@ return {
   -- Formatting & Linting (replaces null-ls, modern approach)
   {
     "stevearc/conform.nvim",
-    event = { "BufWritePre" },
+    event = { "BufReadPre", "BufNewFile" },
     cmd = { "ConformInfo" },
     opts = {
       formatters_by_ft = {
@@ -186,15 +186,11 @@ return {
   -- Completion (nvim-cmp)
   -- ═══════════════════════════════════════════════════════════
   {
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    "saghen/blink.cmp",
+    version = "*",
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-cmdline",
-      "saadparwaiz1/cmp_luasnip",
-      "hrsh7th/cmp-nvim-lua",
+      "rafamadriz/friendly-snippets",
+      "giuxtaposition/blink-cmp-copilot",
     },
   },
   {
@@ -240,12 +236,7 @@ return {
       })
     end,
   },
-  {
-    "zbirenbaum/copilot-cmp",
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  },
+  -- copilot-cmp replaced by native blink-cmp-copilot configuration in saghen/blink.cmp dependencies
   -- DISABLED: Heavy AI completion, runs constantly in background
   -- {
   --   "Exafunction/codeium.vim",

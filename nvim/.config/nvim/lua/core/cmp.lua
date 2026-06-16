@@ -1,9 +1,9 @@
--- nvim-cmp Configuration (Modern Completion Engine)
--- Optimized for frontend development with TypeScript/JavaScript
+-- blink.cmp Configuration (High-Performance Completion Engine)
+-- Optimized for frontend development with TypeScript/JavaScript/SolidJS
 
-local cmp_status_ok, cmp = pcall(require, "cmp")
-if not cmp_status_ok then
-  vim.notify("nvim-cmp could not be loaded", vim.log.levels.ERROR)
+local blink_status_ok, blink = pcall(require, "blink.cmp")
+if not blink_status_ok then
+  vim.notify("blink.cmp could not be loaded", vim.log.levels.ERROR)
   return
 end
 
@@ -21,125 +21,114 @@ end
 -- Load custom SolidJS snippets
 pcall(require, "core.snippets.solidjs")
 
--- Completion Icons (Nerd Font Required)
-local kind_icons = {
-  Text = "󰉿",
-  Method = "󰆧",
-  Function = "󰊕",
-  Constructor = "",
-  Field = "󰜢",
-  Variable = "󰀫",
-  Class = "󰠱",
-  Interface = "",
-  Module = "",
-  Property = "󰜢",
-  Unit = "󰑭",
-  Value = "󰎠",
-  Enum = "",
-  Keyword = "󰌋",
-  Snippet = "",
-  Color = "󰏘",
-  File = "󰈙",
-  Reference = "󰈇",
-  Folder = "󰉋",
-  EnumMember = "",
-  Constant = "󰏿",
-  Struct = "󰙅",
-  Event = "",
-  Operator = "󰆕",
-  TypeParameter = "󰊄",
-  Codeium = "",
-  Copilot = "",
-}
+-- Main blink.cmp Setup
+blink.setup({
+  -- Keymaps (preset "none" for custom bindings matching your legacy setup)
+  keymap = {
+    preset = "none",
+    ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+    ["<C-e>"] = { "hide", "fallback" },
+    ["<C-y>"] = { "accept", "fallback" },
+    ["<C-j>"] = { "select_next", "fallback" },
+    ["<C-k>"] = { "select_prev", "fallback" },
+    ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+    ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+    ["<C-p>"] = { "select_prev", "fallback" },
+    ["<C-n>"] = { "select_next", "fallback" },
+    ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+    ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+  },
 
--- Main CMP Setup
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      if luasnip_status_ok then
-        luasnip.lsp_expand(args.body)
-      elseif vim.snippet then
-        vim.snippet.expand(args.body)
-      end
+  -- Snippet engine preset
+  snippets = {
+    preset = "luasnip",
+  },
+
+  -- Completion window settings
+  completion = {
+    accept = {
+      auto_brackets = {
+        enabled = true,
+      },
+    },
+    list = {
+      selection = {
+        preselect = false, -- Matches nvim-cmp select = false (forces manual selection for Enter accept)
+        auto_insert = false,
+      },
+    },
+    menu = {
+      border = "rounded",
+    },
+    documentation = {
+      auto_show = true,
+      window = {
+        border = "rounded",
+      },
+    },
+  },
+
+  -- Define completion sources
+  sources = {
+    default = { "lazydev", "copilot", "lsp", "path", "snippets", "buffer" },
+    providers = {
+      lazydev = {
+        name = "LazyDev",
+        module = "lazydev.integrations.blink",
+        score_offset = 100,
+      },
+      copilot = {
+        name = "copilot",
+        module = "blink-cmp-copilot",
+        score_offset = 100,
+        async = true,
+      },
+    },
+  },
+
+  -- Aesthetics: Icons configuration matching standard Nerd Fonts
+  appearance = {
+    nerd_font_variant = "mono",
+    kind_icons = {
+      Text = "󰉿",
+      Method = "󰆧",
+      Function = "󰊕",
+      Constructor = "󰆧",
+      Field = "󰜢",
+      Variable = "󰀫",
+      Class = "󰠱",
+      Interface = "󰠱",
+      Module = "󰏗",
+      Property = "󰜢",
+      Unit = "󰑭",
+      Value = "󰎠",
+      Enum = "󰠱",
+      Keyword = "󰌋",
+      Snippet = "󰏿",
+      Color = "󰏘",
+      File = "󰈙",
+      Reference = "󰈇",
+      Folder = "󰉋",
+      EnumMember = "󰠱",
+      Constant = "󰏿",
+      Struct = "󰙅",
+      Event = "󰉁",
+      Operator = "󰆕",
+      TypeParameter = "󰊄",
+    },
+  },
+
+  -- Command-line Autocompletion Setup
+  cmdline = {
+    enabled = true,
+    keymap = {
+      preset = "cmdline",
+    },
+    sources = function()
+      local type = vim.fn.getcmdtype()
+      if type == "/" or type == "?" then return { "buffer" } end
+      if type == ":" or type == "@" then return { "cmdline", "path" } end
+      return {}
     end,
   },
-
-  window = {
-    completion = cmp.config.window.bordered({ border = "rounded" }),
-    documentation = cmp.config.window.bordered({ border = "rounded" }),
-  },
-
-  mapping = cmp.mapping.preset.insert({
-    ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-    ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.abort(),
-    ["<CR>"] = cmp.mapping.confirm({ select = false }),
-    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip_status_ok and luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip_status_ok and luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-  }),
-
-  formatting = {
-    fields = { "kind", "abbr", "menu" },
-    format = function(entry, vim_item)
-      vim_item.kind = kind_icons[vim_item.kind] or ""
-      vim_item.menu = ({
-        nvim_lsp = "[LSP]",
-        luasnip = "[Snippet]",
-        buffer = "[Buffer]",
-        path = "[Path]",
-        copilot = "[AI]",
-        codeium = "[AI]",
-        lazydev = "[Lua]",
-      })[entry.source.name]
-      return vim_item
-    end,
-  },
-
-  sources = cmp.config.sources({
-    { name = "luasnip", group_index = 1, keyword_length = 2 },
-    { name = "lazydev", group_index = 0 },
-    { name = "copilot", group_index = 1 },
-    { name = "nvim_lsp", group_index = 1 },
-    { name = "path", group_index = 1 },
-    { name = "buffer", group_index = 2, keyword_length = 3 },
-  }),
-
-  experimental = { ghost_text = false },
 })
-
--- Cmdline Completion
-cmp.setup.cmdline({ "/", "?" }, {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = { { name = "buffer" } },
-})
-
-cmp.setup.cmdline(":", {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
-})
-
--- Autopairs Integration
-local autopairs_ok, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")
-if autopairs_ok then
-  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-end

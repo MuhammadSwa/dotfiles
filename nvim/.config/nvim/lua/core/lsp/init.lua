@@ -5,8 +5,8 @@ require("core.lsp.handlers").setup()
 -- Enable inlay hints globally by default (Neovim 0.10+)
 -- vim.lsp.inlay_hint.enable(true)
 
--- Get capabilities from nvim-cmp for enhanced completion
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- Get capabilities from blink.cmp for enhanced completion
+local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 -- ═══════════════════════════════════════════════════════════════════
 -- Global LSP Configuration (applies to all servers)

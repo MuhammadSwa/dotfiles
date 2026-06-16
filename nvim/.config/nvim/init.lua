@@ -11,4 +11,3 @@ require("core.colorscheme")
 require("core.codium")
 require("core.terminal")
 require("core.statusline")
--- require("flutter-tools").setup {}

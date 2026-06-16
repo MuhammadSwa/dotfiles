@@ -92,7 +92,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     if vim.o.diff then
       return
     end
-    local last_pos = vim.api.nvim_buf_mark(0, '"')
+    local last_pos = vim.api.nvim_buf_get_mark(0, '"')
     local last_line = vim.api.nvim_buf_line_count(0)
     local row = last_pos[1]
     if row < 1 or row > last_line then
