@@ -27,8 +27,16 @@ zvm_after_init() {
   # Ctrl+\ -> toggle autosuggestions (useful for screen recordings)
   # bindkey '^\' autosuggest-toggle
 
-  # Ctrl+P -> accept autosuggestion
-  bindkey '^P' autosuggest-accept
+  # Ctrl+P -> accept autosuggestion if present, otherwise history search up
+  _autosuggest_or_history_up() {
+    if [[ -n "$POSTDISPLAY" ]]; then
+      zle autosuggest-accept
+    else
+      zle history-substring-search-up
+    fi
+  }
+  zle -N _autosuggest_or_history_up
+  bindkey '^P' _autosuggest_or_history_up
 
   # Up/Down -> history search by substring (^[[A/^[[B are up/down arrow escape codes)
   bindkey '^[[A' history-substring-search-up

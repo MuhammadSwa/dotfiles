@@ -25,8 +25,8 @@ blink.setup({
     ["<C-e>"] = { "hide", "fallback" },
     ["<C-y>"] = { "accept", "fallback" },
     ["<CR>"] = { "accept", "fallback" },
-    ["<C-j>"] = { "select_next", "fallback" },
-    ["<C-k>"] = { "select_prev", "fallback" },
+    -- ["<C-j>"] = { "select_next", "fallback" },
+    -- ["<C-k>"] = { "select_prev", "fallback" },
     ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
     ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
     ["<C-p>"] = { "select_prev", "fallback" },
@@ -113,8 +113,12 @@ blink.setup({
     },
     sources = function()
       local type = vim.fn.getcmdtype()
-      if type == "/" or type == "?" then return { "buffer" } end
-      if type == ":" or type == "@" then return { "cmdline", "path" } end
+      if type == "/" or type == "?" then
+        return { "buffer" }
+      end
+      if type == ":" or type == "@" then
+        return { "cmdline", "path" }
+      end
       return {}
     end,
   },
