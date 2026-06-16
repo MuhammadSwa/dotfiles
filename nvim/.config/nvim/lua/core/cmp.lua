@@ -53,7 +53,7 @@ blink.setup({
     },
     list = {
       selection = {
-        preselect = false, -- Matches nvim-cmp select = false (forces manual selection for Enter accept)
+        preselect = true, -- Automatically select the first item, allowing C-y to insert it immediately
         auto_insert = false,
       },
     },
