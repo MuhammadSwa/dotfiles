@@ -1,66 +1,10 @@
 return {
-  -- DISABLED: Flutter tools - only enable if you use Flutter
-  -- {
-  --   "nvim-flutter/flutter-tools.nvim",
-  --   lazy = false,
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "stevearc/dressing.nvim", -- optional for vim.ui.select
-  --   },
-  --   config = true,
-  -- },
-  -- lsp
+  -- LSP
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
   "neovim/nvim-lspconfig",
 
-  -- Formatting & Linting (replaces null-ls, modern approach)
-  {
-    "stevearc/conform.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    cmd = { "ConformInfo" },
-    opts = {
-      formatters_by_ft = {
-        javascript = { "prettierd", "prettier", stop_after_first = true },
-        typescript = { "prettierd", "prettier", stop_after_first = true },
-        javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-        typescriptreact = { "prettierd", "prettier", stop_after_first = true },
-        css = { "prettierd", "prettier", stop_after_first = true },
-        html = { "prettierd", "prettier", stop_after_first = true },
-        json = { "prettierd", "prettier", stop_after_first = true },
-        yaml = { "prettierd", "prettier", stop_after_first = true },
-        markdown = { "prettierd", "prettier", stop_after_first = true },
-        lua = { "stylua" },
-      },
-      format_on_save = {
-        timeout_ms = 500,
-        lsp_format = "fallback",
-      },
-    },
-  },
-
-  -- Linting
-  -- DISABLED: eslint_d runs frequently and slows down editing
-  -- {
-  --   "mfussenegger/nvim-lint",
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   config = function()
-  --     local lint = require("lint")
-  --     lint.linters_by_ft = {
-  --       javascript = { "eslint_d" },
-  --       typescript = { "eslint_d" },
-  --       javascriptreact = { "eslint_d" },
-  --       typescriptreact = { "eslint_d" },
-  --     }
-  --     vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
-  --       callback = function()
-  --         lint.try_lint()
-  --       end,
-  --     })
-  --   end,
-  -- },
-
-  -- Emmet for rapid HTML/JSX expansion
+  -- Emmet
   {
     "mattn/emmet-vim",
     ft = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
@@ -75,52 +19,7 @@ return {
     end,
   },
 
-  -- Color highlighting for CSS colors (includes Tailwind support)
-  -- DISABLED: Heavy with tailwind scanning on large files
-  -- {
-  --   "NvChad/nvim-colorizer.lua",
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   opts = {
-  --     filetypes = { "*" },
-  --     user_default_options = {
-  --       RGB = true,
-  --       RRGGBB = true,
-  --       names = false,
-  --       RRGGBBAA = true,
-  --       css = true,
-  --       css_fn = true,
-  --       tailwind = true,
-  --       mode = "background",
-  --     },
-  --   },
-  -- },
-
-  -- TypeScript enhanced features
-  -- DISABLED: Heavy plugin with many inlay hints, uses lots of memory
-  -- {
-  --   "pmizio/typescript-tools.nvim",
-  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-  --   ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-  --   opts = {
-  --     settings = {
-  --       separate_diagnostic_server = true,
-  --       publish_diagnostic_on = "insert_leave",
-  --       tsserver_file_preferences = {
-  --         includeInlayParameterNameHints = "all",
-  --         includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-  --         includeInlayFunctionParameterTypeHints = true,
-  --         includeInlayVariableTypeHints = true,
-  --         includeInlayPropertyDeclarationTypeHints = true,
-  --         includeInlayFunctionLikeReturnTypeHints = true,
-  --         includeInlayEnumMemberValueHints = true,
-  --       },
-  --     },
-  --   },
-  -- },
-
-  -- ═══════════════════════════════════════════════════════════
   -- Lua Development
-  -- ═══════════════════════════════════════════════════════════
   {
     "folke/lazydev.nvim",
     ft = "lua",
@@ -131,30 +30,13 @@ return {
     },
   },
 
-  -- ═══════════════════════════════════════════════════════════
-  -- Treesitter (Syntax Highlighting & Text Objects)
-  -- ═══════════════════════════════════════════════════════════
+  -- Treesitter (main branch for Neovim 0.12+)
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
     opts = {
-      ensure_installed = {
-        "typescript",
-        "tsx",
-        "javascript",
-        "html",
-        "css",
-        "json",
-        "jsonc",
-        "lua",
-        "vim",
-        "vimdoc",
-        "bash",
-        "yaml",
-        "go",
-        "dart",
-      },
       highlight = {
         enable = true,
         disable = function(lang, buf)
@@ -169,28 +51,42 @@ return {
     },
     config = function(_, opts)
       require("nvim-treesitter").setup(opts)
-      require("nvim-treesitter.install").prefer_git = true
+      local parsers = {
+        "typescript",
+        "tsx",
+        "javascript",
+        "html",
+        "css",
+        "json",
+        "lua",
+        "vim",
+        "vimdoc",
+        "bash",
+        "yaml",
+        "go",
+        "dart",
+        "zig",
+        "qml",
+        "cpp",
+        "c",
+      }
+      for _, parser in ipairs(parsers) do
+        pcall(require("nvim-treesitter").install, parser)
+      end
     end,
   },
-  -- DISABLED: Heavy treesitter textobjects
-  -- {
-  --   "nvim-treesitter/nvim-treesitter-textobjects",
-  --   dependencies = { "nvim-treesitter/nvim-treesitter" },
-  -- },
+
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
     lazy = true,
   },
 
-  -- ═══════════════════════════════════════════════════════════
-  -- Completion (nvim-cmp)
-  -- ═══════════════════════════════════════════════════════════
+  -- Completion
   {
     "saghen/blink.cmp",
     version = "*",
     dependencies = {
       "rafamadriz/friendly-snippets",
-      "giuxtaposition/blink-cmp-copilot",
     },
   },
   {
@@ -200,96 +96,7 @@ return {
     dependencies = { "rafamadriz/friendly-snippets" },
   },
 
-  -- ═══════════════════════════════════════════════════════════
-  -- Git Integration
-  -- ═══════════════════════════════════════════════════════════
-  -- DISABLED: Updates frequently, can slow down large repos
-  -- {
-  --   "lewis6991/gitsigns.nvim",
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   opts = {},
-  -- },
-
-  -- ═══════════════════════════════════════════════════════════
-
-  -- ═══════════════════════════════════════════════════════════
-  -- AI Assistance
-  -- ═══════════════════════════════════════════════════════════
-  {
-    "zbirenbaum/copilot.lua",
-    dir = vim.fn.stdpath("data") .. "/local_plugins/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          keymap = {
-            accept = "<C-j>",
-            next = "<M-]>",
-            prev = "<M-[>",
-            dismiss = "<C-x>",
-          },
-        },
-        panel = { enabled = true },
-      })
-    end,
-  },
-  -- copilot-cmp replaced by native blink-cmp-copilot configuration in saghen/blink.cmp dependencies
-  -- DISABLED: Heavy AI completion, runs constantly in background
-  -- {
-  --   "Exafunction/codeium.vim",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     vim.g.codeium_disable_bindings = 1
-  --     vim.keymap.set("i", "<C-g>", function()
-  --       return vim.fn["codeium#Accept"]()
-  --     end, { expr = true, silent = true, desc = "Codeium Accept" })
-  --     vim.keymap.set("i", "<M-]>", function()
-  --       return vim.fn["codeium#CycleCompletions"](1)
-  --     end, { expr = true, silent = true, desc = "Codeium Next" })
-  --     vim.keymap.set("i", "<M-[>", function()
-  --       return vim.fn["codeium#CycleCompletions"](-1)
-  --     end, { expr = true, silent = true, desc = "Codeium Prev" })
-  --     vim.keymap.set("i", "<C-x>", function()
-  --       return vim.fn["codeium#Clear"]()
-  --     end, { expr = true, silent = true, desc = "Codeium Clear" })
-  --   end,
-  -- },
-
-  -- ═══════════════════════════════════════════════════════════
   -- Editor Enhancements
-  -- ═══════════════════════════════════════════════════════════
-  -- {
-  --   "folke/which-key.nvim",
-  --   event = "VeryLazy",
-  --   dependencies = { "echasnovski/mini.icons", "nvim-tree/nvim-web-devicons" },
-  --   opts = {
-  --     preset = "helix",
-  --     spec = {
-  --       { "<leader>f", group = "find/file" },
-  --       { "<leader>g", group = "git" },
-  --       { "<leader>t", group = "typescript" },
-  --       { "<leader>d", group = "dev/debug" },
-  --       { "<leader>x", group = "diagnostics" },
-  --       { "<leader>c", group = "code" },
-  --       { "<leader>w", group = "workspace" },
-  --     },
-  --   },
-  -- },
-  -- DISABLED: Heavy reference highlighting, uses LSP/treesitter constantly
-  -- {
-  --   "RRethy/vim-illuminate",
-  --   event = { "BufReadPost", "BufNewFile" },
-  --   opts = {
-  --     delay = 200,
-  --     large_file_cutoff = 2000,
-  --   },
-  --   config = function(_, opts)
-  --     require("illuminate").configure(opts)
-  --   end,
-  -- },
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
@@ -315,40 +122,7 @@ return {
     opts = {},
   },
 
-  -- ═══════════════════════════════════════════════════════════
-  -- Comments & TODOs
-  -- ═══════════════════════════════════════════════════════════
-  -- DISABLED: Scans buffers for TODO patterns constantly
-  -- {
-  --   "folke/todo-comments.nvim",
-  --   event = { "BufReadPost", "BufNewFile" },
-  --   dependencies = { "nvim-lua/plenary.nvim" },
-  --   opts = {},
-  -- },
-  -- {
-  --   "folke/ts-comments.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  --   enabled = vim.fn.has("nvim-0.10.0") == 1,
-  -- },
-
-  -- ═══════════════════════════════════════════════════════════
-  -- Indentation Guides
-  -- ═══════════════════════════════════════════════════════════
-  -- DISABLED: Heavy indentation calculation on large files
-  -- {
-  --   "lukas-reineke/indent-blankline.nvim",
-  --   main = "ibl",
-  --   event = { "BufReadPost", "BufNewFile" },
-  --   opts = {
-  --     indent = { char = "│" },
-  --     scope = { enabled = true },
-  --   },
-  -- },
-
-  -- ═══════════════════════════════════════════════════════════
-  -- Motion & Navigation
-  -- ═══════════════════════════════════════════════════════════
+  -- Motion
   {
     "smoka7/hop.nvim",
     version = "*",
@@ -358,9 +132,7 @@ return {
     },
   },
 
-  -- ═══════════════════════════════════════════════════════════
-  -- Buffer & Tab Management
-  -- ═══════════════════════════════════════════════════════════
+  -- Buffer Management
   {
     "akinsho/bufferline.nvim",
     version = "*",
@@ -368,25 +140,7 @@ return {
     dependencies = "nvim-tree/nvim-web-devicons",
   },
 
-  -- ═══════════════════════════════════════════════════════════
-  -- Fuzzy Finder (fzf-lua)
-  -- ═══════════════════════════════════════════════════════════
-  {
-    "ibhagwan/fzf-lua",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    cmd = "FzfLua",
-    config = function()
-      require("fzf-lua").setup({
-        files = {
-          fd_opts = "--color=never --type f --hidden --follow --exclude .git --exclude node_modules --exclude dist --exclude build",
-        },
-      })
-    end,
-  },
-
-  -- ═══════════════════════════════════════════════════════════
   -- Code Manipulation
-  -- ═══════════════════════════════════════════════════════════
   {
     "Wansmer/treesj",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
@@ -396,9 +150,7 @@ return {
     },
   },
 
-  -- ═══════════════════════════════════════════════════════════
   -- Session Management
-  -- ═══════════════════════════════════════════════════════════
   {
     "Shatur/neovim-session-manager",
     cmd = "SessionManager",
@@ -409,18 +161,14 @@ return {
     end,
   },
 
-  -- ═══════════════════════════════════════════════════════════
   -- File Explorer
-  -- ═══════════════════════════════════════════════════════════
   {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
 
-  -- ═══════════════════════════════════════════════════════════
   -- Colorscheme
-  -- ═══════════════════════════════════════════════════════════
   {
     "folke/tokyonight.nvim",
     lazy = false,
@@ -433,34 +181,6 @@ return {
         comments = { italic = true },
         keywords = { italic = true },
       },
-    },
-  },
-
-  -- ═══════════════════════════════════════════════════════════
-  -- Diagnostics (Trouble)
-  -- ═══════════════════════════════════════════════════════════
-  {
-    "folke/trouble.nvim",
-    cmd = "Trouble",
-    opts = {
-      modes = {
-        preview_float = {
-          mode = "diagnostics",
-          preview = {
-            type = "float",
-            relative = "editor",
-            border = "rounded",
-            title = "Preview",
-            title_pos = "center",
-          },
-        },
-      },
-    },
-    keys = {
-      { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics" },
-      { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics" },
-      { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols" },
-      { "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions" },
     },
   },
 }

@@ -1,5 +1,4 @@
--- blink.cmp Configuration (High-Performance Completion Engine)
--- Optimized for frontend development with TypeScript/JavaScript/SolidJS
+-- blink.cmp Configuration
 
 local blink_status_ok, blink = pcall(require, "blink.cmp")
 if not blink_status_ok then
@@ -12,23 +11,20 @@ if not luasnip_status_ok then
   vim.notify("LuaSnip could not be loaded", vim.log.levels.WARN)
 end
 
--- Load VSCode-style snippets (from friendly-snippets)
 local vscode_loader_ok, vscode_loader = pcall(require, "luasnip.loaders.from_vscode")
 if vscode_loader_ok and vscode_loader.lazy_load then
   vscode_loader.lazy_load()
 end
 
--- Load custom SolidJS snippets
 pcall(require, "core.snippets.solidjs")
 
--- Main blink.cmp Setup
 blink.setup({
-  -- Keymaps (preset "none" for custom bindings matching your legacy setup)
   keymap = {
     preset = "none",
     ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
     ["<C-e>"] = { "hide", "fallback" },
     ["<C-y>"] = { "accept", "fallback" },
+    ["<CR>"] = { "accept", "fallback" },
     ["<C-j>"] = { "select_next", "fallback" },
     ["<C-k>"] = { "select_prev", "fallback" },
     ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
@@ -39,12 +35,10 @@ blink.setup({
     ["<C-f>"] = { "scroll_documentation_down", "fallback" },
   },
 
-  -- Snippet engine preset
   snippets = {
     preset = "luasnip",
   },
 
-  -- Completion window settings
   completion = {
     accept = {
       auto_brackets = {
@@ -53,7 +47,7 @@ blink.setup({
     },
     list = {
       selection = {
-        preselect = true, -- Automatically select the first item, allowing C-y to insert it immediately
+        preselect = true,
         auto_insert = false,
       },
     },
@@ -68,25 +62,19 @@ blink.setup({
     },
   },
 
-  -- Define completion sources
+  -- Copilot provides ghost text suggestions independently via copilot.lua
+  -- It does NOT appear in the completion menu
   sources = {
-    default = { "lazydev", "copilot", "lsp", "path", "snippets", "buffer" },
+    default = { "lazydev", "lsp", "path", "snippets", "buffer" },
     providers = {
       lazydev = {
         name = "LazyDev",
         module = "lazydev.integrations.blink",
         score_offset = 100,
       },
-      copilot = {
-        name = "copilot",
-        module = "blink-cmp-copilot",
-        score_offset = 100,
-        async = true,
-      },
     },
   },
 
-  -- Aesthetics: Icons configuration matching standard Nerd Fonts
   appearance = {
     nerd_font_variant = "mono",
     kind_icons = {
@@ -118,7 +106,6 @@ blink.setup({
     },
   },
 
-  -- Command-line Autocompletion Setup
   cmdline = {
     enabled = true,
     keymap = {

@@ -1,24 +1,14 @@
--- Modern Neovim 0.11+ LSP Configuration
-
 require("core.lsp.handlers").setup()
 
--- Enable inlay hints globally by default (Neovim 0.10+)
--- vim.lsp.inlay_hint.enable(true)
-
--- Get capabilities from blink.cmp for enhanced completion
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 
--- ═══════════════════════════════════════════════════════════════════
--- Global LSP Configuration (applies to all servers)
--- ═══════════════════════════════════════════════════════════════════
+-- Global LSP Configuration
 vim.lsp.config("*", {
   capabilities = capabilities,
   root_markers = { ".git" },
 })
 
--- ═══════════════════════════════════════════════════════════════════
 -- Lua Language Server
--- ═══════════════════════════════════════════════════════════════════
 vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
@@ -35,9 +25,7 @@ vim.lsp.config("lua_ls", {
   },
 })
 
--- ═══════════════════════════════════════════════════════════════════
 -- Go Language Server
--- ═══════════════════════════════════════════════════════════════════
 vim.lsp.config("gopls", {
   settings = {
     gopls = {
@@ -53,9 +41,7 @@ vim.lsp.config("gopls", {
   },
 })
 
--- ═══════════════════════════════════════════════════════════════════
--- JSON Language Server (with schemastore support)
--- ═══════════════════════════════════════════════════════════════════
+-- JSON Language Server
 vim.lsp.config("jsonls", {
   settings = {
     json = {
@@ -64,61 +50,10 @@ vim.lsp.config("jsonls", {
   },
 })
 
--- ═══════════════════════════════════════════════════════════════════
 -- Bash Language Server
--- ═══════════════════════════════════════════════════════════════════
 vim.lsp.config("bashls", {})
 
--- ═══════════════════════════════════════════════════════════════════
--- HTML Language Server
--- ═══════════════════════════════════════════════════════════════════
--- vim.lsp.config("html", {
---   init_options = {
---     provideFormatter = false, -- Use prettier instead
---   },
--- })
-
--- ═══════════════════════════════════════════════════════════════════
--- CSS Language Server
--- ═══════════════════════════════════════════════════════════════════
--- vim.lsp.config("cssls", {
---   settings = {
---     css = { validate = true, lint = { unknownAtRules = "ignore" } },
---     scss = { validate = true },
---     less = { validate = true },
---   },
--- })
-
--- ═══════════════════════════════════════════════════════════════════
--- Tailwind CSS Language Server (Frontend Essential)
--- ═══════════════════════════════════════════════════════════════════
--- vim.lsp.config("tailwindcss", {
---   filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact" },
---   settings = {
---     tailwindCSS = {
---       experimental = {
---         classRegex = {
---           -- SolidJS/React class attribute patterns
---           { "class\\s*=\\s*[\"']([^\"']*)[\"']", 1 },
---           { "classList\\s*=\\s*\\{([^}]*)\\}", 1 },
---           { "className\\s*=\\s*[\"']([^\"']*)[\"']", 1 },
---           -- clsx/classnames/cn patterns
---           { "(?:clsx|classnames|cn|cva|cx)\\(([^)]*)\\)", 1 },
---           -- tw tagged template literal
---           { "tw`([^`]*)`", 1 },
---         },
---       },
---       includeLanguages = {
---         typescriptreact = "html",
---         javascriptreact = "html",
---       },
---     },
---   },
--- })
-
--- ═══════════════════════════════════════════════════════════════════
--- Emmet Language Server (Fast HTML/JSX Expansion)
--- ═══════════════════════════════════════════════════════════════════
+-- Emmet Language Server
 vim.lsp.config("emmet_ls", {
   filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact" },
   init_options = {
@@ -130,9 +65,24 @@ vim.lsp.config("emmet_ls", {
   },
 })
 
--- ═══════════════════════════════════════════════════════════════════
--- LspAttach Autocommand - Buffer-local Keymaps & Settings
--- ═══════════════════════════════════════════════════════════════════
+-- QML Language Server (Qt/QML development)
+vim.lsp.config("qmlls", {
+  cmd = { "qmlls6", "-E" },
+  filetypes = { "qml" },
+  root_markers = { "qmldir", ".git" },
+})
+
+-- -- C++ Language Server (Qt C++ development)
+-- vim.lsp.config("clangd", {
+--   cmd = { "clangd", "--background-index", "--clang-tidy" },
+--   filetypes = { "c", "cpp", "objc", "objcpp" },
+--   root_markers = { "compile_commands.json", ".clangd", ".git" },
+-- })
+
+-- Enable all configured servers
+-- vim.lsp.enable({ "lua_ls", "gopls", "jsonls", "bashls", "emmet_ls", "ts_ls", "zls", "qmlls", "clangd" })
+
+-- LspAttach: buffer-local keymaps (only for keys NOT provided by 0.12 defaults)
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
   callback = function(ev)
@@ -141,37 +91,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
 
-    -- Enable completion triggered by <c-x><c-o>
     vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-    -- Enable built-in LSP completion if supported (Neovim 0.11+)
-    if client:supports_method("textDocument/completion") then
-      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-    end
-
-    -- Auto-format on save if supported (disabled - using conform.nvim instead)
-    -- if client:supports_method("textDocument/formatting") then
-    --   vim.api.nvim_create_autocmd("BufWritePre", {
-    --     group = vim.api.nvim_create_augroup("LspFormat." .. ev.buf, { clear = true }),
-    --     buffer = ev.buf,
-    --     callback = function()
-    --       vim.lsp.buf.format({ bufnr = ev.buf, id = client.id, timeout_ms = 1000 })
-    --     end,
-    --   })
-    -- end
-
-    -- Buffer local mappings with descriptions
     local map = function(mode, lhs, rhs, desc)
       vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, desc = "LSP: " .. desc })
     end
 
-    -- Navigation
+    -- Navigation (0.12 provides: grr=refs, gri=impl, grn=rename, gra=code_action, gO=symbols, K=hover, grt=type_def)
     map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
     map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
-    map("n", "gi", vim.lsp.buf.implementation, "Go to Implementation")
-    map("n", "gr", vim.lsp.buf.references, "Go to References")
-    map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
-    map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
 
     -- Workspace
     map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "Add Workspace Folder")
@@ -180,15 +108,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, "List Workspace Folders")
 
-    -- Actions
-    map("n", "<leader>D", vim.lsp.buf.type_definition, "Type Definition")
-    map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
-    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code Action")
+    -- Format (conform handles save, this is manual)
     map("n", "<leader>f", function()
       vim.lsp.buf.format({ async = true })
     end, "Format Buffer")
 
-    -- Inlay hints toggle (Neovim 0.10+)
+    -- Inlay hints toggle
     map("n", "<leader>ih", function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, "Toggle Inlay Hints")
