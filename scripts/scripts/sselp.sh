@@ -1,7 +1,7 @@
 #!/bin/bash
 # path="$HOME/MyVault/Areas/Dentistry/Dental caries.md"
-path="$HOME/Mzahrawi/ongoing/qtzig/notes/Essential-modules.md"
-# echo "- $(sselp)" >> "/media/Maind/MyVault/highlights.md"
+# path="$HOME/Mzahrawi/ongoing/qtzig/notes/Essential-modules.md"
+echo "- $(sselp)" >> "/media/Maind/MyVault/highlights.md"
 # echo "- $(wl-paste -p)" >> "/media/Maind/MyVault/highlights.md"
 echo "- $(wl-paste -p)" >> "$path"
 # xsel >> ~/MyVault/highlights.md
