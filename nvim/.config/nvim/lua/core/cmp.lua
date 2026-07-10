@@ -24,7 +24,7 @@ blink.setup({
     ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
     ["<C-e>"] = { "hide", "fallback" },
     ["<C-y>"] = { "accept", "fallback" },
-    ["<CR>"] = { "accept", "fallback" },
+    -- ["<CR>"] = { "accept", "fallback" },
     -- ["<C-j>"] = { "select_next", "fallback" },
     -- ["<C-k>"] = { "select_prev", "fallback" },
     ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
