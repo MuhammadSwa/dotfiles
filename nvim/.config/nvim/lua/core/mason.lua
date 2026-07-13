@@ -33,14 +33,13 @@ require("mason").setup({
 require("mason-lspconfig").setup({
   ensure_installed = {
     "lua_ls",
-    "ts_ls",
     "gopls",
     "jsonls",
     "zls",
     "bashls",
     "emmet_ls",
-    -- "qmlls", -- not a mason package, installed via qt6-declarative
-    -- "clangd",
+    -- ts_ls excluded: TS7 (native Go port) removed tsserver.js.
+    -- Use global typescript-language-server + typescript@5.8 instead.
   },
   automatic_enable = true,
 })
@@ -48,6 +47,8 @@ require("mason-lspconfig").setup({
 local mason_registry_ok, mason_registry = pcall(require, "mason-registry")
 if mason_registry_ok then
   local tools = {
+    "oxfmt",
+    "oxlint",
     "prettierd",
     "stylua",
   }

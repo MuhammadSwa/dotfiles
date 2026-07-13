@@ -50,6 +50,23 @@ vim.lsp.config("jsonls", {
   },
 })
 
+-- TypeScript Language Server (TS7 native LSP)
+-- TS7 ships a built-in LSP: tsc --lsp --stdio
+-- No typescript-language-server wrapper needed.
+vim.lsp.config("ts_ls", {
+  cmd = { "node", "./node_modules/typescript/lib/tsc.js", "--lsp", "--stdio" },
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+  },
+  root_markers = { "tsconfig.json", "package.json", ".git" },
+  single_file_support = true,
+})
+
 -- Bash Language Server
 vim.lsp.config("bashls", {})
 
