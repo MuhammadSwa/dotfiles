@@ -100,6 +100,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- Navigation (0.12 provides: grr=refs, gri=impl, grn=rename, gra=code_action, gO=symbols, K=hover, grt=type_def)
     map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
     map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
+    map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
 
     -- Workspace
     map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "Add Workspace Folder")
