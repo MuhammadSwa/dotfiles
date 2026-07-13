@@ -38,10 +38,10 @@ require("mason-lspconfig").setup({
     "zls",
     "bashls",
     "emmet_ls",
-    -- ts_ls excluded: TS7 (native Go port) removed tsserver.js.
-    -- Use global typescript-language-server + typescript@5.8 instead.
   },
-  automatic_enable = true,
+  automatic_enable = {
+    exclude = { "ts_ls" },
+  },
 })
 
 local mason_registry_ok, mason_registry = pcall(require, "mason-registry")

@@ -54,7 +54,7 @@ vim.lsp.config("jsonls", {
 -- TS7 ships a built-in LSP: tsc --lsp --stdio
 -- No typescript-language-server wrapper needed.
 vim.lsp.config("ts_ls", {
-  cmd = { "node", "./node_modules/typescript/lib/tsc.js", "--lsp", "--stdio" },
+  cmd = { "node", "/home/alien/.npm-global/lib/node_modules/typescript/lib/tsc.js", "--lsp", "--stdio" },
   filetypes = {
     "javascript",
     "javascriptreact",
@@ -97,7 +97,7 @@ vim.lsp.config("qmlls", {
 -- })
 
 -- Enable all configured servers
--- vim.lsp.enable({ "lua_ls", "gopls", "jsonls", "bashls", "emmet_ls", "ts_ls", "zls", "qmlls", "clangd" })
+vim.lsp.enable({ "lua_ls", "gopls", "jsonls", "bashls", "emmet_ls", "ts_ls", "zls", "qmlls" })
 
 -- LspAttach: buffer-local keymaps (only for keys NOT provided by 0.12 defaults)
 vim.api.nvim_create_autocmd("LspAttach", {
