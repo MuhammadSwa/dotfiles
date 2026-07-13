@@ -80,3 +80,6 @@ source "$ZDOTDIR/plugins.zsh"
 
 # Prompt/theme
 source "$ZDOTDIR/prompt.zsh"
+
+# Vite+ bin (https://viteplus.dev)
+. "$HOME/.vite-plus/env"
