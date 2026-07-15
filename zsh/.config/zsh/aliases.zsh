@@ -10,6 +10,11 @@ alias la='eza -lah --icons --git'
 # Tree view
 alias tree='eza --tree --icons'
 
+
+alias ba='bash ~/dotfiles/scripts/scripts/android.sh'
+alias bap='./gradlew assembleRelease && adb install -r app/build/outputs/apk/release/app-release.apk'
+alias bar='./gradlew assembleFast && adb install -r app/build/outputs/apk/fast/app-fast.apk'
+
 # Reuse ls completions for eza (avoids defining a separate completion function)
 compdef eza=ls
 
