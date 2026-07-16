@@ -38,9 +38,12 @@ require("mason-lspconfig").setup({
     "zls",
     "bashls",
     "emmet_ls",
+    "astro",
+    "oxlint",
+    "oxfmt",
   },
   automatic_enable = {
-    exclude = { "ts_ls" },
+    exclude = { "ts_ls", "astro" },
   },
 })
 

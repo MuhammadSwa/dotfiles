@@ -67,6 +67,15 @@ vim.lsp.config("ts_ls", {
   single_file_support = true,
 })
 
+-- Astro Language Server
+vim.lsp.config("astro", {
+  init_options = {
+    typescript = {
+      tsdk = vim.fn.getcwd() .. "/node_modules/typescript-v6/lib",
+    },
+  },
+})
+
 -- Bash Language Server
 vim.lsp.config("bashls", {})
 
@@ -97,7 +106,7 @@ vim.lsp.config("qmlls", {
 -- })
 
 -- Enable all configured servers
-vim.lsp.enable({ "lua_ls", "gopls", "jsonls", "bashls", "emmet_ls", "ts_ls", "zls", "qmlls" })
+vim.lsp.enable({ "lua_ls", "gopls", "jsonls", "bashls", "emmet_ls", "ts_ls", "zls", "qmlls", "astro" })
 
 -- LspAttach: buffer-local keymaps (only for keys NOT provided by 0.12 defaults)
 vim.api.nvim_create_autocmd("LspAttach", {
