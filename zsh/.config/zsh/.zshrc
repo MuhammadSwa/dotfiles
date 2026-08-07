@@ -83,3 +83,10 @@ source "$ZDOTDIR/prompt.zsh"
 
 # Vite+ bin (https://viteplus.dev)
 . "$HOME/.vite-plus/env"
+
+# >>>> BEGIN MANAGED DEVIN BLOCK >>>>
+# Add ~/.local/bin to PATH for devin
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+# <<<< END MANAGED DEVIN BLOCK <<<<
