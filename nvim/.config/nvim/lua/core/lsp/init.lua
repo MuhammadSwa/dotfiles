@@ -1,5 +1,13 @@
 require("core.lsp.handlers").setup()
 
+-- Make Mason-installed binaries resolvable before Mason loads (Mason itself is
+-- deferred to VeryLazy). Without this, opening a file as a CLI argument fires
+-- FileType before Mason runs, and the first LSP attach attempt fails.
+local mason_bin = vim.fs.joinpath(vim.fn.stdpath("data"), "mason", "bin")
+if vim.uv.fs_stat(mason_bin) then
+  vim.env.PATH = mason_bin .. ":" .. vim.env.PATH
+end
+
 -- Filetype detection for GNOME file types
 vim.filetype.add({
   extension = {

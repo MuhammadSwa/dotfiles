@@ -54,9 +54,17 @@ return {
         "c",
         "xml",
       }
-      -- Only install missing parsers (get_installed is main-branch API)
-      local ok, installed = pcall(require("nvim-treesitter").get_installed, "parsers")
-      if ok then
+      -- Install missing parsers off the critical path: running this inline in
+      -- BufReadPre would block file rendering whenever a parser needs to
+      -- download/compile (install() skips parsers that are already installed).
+      vim.defer_fn(function()
+        local ok, installed = pcall(require("nvim-treesitter").get_installed, "parsers")
+        if not ok then
+          for _, parser in ipairs(parsers) do
+            pcall(require("nvim-treesitter").install, parser)
+          end
+          return
+        end
         local have = {}
         for _, name in ipairs(installed) do
           have[name] = true
@@ -66,11 +74,7 @@ return {
             pcall(require("nvim-treesitter").install, parser)
           end
         end
-      else
-        for _, parser in ipairs(parsers) do
-          pcall(require("nvim-treesitter").install, parser)
-        end
-      end
+      end, 0)
     end,
   },
 
