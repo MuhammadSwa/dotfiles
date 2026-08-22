@@ -4,21 +4,6 @@ return {
   "williamboman/mason-lspconfig.nvim",
   "neovim/nvim-lspconfig",
 
-  -- Emmet
-  {
-    "mattn/emmet-vim",
-    ft = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
-    init = function()
-      vim.g.user_emmet_leader_key = "<C-,>"
-      vim.g.user_emmet_settings = {
-        javascript = { extends = "jsx" },
-        typescript = { extends = "jsx" },
-        typescriptreact = { extends = "jsx" },
-        javascriptreact = { extends = "jsx" },
-      }
-    end,
-  },
-
   -- Lua Development
   {
     "folke/lazydev.nvim",
@@ -71,8 +56,22 @@ return {
         "c",
         "xml",
       }
-      for _, parser in ipairs(parsers) do
-        pcall(require("nvim-treesitter").install, parser)
+      -- Only install missing parsers (get_installed is main-branch API)
+      local ok, installed = pcall(require("nvim-treesitter").get_installed, "parsers")
+      if ok then
+        local have = {}
+        for _, name in ipairs(installed) do
+          have[name] = true
+        end
+        for _, parser in ipairs(parsers) do
+          if not have[parser] then
+            pcall(require("nvim-treesitter").install, parser)
+          end
+        end
+      else
+        for _, parser in ipairs(parsers) do
+          pcall(require("nvim-treesitter").install, parser)
+        end
       end
     end,
   },
@@ -85,7 +84,7 @@ return {
   -- Completion
   {
     "saghen/blink.cmp",
-    version = "*",
+    version = "1.*",
     dependencies = {
       "rafamadriz/friendly-snippets",
     },
@@ -125,11 +124,14 @@ return {
 
   -- Motion
   {
-    "smoka7/hop.nvim",
-    version = "*",
+    "folke/flash.nvim",
     event = "VeryLazy",
     opts = {
-      keys = "etovxqpdygfblzhckisuran",
+      modes = {
+        char = {
+          enabled = true,
+        },
+      },
     },
   },
 

@@ -55,7 +55,7 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<CR>", "Decrease window width")
 map("n", "<S-l>", "<cmd>bnext<CR>", "Next buffer")
 map("n", "<S-h>", "<cmd>bprevious<CR>", "Previous buffer")
 map("n", "gb", "<cmd>BufferLinePick<CR>", "Pick buffer")
-map("n", "<C-w>", "<cmd>bdelete<CR>", "Close buffer")
+map("n", "<leader>bd", "<cmd>bdelete<CR>", "Close buffer")
 map("n", "<A-w>", "<cmd>bdelete!<CR>", "Force close buffer")
 
 -- ═══════════════════════════════════════════════════════════════════
@@ -72,11 +72,10 @@ map("v", "K", ":m '<-2<CR>gv=gv", "Move selection up")
 map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", "Toggle file explorer")
 
 -- ═══════════════════════════════════════════════════════════════════
--- Motion (Hop)
+-- Motion (Flash)
 -- ═══════════════════════════════════════════════════════════════════
-map("", "f", "<cmd>HopChar1CurrentLine<CR>", "Hop to char (line)")
-map("", ",", "<cmd>HopChar2<CR>", "Hop to 2 chars")
-map("n", ";", "<cmd>HopLine<CR>", "Hop to line")
+map({ "n", "x", "o" }, ";", function() require("flash").jump() end, "Flash jump")
+map({ "n", "o" }, "<leader>;", function() require("flash").treesitter() end, "Flash treesitter")
 
 -- ═══════════════════════════════════════════════════════════════════
 -- Fzf-lua
@@ -98,14 +97,14 @@ fzf_map("<leader>fr", "lsp_references", "Find references")
 fzf_map("<leader>fs", "lsp_document_symbols", "Document symbols")
 fzf_map("<leader>gc", "git_commits", "Git commits")
 fzf_map("<leader>gs", "git_status", "Git status")
-fzf_map("<leader>gb", "git_branches", "Git branches")
+fzf_map("<leader>gB", "git_branches", "Git branches")
 
 -- ═══════════════════════════════════════════════════════════════════
 -- Diagnostics
 -- ═══════════════════════════════════════════════════════════════════
 map("n", "gl", vim.diagnostic.open_float, "Show diagnostics")
-map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")
-map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
+map("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, "Previous diagnostic")
+map("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, "Next diagnostic")
 map("n", "<leader>q", vim.diagnostic.setloclist, "Diagnostics to loclist")
 
 -- ═══════════════════════════════════════════════════════════════════

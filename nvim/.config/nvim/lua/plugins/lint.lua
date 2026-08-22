@@ -4,51 +4,6 @@ return {
   config = function()
     local lint = require("lint")
 
-    lint.linters.oxlint = {
-      cmd = "oxlint",
-      stdin = false,
-      args = {
-        "--format", "json",
-        "--tsconfig", "./tsconfig.json",
-      },
-      append_fname = true,
-      stream = "stdout",
-      ignore_exitcode = true,
-      parser = function(output, bufnr)
-        local diagnostics = {}
-        local ok, result = pcall(vim.json.decode, output)
-        if not ok or type(result) ~= "table" then
-          return diagnostics
-        end
-
-        for _, file in ipairs(result) do
-          if type(file.messages) == "table" then
-            for _, msg in ipairs(file.messages) do
-              local severity = vim.diagnostic.severity.WARN
-              if msg.severity == 2 then
-                severity = vim.diagnostic.severity.ERROR
-              elseif msg.severity == 1 then
-                severity = vim.diagnostic.severity.WARN
-              end
-
-              table.insert(diagnostics, {
-                lnum = (msg.line or 1) - 1,
-                col = (msg.column or 1) - 1,
-                end_lnum = (msg.endLine or msg.line or 1) - 1,
-                end_col = (msg.endColumn or msg.column or 1) - 1,
-                message = msg.message or "",
-                severity = severity,
-                source = "oxlint",
-                code = msg.ruleId,
-              })
-            end
-          end
-        end
-
-        return diagnostics
-      end,
-    }
-
     lint.linters.blueprint_lint = {
       cmd = "blueprint-compiler",
       stdin = false,

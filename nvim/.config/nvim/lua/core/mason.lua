@@ -39,8 +39,6 @@ require("mason-lspconfig").setup({
     "bashls",
     "emmet_ls",
     "astro",
-    "oxlint",
-    "oxfmt",
     "lemminx",
   },
   automatic_enable = {

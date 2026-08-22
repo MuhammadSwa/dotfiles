@@ -21,15 +21,11 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- ts-context-commentstring for proper JSX/TSX comments
+-- Uses the plugin's built-in OptionRestored/autocmd integration (modern path,
+-- replaces the vim.filetype.get_option monkey-patch)
 local ok, ts_context_commentstring = pcall(require, "ts_context_commentstring")
 if ok then
   ts_context_commentstring.setup({
-    enable_autocmd = false,
+    enable_autocmd = true,
   })
-  local get_option = vim.filetype.get_option
-  vim.filetype.get_option = function(filetype, option)
-    return option == "commentstring"
-        and require("ts_context_commentstring.internal").calculate_commentstring()
-        or get_option(filetype, option)
-  end
 end

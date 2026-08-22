@@ -60,31 +60,42 @@ vim.lsp.config("jsonls", {
   },
 })
 
+-- Resolve globally-installed tsc.js for TS7 native LSP (tsc --lsp --stdio)
+local function get_global_tsc()
+  local ok, res = pcall(vim.fn.system, { "npm", "root", "-g" })
+  if not ok or vim.v.shell_error ~= 0 then
+    return nil
+  end
+  local tsc = vim.fs.joinpath(vim.trim(res), "typescript", "lib", "tsc.js")
+  if vim.uv.fs_stat(tsc) then
+    return tsc
+  end
+  return nil
+end
+
 -- TypeScript Language Server (TS7 native LSP)
 -- TS7 ships a built-in LSP: tsc --lsp --stdio
 -- No typescript-language-server wrapper needed.
-vim.lsp.config("ts_ls", {
-  cmd = { "node", "/home/alien/.npm-global/lib/node_modules/typescript/lib/tsc.js", "--lsp", "--stdio" },
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "javascript.jsx",
-    "typescript",
-    "typescriptreact",
-    "typescript.tsx",
-  },
-  root_markers = { "tsconfig.json", "package.json", ".git" },
-  single_file_support = true,
-})
+-- Falls back to the nvim-lspconfig template (typescript-language-server) if absent.
+local tsc = get_global_tsc()
+if tsc then
+  vim.lsp.config("ts_ls", {
+    cmd = { "node", tsc, "--lsp", "--stdio" },
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
+    root_markers = { "tsconfig.json", "package.json", ".git" },
+  })
+end
 
 -- Astro Language Server
-vim.lsp.config("astro", {
-  init_options = {
-    typescript = {
-      tsdk = vim.fn.getcwd() .. "/node_modules/typescript-v6/lib",
-    },
-  },
-})
+-- tsdk is auto-detected from the project's node_modules by astro-ls,
+-- so no init_options needed (avoids stale vim.fn.getcwd() at startup).
 
 -- Bash Language Server
 vim.lsp.config("bashls", {})
@@ -119,12 +130,13 @@ vim.lsp.config("qmlls", {
 vim.lsp.config("blueprint_ls", {
   cmd = { "blueprint-compiler", "lsp" },
   filetypes = { "blueprint" },
-  root_markers = { ".git" },
+  root_markers = { "meson.build", ".git" },
 })
 
 -- XML Language Server (GtkBuilder .ui, GSettings schemas, appstream metainfo)
 vim.lsp.config("lemminx", {
   filetypes = { "xml", "svg" },
+  root_markers = { "meson.build", ".git" },
   settings = {
     xml = {
       format = { splitAttributes = true },
