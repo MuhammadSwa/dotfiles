@@ -41,6 +41,7 @@ require("mason-lspconfig").setup({
     "astro",
     "oxlint",
     "oxfmt",
+    "lemminx",
   },
   automatic_enable = {
     exclude = { "ts_ls", "astro" },

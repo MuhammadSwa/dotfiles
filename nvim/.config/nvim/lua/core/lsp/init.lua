@@ -6,7 +6,7 @@ vim.filetype.add({
     blp = "blueprint",
   },
   pattern = {
-    ["*.%.ui"] = "xml", -- GtkBuilder UI files
+    [".*%.ui"] = "xml", -- GtkBuilder UI files
   },
 })
 
@@ -117,18 +117,23 @@ vim.lsp.config("qmlls", {
 
 -- Blueprint Language Server (GNOME UI language, .blp files)
 vim.lsp.config("blueprint_ls", {
-  cmd = { "blueprint-lsp" },
+  cmd = { "blueprint-compiler", "lsp" },
   filetypes = { "blueprint" },
   root_markers = { ".git" },
 })
 
 -- XML Language Server (GtkBuilder .ui, GSettings schemas, appstream metainfo)
-vim.lsp.config("xmlls", {
+vim.lsp.config("lemminx", {
   filetypes = { "xml", "svg" },
+  settings = {
+    xml = {
+      format = { splitAttributes = true },
+    },
+  },
 })
 
 -- Enable all configured servers
-vim.lsp.enable({ "lua_ls", "gopls", "jsonls", "bashls", "emmet_ls", "ts_ls", "zls", "qmlls", "astro", "blueprint_ls", "xmlls" })
+vim.lsp.enable({ "lua_ls", "gopls", "jsonls", "bashls", "emmet_ls", "ts_ls", "zls", "qmlls", "astro", "blueprint_ls", "lemminx" })
 
 -- LspAttach: buffer-local keymaps (only for keys NOT provided by 0.12 defaults)
 vim.api.nvim_create_autocmd("LspAttach", {
