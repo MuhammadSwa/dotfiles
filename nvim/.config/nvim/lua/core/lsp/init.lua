@@ -1,5 +1,15 @@
 require("core.lsp.handlers").setup()
 
+-- Filetype detection for GNOME file types
+vim.filetype.add({
+  extension = {
+    blp = "blueprint",
+  },
+  pattern = {
+    ["*.%.ui"] = "xml", -- GtkBuilder UI files
+  },
+})
+
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 -- Global LSP Configuration
@@ -105,8 +115,20 @@ vim.lsp.config("qmlls", {
 --   root_markers = { "compile_commands.json", ".clangd", ".git" },
 -- })
 
+-- Blueprint Language Server (GNOME UI language, .blp files)
+vim.lsp.config("blueprint_ls", {
+  cmd = { "blueprint-lsp" },
+  filetypes = { "blueprint" },
+  root_markers = { ".git" },
+})
+
+-- XML Language Server (GtkBuilder .ui, GSettings schemas, appstream metainfo)
+vim.lsp.config("xmlls", {
+  filetypes = { "xml", "svg" },
+})
+
 -- Enable all configured servers
-vim.lsp.enable({ "lua_ls", "gopls", "jsonls", "bashls", "emmet_ls", "ts_ls", "zls", "qmlls", "astro" })
+vim.lsp.enable({ "lua_ls", "gopls", "jsonls", "bashls", "emmet_ls", "ts_ls", "zls", "qmlls", "astro", "blueprint_ls", "xmlls" })
 
 -- LspAttach: buffer-local keymaps (only for keys NOT provided by 0.12 defaults)
 vim.api.nvim_create_autocmd("LspAttach", {

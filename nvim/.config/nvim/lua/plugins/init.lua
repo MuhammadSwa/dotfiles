@@ -69,6 +69,8 @@ return {
         "qml",
         "cpp",
         "c",
+        "blueprint",
+        "xml",
       }
       for _, parser in ipairs(parsers) do
         pcall(require("nvim-treesitter").install, parser)
