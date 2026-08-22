@@ -55,7 +55,7 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<CR>", "Decrease window width")
 map("n", "<S-l>", "<cmd>bnext<CR>", "Next buffer")
 map("n", "<S-h>", "<cmd>bprevious<CR>", "Previous buffer")
 map("n", "gb", "<cmd>BufferLinePick<CR>", "Pick buffer")
-map("n", "<leader>bd", "<cmd>bdelete<CR>", "Close buffer")
+map("n", "<C-w>", "<cmd>bdelete<CR>", "Close buffer")
 map("n", "<A-w>", "<cmd>bdelete!<CR>", "Force close buffer")
 
 -- ═══════════════════════════════════════════════════════════════════

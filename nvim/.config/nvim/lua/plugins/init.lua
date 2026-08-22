@@ -51,7 +51,7 @@ return {
         "go",
         "dart",
         "zig",
-        "qml",
+        -- "qml": unsupported in nvim-treesitter main-branch registry (qmlls still active)
         "cpp",
         "c",
         "xml",

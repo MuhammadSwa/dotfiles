@@ -78,8 +78,10 @@ blueprint-compiler compile ui/main.blp --output main.ui
 ## zls notes
 
 zig-gobject generates large wrapper modules — keep them resolvable via your
-project's `build.zig.zon` dependencies so zls can index them. Style warnings
-are disabled in `vim.lsp.config("zls", ...)` since generated code triggers noise.
+project's `build.zig.zon` dependencies so zls can index them. zls uses default
+settings here (`vim.lsp.enable({ "zls", ... })` in `lua/core/lsp/init.lua`);
+if generated code produces noise, add a `zls` config with
+`settings = { zls = { enable_snippets = false } }` or per-project `.zls.json`.
 
 ## Known limitations (upstream)
 
