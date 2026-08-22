@@ -1,7 +1,5 @@
 return {
-  -- LSP
-  "williamboman/mason.nvim",
-  "williamboman/mason-lspconfig.nvim",
+  -- LSP (Mason + mason-lspconfig are deferred in plugins/mason.lua)
   "neovim/nvim-lspconfig",
 
   -- Lua Development

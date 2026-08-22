@@ -1,7 +1,6 @@
 require("core.lazy")
 require("core.options")
-require("core.mason") -- Mason must be loaded before LSP for automatic_enable
-require("core.lsp") -- LSP config uses vim.lsp.config() (Neovim 0.11+)
+require("core.lsp") -- LSP config uses vim.lsp.config() (Neovim 0.11+); Mason loads deferred via DeferredUIEnter
 require("core.treesitter")
 require("core.cmp")
 require("core.keymaps")

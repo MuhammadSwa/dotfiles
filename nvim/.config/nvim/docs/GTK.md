@@ -102,5 +102,5 @@ properties, signals, and classes get full validation.
 | `lua/plugins/lint.lua`                  | `blueprint_lint` custom linter + parser     |
 | `lua/core/treesitter.lua`               | `vim.treesitter.start` autocmd for blueprint |
 | `lua/plugins/init.lua`                  | treesitter parser install list (incl. xml)  |
-| `lua/core/mason.lua`                    | mason `ensure_installed` (lemminx)          |
+| `lua/plugins/mason.lua`                 | mason `ensure_installed` (lemminx)          |
 | `queries/blueprint/highlights.scm`      | custom highlight queries                    |

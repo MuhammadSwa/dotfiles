@@ -1,6 +1,6 @@
 return {
   "stevearc/conform.nvim",
-  event = { "BufReadPre", "BufNewFile" },
+  event = { "InsertEnter", "BufWritePre" },
   cmd = { "ConformInfo" },
   opts = {
     formatters_by_ft = {

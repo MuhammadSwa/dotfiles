@@ -58,6 +58,7 @@ git clone https://github.com/zbirenbaum/copilot.lua \
 │   │   └── snippets/solidjs.lua
 │   └── plugins/
 │       ├── init.lua          # Plugin specs (lazy.nvim imports "plugins")
+│       ├── mason.lua         # Mason + mason-lspconfig (deferred to VeryLazy)
 │       ├── conform.lua       # Formatting (oxfmt / prettierd / stylua)
 │       ├── lint.lua          # oxlint + custom blueprint_lint
 │       ├── copilot.lua       # Copilot ghost text
@@ -81,8 +82,9 @@ git clone https://github.com/zbirenbaum/copilot.lua \
 
 Notes:
 
-- **ts_ls** resolves `tsc.js` via `npm root -g` at startup; falls back to
-  typescript-language-server if not found.
+- **ts_ls** uses TS7 native LSP (`tsgo --lsp`), resolved lazily on the first
+  JS/TS buffer (`tsgo` on PATH → global npm `@typescript/native-preview` →
+  `typescript/lib/tsc.js`). Falls back to typescript-language-server if none found.
 - **qml** parser is unsupported in nvim-treesitter main registry; `qmlls6` LSP is still enabled.
 
 ---
@@ -205,7 +207,7 @@ vim.lsp.config("pyright", {
 -- add to the vim.lsp.enable({ ... }) list
 ```
 
-Install via Mason (`ensure_installed` in `lua/core/mason.lua`) or system package.
+Install via Mason (`ensure_installed` in `lua/plugins/mason.lua`) or system package.
 
 ### Formatter / linter
 

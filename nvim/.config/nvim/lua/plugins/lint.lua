@@ -1,6 +1,7 @@
 return {
   "mfussenegger/nvim-lint",
-  event = { "BufReadPre", "BufNewFile" },
+  -- Deferred: lint autocmds (BufEnter/BufWritePost/InsertLeave) take over once loaded
+  event = "VeryLazy",
   config = function()
     local lint = require("lint")
 

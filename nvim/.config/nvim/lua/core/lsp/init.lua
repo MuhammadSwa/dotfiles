@@ -60,16 +60,28 @@ vim.lsp.config("jsonls", {
   },
 })
 
--- Resolve globally-installed tsc.js for TS7 native LSP (tsc --lsp --stdio)
-local function get_global_tsc()
+-- Resolve a TS7-native LSP binary (tsgo / tsc --lsp --stdio)
+local function get_ts7_cmd()
+  -- 1) tsgo on PATH (@typescript/native-preview)
+  local tsgo = vim.fn.exepath("tsgo")
+  if tsgo ~= "" then
+    return { tsgo, "--lsp", "--stdio" }
+  end
+
+  -- 2/3) global npm install: native-preview or future stable typescript
   local ok, res = pcall(vim.fn.system, { "npm", "root", "-g" })
-  if not ok or vim.v.shell_error ~= 0 then
-    return nil
+  if ok and vim.v.shell_error == 0 then
+    local root = vim.trim(res)
+    for _, candidate in ipairs({
+      vim.fs.joinpath(root, "@typescript", "native-preview", "lib", "tsgo.js"),
+      vim.fs.joinpath(root, "typescript", "lib", "tsc.js"),
+    }) do
+      if vim.uv.fs_stat(candidate) then
+        return { "node", candidate, "--lsp", "--stdio" }
+      end
+    end
   end
-  local tsc = vim.fs.joinpath(vim.trim(res), "typescript", "lib", "tsc.js")
-  if vim.uv.fs_stat(tsc) then
-    return tsc
-  end
+
   return nil
 end
 
@@ -77,21 +89,27 @@ end
 -- TS7 ships a built-in LSP: tsc --lsp --stdio
 -- No typescript-language-server wrapper needed.
 -- Falls back to the nvim-lspconfig template (typescript-language-server) if absent.
-local tsc = get_global_tsc()
-if tsc then
-  vim.lsp.config("ts_ls", {
-    cmd = { "node", tsc, "--lsp", "--stdio" },
-    filetypes = {
-      "javascript",
-      "javascriptreact",
-      "javascript.jsx",
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-    },
-    root_markers = { "tsconfig.json", "package.json", ".git" },
-  })
-end
+--
+-- Resolution is deferred to the first JS/TS FileType: `npm root -g` is a
+-- ~200ms subprocess and would otherwise block startup.
+local TS_FT = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" }
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("UserTslsSetup", { clear = true }),
+  pattern = TS_FT,
+  once = true,
+  callback = function()
+    local cmd = get_ts7_cmd()
+    if cmd then
+      vim.lsp.config("ts_ls", {
+        cmd = cmd,
+        filetypes = TS_FT,
+        root_markers = { "tsconfig.json", "package.json", ".git" },
+      })
+      vim.lsp.enable("ts_ls")
+    end
+  end,
+  desc = "Resolve TS7 native LSP (tsgo/tsc --lsp) on first JS/TS buffer",
+})
 
 -- Astro Language Server
 -- tsdk is auto-detected from the project's node_modules by astro-ls,
@@ -144,8 +162,8 @@ vim.lsp.config("lemminx", {
   },
 })
 
--- Enable all configured servers
-vim.lsp.enable({ "lua_ls", "gopls", "jsonls", "bashls", "emmet_ls", "ts_ls", "zls", "qmlls", "astro", "blueprint_ls", "lemminx" })
+-- Enable all configured servers (ts_ls is enabled lazily on first JS/TS buffer)
+vim.lsp.enable({ "lua_ls", "gopls", "jsonls", "bashls", "emmet_ls", "zls", "qmlls", "astro", "blueprint_ls", "lemminx" })
 
 -- LspAttach: buffer-local keymaps (only for keys NOT provided by 0.12 defaults)
 vim.api.nvim_create_autocmd("LspAttach", {
