@@ -12,8 +12,10 @@
 (ident_literal) @variable
 
 (object (ident) @label)
-(property (ident) @property)
-(signal (ident) @function.method)
+(property name: (ident) @property)
+(ext_layout "layout" @keyword)
+(ext_layout_prop name: (ident) @property)
+(signal name: (ident) @function.method)
 (binding_flag) @keyword.modifier
 (signal_flag) @keyword.modifier
 
