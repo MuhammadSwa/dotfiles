@@ -2,7 +2,7 @@
 
 #
 # tmpfile=$(mktemp)
-# find ~/Books/ /media/Maind/كتب2/ /media/Maind/كتب/ /media/Maind/Dental_books/ -type f ! -path "$HOME/Books/site/*" >"$tmpfile"
+# find /media/Maind/كتب2/ /media/Maind/كتب/ /media/Maind/Dental_books/ -type f ! -path "$HOME/Books/site/*" >"$tmpfile"
 # # chosen_book=$(sed 's|.*/\([^/]*\)/\([^/]*\)$|\1/\2|' "$tmpfile" | ~/Mzahrawi/productivity/badi/zig-out/bin/badi)
 # chosen_book=$(sed 's|.*/\([^/]*\)/\([^/]*\)$|\1/\2|' "$tmpfile" | ~/Mzahrawi/ongoing/badi/zig-out/bin/gtk-zig)
 # chosen_book=$(grep -F "/$chosen_book" "$tmpfile" | head -1)
@@ -15,10 +15,11 @@ trap 'rm -f "$tmpfile"' EXIT
 
 chosen=$(
     fd --type f --hidden --no-ignore -E 'site' \
-        . "$HOME/Books" /media/Maind/كتب2 /media/Maind/كتب /media/Maind/Dental_books \
+        . /media/Maind/كتب2 /media/Maind/كتب /media/Maind/Dental_books \
     | tee "$tmpfile" \
     | sed 's|.*/\([^/]*\)/\([^/]*\)$|\1/\2|' \
     | ~/Mzahrawi/ongoing/badi/zig-out/bin/gtk-zig
+    # | ~/Mzahrawi/productivity/badi/zig-out/bin/badi
 ) || exit 1
 
 [[ -n $chosen ]] || exit 1
