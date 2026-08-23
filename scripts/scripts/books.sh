@@ -18,8 +18,8 @@ chosen=$(
         . /media/Maind/كتب2 /media/Maind/كتب /media/Maind/Dental_books \
     | tee "$tmpfile" \
     | sed 's|.*/\([^/]*\)/\([^/]*\)$|\1/\2|' \
-    | ~/Mzahrawi/ongoing/badi/zig-out/bin/gtk-zig
-    # | ~/Mzahrawi/productivity/badi/zig-out/bin/badi
+    | ~/Mzahrawi/productivity/badi/zig-out/bin/badi
+    # | ~/Mzahrawi/ongoing/badi/zig-out/bin/gtk-zig
 ) || exit 1
 
 [[ -n $chosen ]] || exit 1

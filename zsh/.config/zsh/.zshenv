@@ -5,6 +5,8 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
+export ANDROID_HOME=/media/Maind/Android/Sdk/
+
 # ---------- Editor ----------
 # Default editor used by git, crontab, etc.
 export EDITOR="nvim"
