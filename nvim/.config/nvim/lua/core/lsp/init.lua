@@ -184,6 +184,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
+    -- Built-in LSP document colors (0.12+)
+    if vim.lsp.document_color then
+      vim.lsp.document_color.enable(true, { bufnr = ev.buf })
+    end
+
     local map = function(mode, lhs, rhs, desc)
       vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, desc = "LSP: " .. desc })
     end

@@ -6,9 +6,11 @@
 return {
   {
     "nvim-flutter/flutter-tools.nvim",
-    lazy = false,
+    lazy = false, -- registers :Flutter* commands at startup
     dependencies = {
       "nvim-lua/plenary.nvim",
+      -- ensure blink.cmp is set up first so we can pull LSP capabilities
+      "saghen/blink.cmp",
     },
     opts = {
       ui = {
@@ -32,11 +34,6 @@ return {
         focus_on_open = false,
       },
       lsp = {
-        -- blink.cmp capabilities so completion works with the dartls client
-        capabilities = require("blink.cmp").get_lsp_capabilities(),
-        color = {
-          enabled = true,
-        },
         settings = {
           showTodos = true,
           completeFunctionCalls = true,
@@ -84,16 +81,8 @@ return {
       },
     },
     config = function(_, opts)
+      opts.lsp.capabilities = require("blink.cmp").get_lsp_capabilities()
       require("flutter-tools").setup(opts)
-
-      -- blink.cmp capabilities must be attached to the dartls client that
-      -- flutter-tools starts internally
-      local ok, utils = pcall(require, "flutter-tools.lsp")
-      if ok then
-        utils.setup({
-          capabilities = require("blink.cmp").get_lsp_capabilities(),
-        })
-      end
     end,
   },
 

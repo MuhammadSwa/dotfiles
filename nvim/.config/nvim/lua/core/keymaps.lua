@@ -128,6 +128,19 @@ map("n", "<leader>tf", function() vim.lsp.buf.code_action({ context = { only = {
 map("n", "<leader>ti", function() vim.lsp.buf.code_action({ context = { only = { "source.addMissingImports" } } }) end, "TS: Add missing imports")
 
 -- ═══════════════════════════════════════════════════════════════════
+-- Flutter (flutter-tools.nvim)
+-- ═══════════════════════════════════════════════════════════════════
+map("n", "<leader>Fd", "<cmd>FlutterDevices<CR>", "Flutter: select device")
+map("n", "<leader>Fe", "<cmd>FlutterEmulators<CR>", "Flutter: emulators")
+map("n", "<leader>Fr", "<cmd>FlutterRun<CR>", "Flutter: run")
+map("n", "<leader>FR", "<cmd>FlutterRestart<CR>", "Flutter: hot restart")
+map("n", "<leader>Fl", "<cmd>FlutterReload<CR>", "Flutter: hot reload")
+map("n", "<leader>Fq", "<cmd>FlutterQuit<CR>", "Flutter: quit")
+map("n", "<leader>Fo", "<cmd>FlutterOutlineToggle<CR>", "Flutter: outline")
+map("n", "<leader>FD", "<cmd>FlutterOpenDevTools<CR>", "Flutter: dev tools")
+map("n", "<leader>FL", "<cmd>FlutterLogClear<CR>", "Flutter: clear log")
+
+-- ═══════════════════════════════════════════════════════════════════
 -- Development Commands (Terminal)
 -- ═══════════════════════════════════════════════════════════════════
 map("n", "<leader>dn", function() floating_term_exec("npm run dev") end, "npm run dev")
